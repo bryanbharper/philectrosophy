@@ -82,7 +82,7 @@ Target.create "Azure"
 
     let deployment =
         arm {
-            location Location.WestEurope
+            location Location.CentralUS
             add_resource web
         }
 
