@@ -15,6 +15,7 @@ bin/
 packages/
 paket-files/
 node_modules/
+dist/
 
 # Scripts
 release.cmd

@@ -4,6 +4,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="BlogEntry.Tests.fs" />
     <Compile Include="Index.Tests.fs" />
     <Compile Include="Client.Tests.fs" />
   </ItemGroup>

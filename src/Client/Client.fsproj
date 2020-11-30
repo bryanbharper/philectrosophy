@@ -8,7 +8,12 @@
         <None Include="index.html" />
         <None Include="paket.references" />
         <Compile Include="Styles.fs" />
-        <Compile Include="Pulma.fs" />
+        <Compile Include="Components\Navbar.fs" />
+        <Compile Include="Pages\Blog.fs" />
+        <Compile Include="Pages\Lexicon.fs" />
+        <Compile Include="Pages\About.fs" />
+        <Compile Include="Pages\Search.fs" />
+        <Compile Include="Pages\BlogEntry.fs" />
         <Compile Include="Index.fs" />
         <Compile Include="App.fs" />
         <Content Include="public\favicon.png" />

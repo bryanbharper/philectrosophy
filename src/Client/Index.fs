@@ -1,10 +1,11 @@
-module Index
+module Client.Index
 
+open Client.Components
+open Client.Pages
 open Elmish
 open Fable.Remoting.Client
 open Shared
 open Feliz
-open Styles
 open Feliz.Router
 
 let todosApi =
@@ -12,46 +13,110 @@ let todosApi =
     |> Remoting.withRouteBuilder Route.builder
     |> Remoting.buildProxy<ITodosApi>
 
-type State = { CurrentUrl: string list }
+[<RequireQualifiedAccess>]
+type Page =
+    | About of About.State
+    | Blog of Blog.State
+    | BlogEntry of BlogEntry.State
+    | Lexicon of Lexicon.State
+    | Search of Search.State
+    | NotFound
 
-type Msg = UrlChanged of string list
+[<RequireQualifiedAccess>]
+type Url =
+    | About
+    | Blog
+    | BlogEntry of slug: string
+    | Lexicon
+    | Search
+    | NotFound
+
+let parseUrl =
+    function
+    | []
+    | [ "about" ] -> Url.About
+    | [ "blog" ] -> Url.Blog
+    | [ "blog"; slug: string ] -> Url.BlogEntry slug
+    | [ "lexicon" ] -> Url.Lexicon
+    | [ "search" ] -> Url.Search
+    | _ -> Url.NotFound
+
+type State = { CurrentUrl: Url; CurrentPage: Page }
+
+[<RequireQualifiedAccess>]
+type Msg =
+    | About of About.Msg
+    | Blog of Blog.Msg
+    | BlogEntry of BlogEntry.Msg
+    | Lexicon of Lexicon.Msg
+    | Search of Search.Msg
+    | UrlChanged of Url
+
+let pageInitFromUrl url =
+    let initializer (state, cmd) pageMapper msgMapper =
+        {
+            CurrentUrl = url
+            CurrentPage = pageMapper state
+        },
+        Cmd.map msgMapper cmd
+
+    let defaultState =
+        {
+            CurrentUrl = url
+            CurrentPage = Page.NotFound
+        }
+
+    match url with
+    | Url.About -> initializer (About.init ()) Page.About Msg.About
+    | Url.Blog -> initializer (Blog.init ()) Page.Blog Msg.Blog
+    | Url.BlogEntry slug -> initializer (BlogEntry.init slug) Page.BlogEntry Msg.BlogEntry
+    | Url.Lexicon -> initializer (Lexicon.init ()) Page.Lexicon Msg.Lexicon
+    | Url.Search -> initializer (Search.init ()) Page.Search Msg.Search
+    | Url.NotFound -> defaultState, Cmd.none
 
 let init (): State * Cmd<Msg> =
-    { CurrentUrl = Router.currentUrl () }, Cmd.none
+    Router.currentUrl ()
+    |> parseUrl
+    |> pageInitFromUrl
 
 let update (msg: Msg) (state: State): State * Cmd<Msg> =
-    match msg with
-    | UrlChanged url -> { state with CurrentUrl = url }, Cmd.none
+    let updater pageMsg pageState pageUpdater msgMapper pageMapper =
+        let newState, newCmd = pageUpdater pageMsg pageState
+        let cmd = Cmd.map msgMapper newCmd
+        { state with
+            CurrentPage = pageMapper newState
+        },
+        cmd
+
+    match msg, state.CurrentPage with
+    | Msg.About msg', Page.About state' -> updater msg' state' About.update Msg.About Page.About
+    | Msg.Blog msg', Page.Blog state' -> updater msg' state' Blog.update Msg.Blog Page.Blog
+    | Msg.BlogEntry msg', Page.BlogEntry state' -> updater msg' state' BlogEntry.update Msg.BlogEntry Page.BlogEntry
+    | Msg.Lexicon msg', Page.Lexicon state' -> updater msg' state' Lexicon.update Msg.Lexicon Page.Lexicon
+    | Msg.Search msg', Page.Search state' -> updater msg' state' Search.update Msg.Search Page.Search
+    | Msg.UrlChanged nextUrl, _ -> pageInitFromUrl nextUrl
+    | _ -> state, Cmd.none
+
 
 open Fable.React
 
-let navbar =
-    Pulma.nav [
-        Pulma.Navbar.brand "#" "phi.png"
-        Pulma.Navbar.end' [
-            Pulma.Navbar.textItem (Router.format "blog") "blog"
-            Pulma.Navbar.textItem (Router.format "lexicon") "lexicon"
-            Pulma.Navbar.textItem (Router.format "about") "about"
-            Pulma.Navbar.iconItem (Router.format "search") FA.FaSearch
-        ]
-    ]
+let render (state: State) (dispatch: Msg -> unit): ReactElement =
+    let activePage =
+        match state.CurrentPage with
+        | Page.About state -> About.render state (Msg.About >> dispatch)
+        | Page.Blog state -> Blog.render state (Msg.Blog >> dispatch)
+        | Page.BlogEntry state -> BlogEntry.render state (Msg.BlogEntry >> dispatch)
+        | Page.Lexicon state -> Lexicon.render state (Msg.Lexicon >> dispatch)
+        | Page.Search state -> Search.render state (Msg.Search >> dispatch)
+        | Page.NotFound -> Html.h1 "Not Found"
 
-let activePage currentUrl =
-    match currentUrl with
-    | [] -> Html.h1 "Home / Blog"
-    | [ "blog" ] -> Html.h1 "Home / Blog"
-    | [ "lexicon" ] -> Html.h1 "Lexicon"
-    | [ "search" ] -> Html.h1 "Search"
-    | _ -> Html.h1 "Not Found"
-
-let view (state: State) (dispatch: Msg -> unit): ReactElement =
     Html.div
         [
             prop.children [
-                navbar
+                Navbar.render
                 React.router [
-                    router.onUrlChanged (UrlChanged >> dispatch)
-                    router.children [ state.CurrentUrl |> activePage ]
+                    router.onUrlChanged (parseUrl >> Msg.UrlChanged >> dispatch)
+                    router.children [ activePage ]
                 ]
             ]
         ]

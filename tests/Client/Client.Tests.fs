@@ -8,7 +8,8 @@ let all =
 #if FABLE_COMPILER // This preprocessor directive makes editor happy
             Shared.Tests.shared
 #endif
-            Index.Tests.all
+            Tests.BlogEntry.all
+            Tests.Index.all
         ]
 
 [<EntryPoint>]
