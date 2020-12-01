@@ -60,19 +60,18 @@ let pageInitFromUrl url =
         },
         Cmd.map msgMapper cmd
 
-    let defaultState =
-        {
-            CurrentUrl = url
-            CurrentPage = Page.NotFound
-        }
-
     match url with
     | Url.About -> initializer (About.init ()) Page.About Msg.About
     | Url.Blog -> initializer (Blog.init ()) Page.Blog Msg.Blog
     | Url.BlogEntry slug -> initializer (BlogEntry.init slug) Page.BlogEntry Msg.BlogEntry
     | Url.Lexicon -> initializer (Lexicon.init ()) Page.Lexicon Msg.Lexicon
     | Url.Search -> initializer (Search.init ()) Page.Search Msg.Search
-    | Url.NotFound -> defaultState, Cmd.none
+    | Url.NotFound ->
+        {
+            CurrentUrl = url
+            CurrentPage = Page.NotFound
+        },
+        Cmd.none
 
 let init (): State * Cmd<Msg> =
     Router.currentUrl ()
