@@ -1,10 +1,8 @@
-﻿module Client.Tests.Index
+﻿module IndexTests
 
 open Client
 open Client.Index
 open Client.Pages
-open Expecto
-open Expecto.Flip
 open Fable.Mocha
 
 module Target = Index
@@ -34,7 +32,7 @@ let all =
                     let result = Target.parseUrl url
 
                     // assert
-                    Expect.equal result page "Index.parseUrl should return expected Page."
+                    Expect.equal result page (sprintf "%A should parse to %A, but got %A instead." url page result)
 
             testCase "Index.pageInitFromUrl returns correct state for each page"
             <| fun _ ->

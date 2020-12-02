@@ -4,6 +4,10 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Shared.fs" />
+    <Compile Include="Deferred.fs" />
+    <Compile Include="Async.fs" />
+    <Compile Include="String.fs" />
+    <Compile Include="DomainModels.fs" />
+    <Compile Include="ApiContract.fs" />
   </ItemGroup>
 </Project>

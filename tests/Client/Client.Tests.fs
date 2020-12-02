@@ -6,10 +6,10 @@ let all =
     testList "All"
         [
 #if FABLE_COMPILER // This preprocessor directive makes editor happy
-            Shared.Tests.shared
+            Shared.Tests.all
 #endif
-            Tests.BlogEntry.all
-            Tests.Index.all
+            BlogEntryTests.all
+            IndexTests.all
         ]
 
 [<EntryPoint>]

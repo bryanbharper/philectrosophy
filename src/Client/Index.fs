@@ -3,15 +3,9 @@ module Client.Index
 open Client.Components
 open Client.Pages
 open Elmish
-open Fable.Remoting.Client
 open Shared
 open Feliz
 open Feliz.Router
-
-let todosApi =
-    Remoting.createApi ()
-    |> Remoting.withRouteBuilder Route.builder
-    |> Remoting.buildProxy<ITodosApi>
 
 [<RequireQualifiedAccess>]
 type Page =
@@ -33,8 +27,8 @@ type Url =
 
 let parseUrl =
     function
-    | []
     | [ "about" ] -> Url.About
+    | []
     | [ "blog" ] -> Url.Blog
     | [ "blog"; slug: string ] -> Url.BlogEntry slug
     | [ "lexicon" ] -> Url.Lexicon

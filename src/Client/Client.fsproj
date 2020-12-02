@@ -5,10 +5,15 @@
         <DefineConstants>FABLE_COMPILER</DefineConstants>
     </PropertyGroup>
     <ItemGroup>
+        <Content Include="public\styles.css" />
         <None Include="index.html" />
         <None Include="paket.references" />
         <Compile Include="Styles.fs" />
         <Compile Include="Components\Navbar.fs" />
+        <Compile Include="Components\Spinner.fs" />
+        <Compile Include="Components\Error.fs" />
+        <Compile Include="Components\Layout.fs" />
+        <Compile Include="Components\MediaObject.fs" />
         <Compile Include="Pages\Blog.fs" />
         <Compile Include="Pages\Lexicon.fs" />
         <Compile Include="Pages\About.fs" />

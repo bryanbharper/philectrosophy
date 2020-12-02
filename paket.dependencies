@@ -2,9 +2,11 @@ source https://api.nuget.org/v3/index.json
 framework: netcoreapp3.1
 storage: none
 
+nuget Expecto.FsCheck
 nuget Fable.Remoting.Giraffe
 nuget Feliz
 nuget Feliz.Router
+nuget Foq
 nuget Saturn
 nuget Expecto
 
