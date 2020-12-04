@@ -15,30 +15,18 @@ let blogApi =
 
 type State =
     {
-        Entries: DeferredResult<BlogEntry list, string>
+        Entries: Deferred<BlogEntry list>
     }
 
-type Msg = GotEntries of Result<BlogEntry list, string>
+type Msg = GotEntries of BlogEntry list
 
-(*****************************
-    INIT
-*****************************)
-// Todo: Test this
 let init (): State * Cmd<Msg> =
     { Entries = InProgress }, Cmd.OfAsync.perform blogApi.GetEntries () (GotEntries)
 
-
-(*****************************
-    UPDATE
-*****************************)
-// Todo: Test this
 let update (msg: Msg) (state: State): State * Cmd<Msg> =
     match msg with
     | GotEntries result -> { state with Entries = Resolved result }, Cmd.none
 
-(*****************************
-    RENDER
-*****************************)
 let renderEntry dispatch entry =
     let title =
         Html.h4 [
@@ -65,8 +53,7 @@ let render (state: State) (dispatch: Msg -> unit) =
         match state.Entries with
         | Idle -> Html.none
         | InProgress -> Spinner.render
-        | Resolved (Error error) -> Error.render error
-        | Resolved (Ok entries) ->
+        | Resolved entries ->
             entries
             |> List.map (renderEntry dispatch)
             |> Html.div

@@ -1,9 +1,9 @@
 ﻿namespace Shared
 
 type IBlogApi =
-    { GetEntries : unit -> Async<Result<BlogEntry list, string>> }
+    {
+        GetEntries: unit -> Async<BlogEntry list>
+    }
 
 module Route =
-    // Todo: Test this
-    let builder typeName methodName =
-        sprintf "/api/%s/%s" typeName methodName
+    let builder typeName methodName = sprintf "/api/%s/%s" typeName methodName

@@ -5,17 +5,7 @@ open Microsoft.Extensions.Logging
 open Shared
 
 let getEntriesAsync (repo: IRepository) (log: ILogger) =
-    try
-        // Todo: failure is throwing 500
-        repo.GetBlogEntriesAsync()
-        |> Async.map Ok
-    with
-    | ex ->
-        log.LogError("Error retrieving blog entries from repo: " + ex.Message)
-
-        Error "An error occurred while retrieving blog entries."
-        |> async.Return
-
+      repo.GetBlogEntriesAsync()
 
 let blogApiReader =
     reader {

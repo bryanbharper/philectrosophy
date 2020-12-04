@@ -4,6 +4,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="String.Tests.fs" />
+    <Compile Include="Async.Tests.fs" />
     <Compile Include="DomainModelsTests.fs" />
     <Compile Include="Shared.Tests.fs" />
   </ItemGroup>

@@ -9,6 +9,7 @@ let all =
             Shared.Tests.all
 #endif
             BlogEntryTests.all
+            BlogTests.all
             IndexTests.all
         ]
 
