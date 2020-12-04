@@ -19,6 +19,9 @@
         <Compile Include="Pages\About.fs" />
         <Compile Include="Pages\Search.fs" />
         <Compile Include="Pages\BlogEntry.fs" />
+        <Compile Include="Pages\ErrorPages\BaseError.fs" />
+        <Compile Include="Pages\ErrorPages\UnexpectedError.fs" />
+        <Compile Include="Pages\ErrorPages\NotFound.fs" />
         <Compile Include="Index.fs" />
         <Compile Include="App.fs" />
         <Content Include="public\favicon.png" />

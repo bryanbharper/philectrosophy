@@ -15,6 +15,7 @@ type Page =
     | Lexicon of Lexicon.State
     | Search of Search.State
     | NotFound
+    | UnexpectedError
 
 [<RequireQualifiedAccess>]
 type Url =
@@ -24,6 +25,7 @@ type Url =
     | Lexicon
     | Search
     | NotFound
+    | UnexpectedError
 
 let parseUrl =
     function
@@ -33,6 +35,7 @@ let parseUrl =
     | [ "blog"; slug: string ] -> Url.BlogEntry slug
     | [ "lexicon" ] -> Url.Lexicon
     | [ "search" ] -> Url.Search
+    | [ "500" ] -> Url.UnexpectedError
     | _ -> Url.NotFound
 
 type State = { CurrentUrl: Url; CurrentPage: Page }
@@ -60,6 +63,12 @@ let pageInitFromUrl url =
     | Url.BlogEntry slug -> initializer (BlogEntry.init slug) Page.BlogEntry Msg.BlogEntry
     | Url.Lexicon -> initializer (Lexicon.init ()) Page.Lexicon Msg.Lexicon
     | Url.Search -> initializer (Search.init ()) Page.Search Msg.Search
+    | Url.UnexpectedError ->
+        {
+            CurrentUrl = url
+            CurrentPage = Page.UnexpectedError
+        },
+        Cmd.none
     | Url.NotFound ->
         {
             CurrentUrl = url
@@ -101,7 +110,8 @@ let render (state: State) (dispatch: Msg -> unit): ReactElement =
         | Page.BlogEntry state -> BlogEntry.render state (Msg.BlogEntry >> dispatch)
         | Page.Lexicon state -> Lexicon.render state (Msg.Lexicon >> dispatch)
         | Page.Search state -> Search.render state (Msg.Search >> dispatch)
-        | Page.NotFound -> Html.h1 "Not Found"
+        | Page.UnexpectedError -> UnexpectedError.render
+        | Page.NotFound -> NotFound.render
 
     Html.div
         [
