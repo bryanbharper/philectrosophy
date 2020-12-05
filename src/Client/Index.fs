@@ -7,6 +7,9 @@ open Shared
 open Feliz
 open Feliz.Router
 
+(*******************************************
+*        TYPES
+*******************************************)
 [<RequireQualifiedAccess>]
 type Page =
     | About of About.State
@@ -27,17 +30,6 @@ type Url =
     | NotFound
     | UnexpectedError
 
-let parseUrl =
-    function
-    | [ "about" ] -> Url.About
-    | []
-    | [ "blog" ] -> Url.Blog
-    | [ "blog"; slug: string ] -> Url.BlogEntry slug
-    | [ "lexicon" ] -> Url.Lexicon
-    | [ "search" ] -> Url.Search
-    | [ "500" ] -> Url.UnexpectedError
-    | _ -> Url.NotFound
-
 type State = { CurrentUrl: Url; CurrentPage: Page }
 
 [<RequireQualifiedAccess>]
@@ -48,6 +40,25 @@ type Msg =
     | Lexicon of Lexicon.Msg
     | Search of Search.Msg
     | UrlChanged of Url
+
+(*******************************************
+*        HELPERS
+*******************************************)
+let parseUrl url =
+    match url with
+    | [ "about" ] -> Url.About
+    | []
+    | [ "blog" ] -> Url.Blog
+    | [ "blog"; slug: string ] -> Url.BlogEntry slug
+    | [ "lexicon" ] -> Url.Lexicon
+    | [ "search" ] -> Url.Search
+    | [ "500" ] -> Url.UnexpectedError
+    | _ -> Url.NotFound
+
+let onUrlChanged state dispatch url =
+    match parseUrl url with
+    | url when state.CurrentUrl = url -> ()
+    | url -> url |> Msg.UrlChanged |> dispatch
 
 let pageInitFromUrl url =
     let initializer (state, cmd) pageMapper msgMapper =
@@ -76,6 +87,9 @@ let pageInitFromUrl url =
         },
         Cmd.none
 
+(*******************************************
+*        INIT & UPDATE
+*******************************************)
 let init (): State * Cmd<Msg> =
     Router.currentUrl ()
     |> parseUrl
@@ -99,7 +113,9 @@ let update (msg: Msg) (state: State): State * Cmd<Msg> =
     | Msg.UrlChanged nextUrl, _ -> pageInitFromUrl nextUrl
     | _ -> state, Cmd.none
 
-
+(*******************************************
+*        RENDER
+*******************************************)
 open Fable.React
 
 let render (state: State) (dispatch: Msg -> unit): ReactElement =
@@ -118,7 +134,7 @@ let render (state: State) (dispatch: Msg -> unit): ReactElement =
             prop.children [
                 Navbar.render
                 React.router [
-                    router.onUrlChanged (parseUrl >> Msg.UrlChanged >> dispatch)
+                    router.onUrlChanged (onUrlChanged state dispatch)
                     router.children [ activePage ]
                 ]
             ]

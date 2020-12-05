@@ -82,4 +82,35 @@ let all =
                     // assert
                     Expect.equal state { CurrentUrl = url; CurrentPage = expectedPageState } "States should be equal."
 
+            testCase "Index.onUrlChanged doesNothing when current and new urls are equal."
+            <| fun _ ->
+                // arrange
+                let mutable dispatchWasCalled = false
+                let dispatch = fun _ ->
+                        dispatchWasCalled <- true
+
+                let url = [ "about" ]
+                let state = { CurrentUrl = Url.About; CurrentPage = Page.NotFound }
+
+                // act
+                onUrlChanged state dispatch url
+
+                // assert
+                Expect.isFalse dispatchWasCalled "Dispatch should not have been called."
+
+            testCase "Index.onUrlChanged calls dispatch with correct message when current and new urls differ."
+            <| fun _ ->
+                // arrange
+                let url = [ "about" ]
+                let state = { CurrentUrl = Url.NotFound; CurrentPage = Page.NotFound }
+
+                let mutable conditionsMet = false
+                let dispatch = fun msg ->
+                        conditionsMet <- msg = (Msg.UrlChanged Url.About)
+
+                // act
+                onUrlChanged state dispatch url
+
+                // assert
+                Expect.isTrue conditionsMet "Dispatch should have been called with correct Msg."
         ]
