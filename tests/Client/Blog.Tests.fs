@@ -1,6 +1,6 @@
 ﻿module BlogTests
 
-open Client.Pages
+open System
 open Client.Pages.Blog
 open Fable.Mocha
 open Shared
@@ -11,7 +11,7 @@ let all =
             testCase "Blog.init sets State.Entries to InProgress"
             <| fun _ ->
                 // act
-                let result = Blog.init () |> fst
+                let result = init () |> fst
 
                 // assert
                 Expect.equal result.Entries Deferred.InProgress "Result should be InProgress."
@@ -24,12 +24,24 @@ let all =
                 let state = { Entries = InProgress }
 
                 // act
-                let result = Blog.update msg state |> fst
+                let result = update msg state |> fst
 
                 // arrange
                 match result.Entries with
                 | Resolved entries' ->
                     Expect.equal entries' entries "result.Entries is Resolved."
                 | _ -> failwith "result.Entries was not Resolved."
+
+            testCase "Blog.update - ApiError doesn't change state"
+            <| fun _ ->
+                // arrange
+                let msg = Exception() |> Msg.ApiError
+                let state = { Entries = InProgress }
+
+                // act
+                let result = update msg state |> fst
+
+                // arrange
+                Expect.equal result state "State is unchanged."
 
         ]
