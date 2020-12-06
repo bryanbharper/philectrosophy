@@ -18,13 +18,15 @@ let all =
 
                 let testParams =
                     [
+                        ([ "about" ], Url.About)
                         ([], Url.Blog)
                         ([ "blog" ], Url.Blog)
-                        ([ "blog"; slug ], Url.BlogEntry slug)
+                        ([ "blog"; slug ], Url.BlogEntry "some-slug")
                         ([ "lexicon" ], Url.Lexicon)
-                        ([ "about" ], Url.About)
+                        ([ "not-found" ], Url.NotFound)
                         ([ "search" ], Url.Search)
                         ([ "tac-o-cat" ], Url.NotFound)
+                        ([ "500" ], Url.UnexpectedError)
                     ]
 
                 for url, page in testParams do

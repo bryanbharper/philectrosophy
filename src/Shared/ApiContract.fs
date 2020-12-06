@@ -3,6 +3,7 @@
 type IBlogApi =
     {
         GetEntries: unit -> Async<BlogEntry list>
+        GetEntry: string -> Async<Option<BlogEntry * string>>
     }
 
 module Route =

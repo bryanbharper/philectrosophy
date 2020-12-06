@@ -11,6 +11,7 @@ type BlogEntry =
         Tags: string option
         ThumbNailUrl: string
         Title: string
+        Subtitle: string
         UpdatedOn: DateTime option
     }
 
@@ -25,5 +26,6 @@ module BlogEntry =
             Tags = None
             ThumbNailUrl = "https://picsum.photos/100/100"
             Title = title
+            Subtitle = "SUB " + title
             UpdatedOn = None
         }

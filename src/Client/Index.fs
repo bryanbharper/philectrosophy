@@ -51,6 +51,7 @@ let parseUrl url =
     | [ "blog" ] -> Url.Blog
     | [ "blog"; slug: string ] -> Url.BlogEntry slug
     | [ "lexicon" ] -> Url.Lexicon
+    | [ "not-found" ] -> Url.NotFound
     | [ "search" ] -> Url.Search
     | [ "500" ] -> Url.UnexpectedError
     | _ -> Url.NotFound

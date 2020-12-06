@@ -37,7 +37,7 @@ let renderEntry dispatch entry =
 
     let subTitle =
         let creationDate =
-            entry.CreatedOn.ToString("dddd, dd MMMM yyyy")
+            entry.CreatedOn.ToString("dd-MMMM-yyyy")
 
         Html.p [
             prop.classes [

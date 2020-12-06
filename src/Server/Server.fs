@@ -3,13 +3,16 @@ module Server
 open Data
 open Fable.Remoting.Server
 open Fable.Remoting.Giraffe
+open File
 open Microsoft.Extensions.DependencyInjection
 open Saturn
 
 open Shared
 
 let configureServices (services : IServiceCollection) =
-    services.AddSingleton<IRepository, InMemoryRepository>()
+    services
+        .AddSingleton<IRepository, InMemoryRepository>()
+        .AddSingleton<IFileStore, StubFileStore>()
 
 let webApp =
     Remoting.createApi()

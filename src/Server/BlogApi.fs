@@ -1,17 +1,29 @@
 ﻿module BlogApi
 
+open System
 open Data
-open Microsoft.Extensions.Logging
+open File
 open Shared
 
-let getEntriesAsync (repo: IRepository) (log: ILogger) =
-      repo.GetBlogEntriesAsync()
+let getEntriesAsync (repo: IRepository) = repo.GetBlogEntriesAsync()
+
+let getEntryAsync (repo: IRepository) (file: IFileStore) slug =
+    async {
+        let! metadata = repo.GetBlogEntry slug
+        let! content = file.GetBlogEntryContent slug
+
+        return match metadata, content with
+               | Some m, Some c -> Some(m, c)
+               | _ -> None
+    }
 
 let blogApiReader =
     reader {
-        let! repo = resolve<IRepository>()
-        let! log = resolve<ILogger>()
+        let! repo = resolve<IRepository> ()
+        let! file = resolve<IFileStore> ()
+
         return {
-            GetEntries = fun () -> getEntriesAsync repo log
-        }
+                   GetEntries = fun () -> getEntriesAsync repo
+                   GetEntry = fun slug -> getEntryAsync repo file slug
+               }
     }
