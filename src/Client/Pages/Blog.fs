@@ -56,7 +56,7 @@ let renderEntry dispatch entry =
 
     Html.div [
         prop.classes [ Style.Clickable; "mb-6" ]
-        prop.onClick (fun _ -> printf "Media was clicked")
+        prop.onClick (fun _ -> ("blog", entry.Slug) |> Router.navigate)
         prop.children media
     ]
 
