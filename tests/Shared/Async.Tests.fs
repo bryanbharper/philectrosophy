@@ -51,17 +51,6 @@ let all = testList "String" [
     properties
 #endif
 
-//    testCase "String.contains returns true when characters are contained."
-//    <| fun _ ->
-//        // arrange
-//        let contained = "happily tuesday for brunch"
-//        let input = "mix doggo" + contained + "fried fish"
-//
-//        // act
-//        let result = input |> String.contains contained
-//
-//        // act
-//        Expect.isTrue result "The result should be true."
 
 ]
 

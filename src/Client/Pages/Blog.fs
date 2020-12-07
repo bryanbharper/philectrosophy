@@ -36,16 +36,14 @@ let renderEntry dispatch entry =
         ]
 
     let subTitle =
-        let creationDate =
-            entry.CreatedOn.ToString("dd-MMMM-yyyy")
-
         Html.p [
             prop.classes [
                 Bulma.Subtitle
                 Bulma.Is6
                 Bulma.HasTextGreyLight
+                Bulma.IsItalic
             ]
-            prop.text (sprintf "Posted by %s on %s" entry.Author creationDate)
+            prop.text (sprintf "Posted by %s on %s" entry.Author (Date.format entry.CreatedOn))
         ]
 
     let synopsis = Html.p entry.Synopsis

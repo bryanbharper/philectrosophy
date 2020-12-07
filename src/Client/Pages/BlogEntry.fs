@@ -47,9 +47,6 @@ let update (msg: Msg) (state: State): State * Cmd<Msg> =
         { state with Entry = Resolved entry }, Cmd.none
 
 let header metadata =
-    let creationDate =
-        metadata.CreatedOn.ToString("dd-MMMM-yyyy")
-
     [
         Html.p [
             prop.classes [ Bulma.Title; Bulma.Is2 ]
@@ -68,8 +65,9 @@ let header metadata =
                 Bulma.Subtitle
                 Bulma.Is5
                 Bulma.HasTextGreyLight
+                Bulma.IsItalic
             ]
-            prop.text (sprintf "Posted by %s on %s" metadata.Author creationDate)
+            prop.text (sprintf "Posted by %s on %s" metadata.Author (Date.format metadata.CreatedOn))
         ]
         Html.hr []
     ]

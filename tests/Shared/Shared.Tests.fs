@@ -7,7 +7,6 @@ open Expecto
 #endif
 
 open Shared
-open FsCheck
 
 #if !FABLE_COMPILER
 let routeProperty =
@@ -39,6 +38,7 @@ let all = testList "Shared" [
     StringTests.all
     DomainModelsTests.all
     AsyncTests.all
+    DateTests.all
     route
 
 #if !FABLE_COMPILER
