@@ -1,3 +1,67 @@
 ﻿.clickable {
     cursor: pointer
 }
+
+.markdown h1 {
+    display: block;
+    font-size: 2em;
+    margin: 0.67em 0;
+    font-weight: bold;
+}
+
+.markdown h2 {
+    display: block;
+    font-size: 1.5em;
+    margin: 0.83em 0;
+    font-weight: bold;
+}
+
+.markdown h3 {
+    display: block;
+    font-size: 1.17em;
+    margin: 1em 0;
+    font-weight: bold;
+}
+
+.markdown h4 {
+    display: block;
+    margin: 1.33em 0;
+    font-weight: bold;
+}
+
+.markdown h5 {
+    display: block;
+    font-size: .83em;
+    margin: 1.67em 0;
+    font-weight: bold;
+}
+
+.markdown h6 {
+    display: block;
+    font-size: .67em;
+    margin: 2.33em 0;
+    font-weight: bold;
+}
+
+.markdown ul {
+    display: block;
+    list-style-type: disc;
+    margin: 1em 0;
+    padding-left: 40px;
+}
+
+.markdown ol {
+    display: block;
+    list-style-type: decimal;
+    margin: 1em 0;
+    padding-left: 40px;
+}
+
+.markdown li {
+    display: list-item;
+}
+
+.markdown p {
+    display: block;
+    margin: 1em 0;
+}

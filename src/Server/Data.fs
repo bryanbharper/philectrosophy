@@ -4,7 +4,7 @@ open Shared
 
 type IRepository =
     abstract GetBlogEntriesAsync: unit -> Async<BlogEntry list>
-    abstract GetBlogEntry: string -> Async<BlogEntry option>
+    abstract GetBlogEntryAsync: string -> Async<BlogEntry option>
 
 type InMemoryRepository() =
     let entries =
@@ -19,11 +19,9 @@ type InMemoryRepository() =
 
     interface IRepository with
 
-        member this.GetBlogEntriesAsync() =
-            entries
-            |> async.Return
+        member this.GetBlogEntriesAsync() = entries |> async.Return
 
-        member this.GetBlogEntry slug =
+        member this.GetBlogEntryAsync slug =
             entries
             |> List.tryFind (fun e -> e.Slug = slug)
             |> async.Return

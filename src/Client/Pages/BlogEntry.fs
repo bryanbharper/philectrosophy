@@ -74,7 +74,21 @@ let header metadata =
     |> Html.div
 
 
-let content (content: string) = Html.p content
+let content (content: string) =
+    Html.div [
+        prop.className Style.Markdown
+        prop.children
+            [
+                Markdown.render [
+                    Markdown.Content content
+                    Markdown.Options [
+                        Markdown.LangPrefix "hljs"
+                        Markdown.GithubFlavoured
+                    ]
+                ]
+            ]
+    ]
+
 
 let render (state: State) (dispatch: Msg -> unit): ReactElement =
     Section.render

@@ -22,9 +22,7 @@ let all =
                     ]
 
                 let repo =
-                    Mock<IRepository>()
-                        .Setup(fun r -> <@ r.GetBlogEntriesAsync() @>)
-                        .Returns(entries |> async.Return)
+                    Mock<IRepository>().Setup(fun r -> <@ r.GetBlogEntriesAsync() @>).Returns(entries |> async.Return)
                         .Create()
 
                 // act
@@ -43,16 +41,12 @@ let all =
                 let expectedContent = "blah blah blah blather blither"
 
                 let repo =
-                    Mock<IRepository>()
-                        .Setup(fun x -> <@ x.GetBlogEntry slug @>)
-                        .Returns(Some entry |> async.Return)
-                        .Create()
+                    Mock<IRepository>().Setup(fun x -> <@ x.GetBlogEntryAsync slug @>)
+                        .Returns(Some entry |> async.Return).Create()
 
                 let file =
-                    Mock<IFileStore>()
-                        .Setup(fun f -> <@ f.GetBlogEntryContent slug @>)
-                        .Returns(expectedContent |> Some |> async.Return)
-                        .Create()
+                    Mock<IFileStore>().Setup(fun f -> <@ f.GetBlogEntryContentAsync slug @>)
+                        .Returns(expectedContent |> Some |> async.Return).Create()
 
                 // act
                 let result =
@@ -72,14 +66,11 @@ let all =
                 let slug = "some-slug"
 
                 let repo =
-                    Mock<IRepository>()
-                        .Setup(fun x -> <@ x.GetBlogEntry slug @>)
-                        .Returns(None |> async.Return)
+                    Mock<IRepository>().Setup(fun x -> <@ x.GetBlogEntryAsync slug @>).Returns(None |> async.Return)
                         .Create()
 
                 let file =
-                    Mock<IFileStore>()
-                        .Setup(fun f -> <@ f.GetBlogEntryContent slug @>)
+                    Mock<IFileStore>().Setup(fun f -> <@ f.GetBlogEntryContentAsync slug @>)
                         .Returns("blah" |> Some |> async.Return).Create()
 
                 // act
@@ -96,14 +87,11 @@ let all =
                 let slug = "some-slug"
 
                 let repo =
-                    Mock<IRepository>()
-                        .Setup(fun x -> <@ x.GetBlogEntry slug @>)
-                        .Returns("blah" |> BlogEntry.create |> Some |> async.Return)
-                        .Create()
+                    Mock<IRepository>().Setup(fun x -> <@ x.GetBlogEntryAsync slug @>)
+                        .Returns("blah" |> BlogEntry.create |> Some |> async.Return).Create()
 
                 let file =
-                    Mock<IFileStore>()
-                        .Setup(fun f -> <@ f.GetBlogEntryContent slug @>)
+                    Mock<IFileStore>().Setup(fun f -> <@ f.GetBlogEntryContentAsync slug @>)
                         .Returns(None |> async.Return).Create()
 
                 // act

@@ -7,6 +7,7 @@ let all =
         [
             Shared.Tests.all
             BlogApiTests.all
+            FileTests.all
         ]
 
 [<EntryPoint>]

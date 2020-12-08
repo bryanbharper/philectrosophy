@@ -36,6 +36,7 @@
     },
     "dependencies": {
         "fable-splitter": "^2.2.1",
-        "mocha": "^8.2.1"
+        "mocha": "^8.2.1",
+        "react-marked-markdown": "^1.4.6"
     }
 }
