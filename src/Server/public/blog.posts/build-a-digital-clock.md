@@ -30,7 +30,7 @@ Here's a list of functions a digital clock must perform:
 * Adjust the 'current' time through user interaction.
 
 To realize these functions electronically, we will need the following types of logic circuits and electronic elements:
-* A Clock Signal — like the pendulum in an analog clock, something needs to be the "heartbeat" of our * digital clock.
+* A Clock Signal — like the pendulum in an analog clock, something needs to be the "heartbeat" of our digital clock.
 * Counters — circuits that count each passing time interval (seconds, minutes, hours) in binary.
 * 7-Segment Displays — to display the time (other types of display would suffice, but these are common and easy to use).
 * Decoders — a circuit which translates binary number signals to 7-segment display inputs.
@@ -38,7 +38,7 @@ To realize these functions electronically, we will need the following types of l
 
 With all this in mind, a diagrammatic representation of our digital clock might be as follows:
 
-![digital-clock-design-big-picture](./img/digital-clock-big-picture-design-700x367.png)
+![digital-clock-design-big-picture](img/diagrammatic-outline-of-digital-clock-design.png)
 
 There are four 7-segment displays — two displays represent each digit of the hour, and two others display each minute digit. For clarity, let's denote the most significant hour digit as H&#x2081; and the least significant hour digit as *H&#x2080;*. Likewise for the minutes (i.e, *M&#x2081;* and  *M&#x2080;*).
 
@@ -55,7 +55,7 @@ A counter circuit is a [sequential logic]() circuit. Thus, we could design [sync
 
 Generally, a sequential circuit requires the use of *flip-flops*. For our design, I have chosen to use *T* (or toggle) flip-flops. (The choice of flip-flop is, to a degree, arbitrary, as various flip-flops can be constructed from one another. However, certain pragmatic concerns may make one the better option. I have chosen T flip-flops simply because I like them).
 
-![t-flip-flop-diagrams-and-table](./img/t-flip-flop-diagram-and-table-horizontal.gif)
+![t-flip-flop-diagrams-and-table](img/t-flip-flop-diagrams-and-table.gif)
 
 The T flip-flop's logic circuit, block diagram, and excitation table are shown above. When the *T* input of the the T flip-flop is '1' (true or high), the current state of the flip flop, *Q*, toggles to its logical opposite on each clock pulse. If the *T* input is '0' (false or low) the state of the flip-flop is unchanged. Lastly, if the *Preset* or *Reset* inputs are '1', the state will asynchrnously (i.e., instantly, irrespective of *clk*) become '1' or '0' respectively.
 
@@ -101,7 +101,7 @@ If you aren't already doing so, [download][1] this free software to construct yo
 
 Consider the 4 bit counting sequence below. Note that Q&#x2081; changes exactly half as often as Q&#x2080;, Q&#x2082; changes half as often as Q&#x2081;, and so on.
 
-![async-0-9-counter-bit-sequence](./img/async-0-9-counter-bit-sequence.png)
+![async-0-9-counter-bit-sequence](img/async-0-9-counter-bit-sequence.png)
 
 Now, if each Q&#8342; is the output of a T flip-flop, consider when it would be necessary that the corresponding clock signal *clk*&#8342; triggers. The timing diagram is shown below. Again we see that *clk*&#x2081; changes exactly half as often as *clk*&#x2080;, *clk*&#x2082; half as often as *clk*&#x2081;, and so on. This makes sense because a flip-flop can only change on a clock signal (ignoring the *Preset* and *Reset* inputs).
 

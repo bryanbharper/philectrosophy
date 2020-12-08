@@ -16,11 +16,9 @@
     </ItemGroup>
     <Import Project="..\..\.paket\Paket.Restore.targets" />
     <ItemGroup>
-        <Content Include="public\**">
+        <Content Include="public\**" Exclude="public\blog.posts\img\**">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
-    </ItemGroup>
-    <ItemGroup>
-      <Folder Include="public\blog.posts\img" />
+        <Content Include="public\blog.posts\img\**" />
     </ItemGroup>
 </Project>

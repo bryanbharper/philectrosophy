@@ -17,6 +17,9 @@ let serverPath = Path.getFullName "./src/Server"
 let deployDir = Path.getFullName "./deploy"
 let sharedTestsPath = Path.getFullName "./tests/Shared"
 let serverTestsPath = Path.getFullName "./tests/Server"
+let blogImagePath =
+    Path.getFullName "./src/Server/public/blog.posts/img"
+let clientPublicDir = Path.getFullName "./src/Client/public"
 
 // Helpers
 let buildRawCmd cmd args workingDir =
@@ -57,6 +60,11 @@ Target.create "Clean"
 <| fun _ ->
     "Clean Deploy Directory" |> printSection
     Shell.cleanDir deployDir
+
+Target.create "BlogImages"
+<| fun _ ->
+    "Moving blog images to client." |> printSection
+    Shell.copyDir (Path.combine clientPublicDir "img") blogImagePath (fun _ -> true)
 
 Target.create "InstallClient"
 <| fun _ ->
@@ -132,11 +140,15 @@ Target.create "List"
 open Fake.Core.TargetOperators
 
 "Clean"
-    ==> "InstallClient"
-    ==> "Bundle"
-    ==> "Azure"
+==> "InstallClient"
+==> "BlogImages"
+==> "Bundle"
+==> "Azure"
 
-"Clean" ==> "InstallClient" ==> "Run"
+"Clean"
+==> "InstallClient"
+==> "BlogImages"
+==> "Run"
 
 "Clean"
 ==> "InstallClient"

@@ -24,3 +24,6 @@ release.sh
 # Misc
 *.orig
 *.DotSettings.user
+
+# Copied images
+src/Client/public/img/
