@@ -75,18 +75,12 @@ let header metadata =
 
 
 let content (content: string) =
-    Html.div [
-        prop.className Style.Markdown
-        prop.children
-            [
-                Markdown.render [
-                    Markdown.Content content
-                    Markdown.Options [
-                        Markdown.LangPrefix "hljs"
-                        Markdown.GithubFlavoured
-                    ]
-                ]
-            ]
+   Markdown.render [
+        Markdown.Content content
+        Markdown.Options [
+            Markdown.LangPrefix "hljs"
+            Markdown.GithubFlavoured
+        ]
     ]
 
 

@@ -4,6 +4,8 @@ open Fable.Core
 open Fable.Core.JsInterop
 open Fable.React.Props
 open Fable.React.Helpers
+open Feliz
+open Styles
 
 type IMarkedOptions =
     | [<CompiledName("gfc")>] GithubFlavoured
@@ -21,4 +23,10 @@ type IMarkedProps =
     interface IHTMLProp
 
 let render (props: IHTMLProp list) =
-    ofImport "MarkdownPreview" "react-marked-markdown" (keyValueList CaseRules.LowerFirst props) []
+    Html.div [
+        prop.className Style.Markdown
+        prop.children
+            [
+                ofImport "MarkdownPreview" "react-marked-markdown" (keyValueList CaseRules.LowerFirst props) []
+        ]
+    ]
