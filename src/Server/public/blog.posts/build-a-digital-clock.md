@@ -55,7 +55,7 @@ A counter circuit is a [sequential logic]() circuit. Thus, we could design [sync
 
 Generally, a sequential circuit requires the use of *flip-flops*. For our design, I have chosen to use *T* (or toggle) flip-flops. (The choice of flip-flop is, to a degree, arbitrary, as various flip-flops can be constructed from one another. However, certain pragmatic concerns may make one the better option. I have chosen T flip-flops simply because I like them).
 
-![t-flip-flop-diagrams-and-table](img/t-flip-flop-diagrams-and-table.gif)
+![t-flip-flop-diagrams-and-table](img/t-flip-flop-diagrams-and-table-horizontal.gif)
 
 The T flip-flop's logic circuit, block diagram, and excitation table are shown above. When the *T* input of the the T flip-flop is '1' (true or high), the current state of the flip flop, *Q*, toggles to its logical opposite on each clock pulse. If the *T* input is '0' (false or low) the state of the flip-flop is unchanged. Lastly, if the *Preset* or *Reset* inputs are '1', the state will asynchrnously (i.e., instantly, irrespective of *clk*) become '1' or '0' respectively.
 
@@ -87,7 +87,7 @@ The resulting equations are as follows:
 
 A similar analysis yields the function for the output clk signal:
 
-![0-9-clock-out](https://latex.codecogs.com/gif.latex?\text{Clk&space;Out}&space;=&space;\overline{Q_3}&space;\,&space;\overline{Q_2}&space;\,&space;\overline{Q_1}&space;\,&space;\overline{Q_0})
+![0-9-clock-out](https://latex.codecogs.com/gif.latex?%5Ctext%7BClk%20Out%7D%20%3D%20%5Coverline%7BQ_3%7D%20%5C%2C%20%5Coverline%7BQ_2%7D%5C%2C%20%5Coverline%7BQ_1%7D%20%5C%2C%20%5Coverline%7BQ_0%7D)
 
 All that is left to do is to implement these equations into a logic circuit with our four flip-flops (below).
 
@@ -113,12 +113,13 @@ If we overlay these two images, we see that there is an inherent symmetry at wor
 
 We can utilize that symmetry to greatly simply our counter design. By simply making the output of each Q&#8342; the input of the subsequent *clk*&#8342;&#8330;&#x2081; we create a 1 - 15&#x2081;&#x2080; counter!
 
+![4-bit-asynchrnous-counter](img/4-bit-asynchrnous-counter.gif)
+
 This is nice and all, but of course we don't actually want to count all the way up to 15&#x2081;&#x2080;. Rather, we want to reset back to 0&#x2081;&#x2080; after we've reached 9&#x2081;&#x2080;.
 
 The solution is simple! We simply need to set each *Reset*&#8342; to '1' at the appropriate moment. In this case, that moment would be the instance our circuit tries to count to 10&#x2081;&#x2080;.
 
 Utilizing a truth table (below) with the properties specified above, and some Karnaugh minimization we can derive the requisite boolean function for the Reset inputs:
-<!-- *Reset = Q&#x2083;Q&#x2081;* -->
 
 ![async-0-9-counter-truth-table](img/async-0-9-counter-truth-table.png) ![Reset Eq](https://latex.codecogs.com/gif.latex?\text{Reset}&space;=&space;Q_3Q_1)
 
@@ -135,7 +136,7 @@ The procedure here is exactly like before. The only notable difference is that i
 
 ![async-complete-0-5-counter-circuit](img/async-complete-0-5-counter-circuit.gif)
 
-## The 0-5 Counter:
+## The 1-12 Counter:
 Recall from [The Big Picture](#the-big-picture) that the H&#x2081; and H&#x2080; digits are together driven by a single counter, whereas the M&#x2081; and M&#x2080; were individually driven by two separate counters. Why have I designed it this way?
 
 Well, imagine for a moment designing the hour counters such that one counter drove H&#x2081; and another drove H&#x2080;, as we did with the minutes. This would require the H&#x2080; counter to count from 1 to 9, then from 1 to 2 (and repeat). And the H&#x2081; counter would have to count from 0 to 1, but at irregular intervals. These would make for some pretty unwieldy circuits. Counters like this *could* be built (probably synchronously), but it would be a somewhat awkward and confusing procedure. And why bother with that?
@@ -167,7 +168,7 @@ Decoders use [Combinational Logic](). So, we'll need a truth table. *(Note: I ap
 
 In order to fill out the truth table, it helps have on hand which segments need to be illuminated in order to represent each number:
 
-![number-to-segment-eq](https://latex.codecogs.com/gif.latex?%5Cbegin%7Balign*%7D%209_10%20%26%3D%20ABCDFG%20%5C%5C%208_10%20%26%3D%20ABCDEFG%20%5C%5C%207_10%20%26%3D%20ABC%20%5C%5C%206_10%20%26%3D%20ACDEFG%20%5C%5C%205_10%20%26%3D%20ACDFG%20%5C%5C%204_10%20%26%3D%20BCFG%20%5C%5C%203_10%20%26%3D%20ABCDG%20%5C%5C%202_10%20%26%3D%20ABDEG%20%5C%5C%201_10%20%26%3D%20BC%20%5C%5C%200_10%20%26%3D%20ABCDF%20%5Cend%7Balign*%7D)
+![number-to-segment-eq](https://latex.codecogs.com/gif.latex?%5Cbegin%7Balign*%7D%209_%7B10%7D%20%26%3D%20ABCDFG%20%5C%5C%208_%7B10%7D%20%26%3D%20ABCDEFG%20%5C%5C%207_%7B10%7D%20%26%3D%20ABC%20%5C%5C%206_%7B10%7D%20%26%3D%20ACDEFG%20%5C%5C%205_%7B10%7D%20%26%3D%20ACDFG%20%5C%5C%204_%7B10%7D%20%26%3D%20BCFG%20%5C%5C%203_%7B10%7D%20%26%3D%20ABCDG%20%5C%5C%202_%7B10%7D%20%26%3D%20ABDEG%20%5C%5C%201_%7B10%7D%20%26%3D%20BC%20%5C%5C%200_%7B10%7D%20%26%3D%20ABCDF%20%5Cend%7Balign*%7D)
 
 Each input to the decoder I&#x2083;, I&#x2082;, I&#x2081;, and I&#x2080; corresponds to the outputs of the counter, Q&#x2083;, Q&#x2082; etc..
 
