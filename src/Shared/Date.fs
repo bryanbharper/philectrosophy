@@ -1,4 +1,4 @@
-﻿module Date
+﻿namespace Shared
 
 open System
 
@@ -24,35 +24,35 @@ type DayInt =
 
     member d.ToInt32() = let (DInt i) = d in i
 
-let monthName (mInt: MonthInt): string =
-    match mInt with
-    | MInt 1 -> "January"
-    | MInt 2 -> "February "
-    | MInt 3 -> "March"
-    | MInt 4 -> "April"
-    | MInt 5 -> "May"
-    | MInt 6 -> "June"
-    | MInt 7 -> "July"
-    | MInt 8 -> "August"
-    | MInt 9 -> "September"
-    | MInt 10 -> "October"
-    | MInt 11 -> "November"
-    | MInt 12 -> "December"
-    | _ -> failwith "mInt must be a value from 1-12"
+module Date =
+    let monthName (mInt: MonthInt): string =
+        match mInt with
+        | MInt 1 -> "January"
+        | MInt 2 -> "February "
+        | MInt 3 -> "March"
+        | MInt 4 -> "April"
+        | MInt 5 -> "May"
+        | MInt 6 -> "June"
+        | MInt 7 -> "July"
+        | MInt 8 -> "August"
+        | MInt 9 -> "September"
+        | MInt 10 -> "October"
+        | MInt 11 -> "November"
+        | MInt 12 -> "December"
+        | _ -> failwith "mInt must be a value from 1-12"
 
-let daySuffix (dInt: DayInt): string =
-    let (DInt i) = dInt
-    match i % 10 with
-    | 1 -> "st"
-    | 2 -> "nd"
-    | 3 -> "rd"
-    | _ -> "th"
+    let daySuffix (dInt: DayInt): string =
+        let (DInt i) = dInt
+        match i % 10 with
+        | 1 -> "st"
+        | 2 -> "nd"
+        | 3 -> "rd"
+        | _ -> "th"
 
-let format (date: DateTime): string =
-    let month =
-        date.Month |> MonthInt.create |> monthName
+    let format (date: DateTime): string =
+        let month =
+            date.Month |> MonthInt.create |> monthName
 
-    let daySuffix =
-        date.Day |> DayInt.create |> daySuffix
+        let daySuffix = date.Day |> DayInt.create |> daySuffix
 
-    sprintf "%i%s %s %i" date.Day daySuffix month date.Year
+        sprintf "%i%s %s %i" date.Day daySuffix month date.Year

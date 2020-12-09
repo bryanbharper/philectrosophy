@@ -10,5 +10,6 @@
     <Compile Include="Date.fs" />
     <Compile Include="DomainModels.fs" />
     <Compile Include="ApiContract.fs" />
+    <Compile Include="Tuple.fs" />
   </ItemGroup>
 </Project>

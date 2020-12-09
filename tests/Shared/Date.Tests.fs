@@ -7,7 +7,7 @@ open Expecto
 #endif
 
 open System
-open Date
+open Shared
 open FsCheck
 
 let months =

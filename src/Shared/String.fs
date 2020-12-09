@@ -1,7 +1,5 @@
 ﻿namespace Shared
 
-open System
-
 module String =
 
     let contains (contained: string) (container: string) =
