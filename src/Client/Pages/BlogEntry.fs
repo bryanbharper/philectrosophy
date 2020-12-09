@@ -6,6 +6,7 @@ open Elmish
 open Fable.Remoting.Client
 open Feliz
 open Feliz.Router
+open Fulma
 open Shared
 open Styles
 
@@ -75,7 +76,7 @@ let header metadata =
 
 
 let content (content: string) =
-   Markdown.render [
+    Markdown.render [
         Markdown.Content content
         Markdown.Options [
             Markdown.LangPrefix "hljs"
@@ -83,17 +84,32 @@ let content (content: string) =
         ]
     ]
 
-
-let render (state: State) (dispatch: Msg -> unit): ReactElement =
+let layout (contents: ReactElement list) =
     Section.render
         [
-            Container.render
-                [
-                    match state.Entry with
-                    | Idle -> Html.none
-                    | InProgress -> Spinner.render
-                    | Resolved entry ->
-                        header entry.Metadata
-                        content entry.Content
-                ]
+            Html.div [
+                prop.className Bulma.Columns
+                prop.children
+                    [
+                        Html.div [
+                            prop.classes [
+                                Bulma.Column
+                                Bulma.IsOffsetOneQuarter
+                                Bulma.IsHalf
+                            ]
+                            prop.children contents
+                        ]
+                    ]
+            ]
+        ]
+
+let render (state: State) (dispatch: Msg -> unit): ReactElement =
+    layout
+        [
+            match state.Entry with
+            | Idle -> Html.none
+            | InProgress -> Spinner.render
+            | Resolved entry ->
+                header entry.Metadata
+                content entry.Content
         ]
