@@ -1,28 +1,21 @@
 ﻿module File
 
+type IFileAccess =
+    abstract ReadFileAsync: string -> Async<string option>
 
-type IFileStore =
+type IBlogContentStore =
     abstract GetBlogEntryContentAsync: string -> Async<string option>
 
-type StubFileStore() =
-
-    interface IFileStore with
-
-        member this.GetBlogEntryContentAsync slug =
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-            |> Some
-            |> async.Return
 
 open Shared
 open System.IO
 
 type PublicFileStore() =
 
-    interface IFileStore with
+    interface IFileAccess with
 
-        member this.GetBlogEntryContentAsync slug =
-            let filename = sprintf "public/blog.posts/%s.md" slug
-            let fileInfo = FileInfo filename
+        member this.ReadFileAsync fullName =
+            let fileInfo = FileInfo fullName
 
             if fileInfo.Exists then
                 File.ReadAllTextAsync(fileInfo.FullName)
@@ -30,3 +23,11 @@ type PublicFileStore() =
                 |> Async.map (fun s -> Some s)
             else
                 None |> async.Return
+
+type BlogContentStore(fileAccess: IFileAccess) =
+
+    interface IBlogContentStore with
+
+        member this.GetBlogEntryContentAsync slug =
+            sprintf "public/blog.posts/%s.md" slug
+            |> fileAccess.ReadFileAsync

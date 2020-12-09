@@ -12,7 +12,8 @@ open Shared
 let configureServices (services : IServiceCollection) =
     services
         .AddSingleton<IRepository, InMemoryRepository>()
-        .AddSingleton<IFileStore, PublicFileStore>()
+        .AddSingleton<IFileAccess, PublicFileStore>()
+        .AddSingleton<IBlogContentStore, BlogContentStore>()
 
 let webApp =
     Remoting.createApi()

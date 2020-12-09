@@ -45,7 +45,7 @@ let all =
                         .Returns(Some entry |> async.Return).Create()
 
                 let file =
-                    Mock<IFileStore>().Setup(fun f -> <@ f.GetBlogEntryContentAsync slug @>)
+                    Mock<IBlogContentStore>().Setup(fun f -> <@ f.GetBlogEntryContentAsync slug @>)
                         .Returns(expectedContent |> Some |> async.Return).Create()
 
                 // act
@@ -70,7 +70,7 @@ let all =
                         .Create()
 
                 let file =
-                    Mock<IFileStore>().Setup(fun f -> <@ f.GetBlogEntryContentAsync slug @>)
+                    Mock<IBlogContentStore>().Setup(fun f -> <@ f.GetBlogEntryContentAsync slug @>)
                         .Returns("blah" |> Some |> async.Return).Create()
 
                 // act
@@ -91,7 +91,7 @@ let all =
                         .Returns("blah" |> BlogEntry.create |> Some |> async.Return).Create()
 
                 let file =
-                    Mock<IFileStore>().Setup(fun f -> <@ f.GetBlogEntryContentAsync slug @>)
+                    Mock<IBlogContentStore>().Setup(fun f -> <@ f.GetBlogEntryContentAsync slug @>)
                         .Returns(None |> async.Return).Create()
 
                 // act

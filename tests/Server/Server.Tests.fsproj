@@ -8,6 +8,7 @@
         <Compile Include="File.Tests.fs" />
         <Compile Include="BlogApi.Tests.fs" />
         <Compile Include="Server.Tests.fs" />
+        <Content Include="test-files\test.txt" />
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\..\src\Server\Server.fsproj" />
