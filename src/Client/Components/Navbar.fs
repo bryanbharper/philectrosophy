@@ -6,7 +6,7 @@ open Styles
 
 let private nav (children: ReactElement list): ReactElement =
     [
-        prop.className Bulma.Navbar
+        prop.className [ Bulma.Navbar; Bulma.IsFixedTop ]
         prop.role "navigation"
         prop.ariaLabel "main navigation"
         prop.children children
