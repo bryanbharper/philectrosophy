@@ -1,12 +1,11 @@
 ﻿module Client.Pages.BlogEntry
 
 open Client.Components
-open Client.Components.Layout
 open Elmish
 open Fable.Remoting.Client
 open Feliz
+open Feliz.Bulma
 open Feliz.Router
-open Fulma
 open Shared
 open Styles
 
@@ -49,22 +48,15 @@ let update (msg: Msg) (state: State): State * Cmd<Msg> =
 
 let header metadata =
     [
-        Html.p [
-            prop.classes [ Bulma.Title; Bulma.Is2 ]
+        Bulma.title.h2 [
             prop.text metadata.Title
         ]
-        Html.p [
-            prop.classes [
-                Bulma.Subtitle
-                Bulma.Is3
-                Bulma.HasTextGrey
-            ]
+        Bulma.subtitle.h4 [
+            prop.classes [ Bulma.HasTextGrey ]
             prop.text metadata.Subtitle
         ]
-        Html.p [
+        Bulma.subtitle.h6 [
             prop.classes [
-                Bulma.Subtitle
-                Bulma.Is5
                 Bulma.HasTextGreyLight
                 Bulma.IsItalic
             ]
@@ -85,31 +77,23 @@ let content (content: string) =
     ]
 
 let layout (contents: ReactElement list) =
-    Section.render
-        [
-            Html.div [
-                prop.className Bulma.Columns
-                prop.children
-                    [
-                        Html.div [
-                            prop.classes [
-                                Bulma.Column
-                                Bulma.IsOffsetOneQuarter
-                                Bulma.IsHalf
-                            ]
-                            prop.children contents
-                        ]
-                    ]
+    Bulma.section [
+        Bulma.columns [
+            Bulma.column [
+                column.isOffsetOneQuarter
+                column.isHalf
+                prop.children contents
             ]
         ]
 
+    ]
+
 let render (state: State) (dispatch: Msg -> unit): ReactElement =
-    layout
-        [
-            match state.Entry with
-            | Idle -> Html.none
-            | InProgress -> Spinner.render
-            | Resolved entry ->
-                header entry.Metadata
-                content entry.Content
-        ]
+    layout [
+        match state.Entry with
+        | Idle -> Html.none
+        | InProgress -> Spinner.render
+        | Resolved entry ->
+            header entry.Metadata
+            content entry.Content
+    ]

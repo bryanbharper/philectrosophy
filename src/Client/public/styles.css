@@ -1,5 +1,5 @@
 ﻿.clickable {
-    cursor: pointer
+    cursor: pointer !important;
 }
 
 .markdown {
