@@ -1,20 +1,40 @@
 ﻿module Client.Components.MediaObject
 
 open Feliz
-open Feliz.Bulma
+open Styles
 
-let render imgUrl (contents: ReactElement list) =
-    Bulma.media [
-        Bulma.mediaLeft
+let private figure imgUrl =
+    Html.figure [
+        prop.className Bulma.MediaLeft
+        prop.children
             [
-                prop.children
-                    [
-                        Bulma.image [
-                            image.is96x96
-                            prop.children [ Html.img [ prop.src imgUrl ] ]
-                        ]
+                Html.p [
+                    prop.classes [
+                        Bulma.Image
+                        Bulma.Is96X96
                     ]
+                    prop.children [ Html.img [ prop.src imgUrl ] ]
+                ]
             ]
+    ]
 
-        Bulma.mediaContent [ Bulma.content contents ]
+let private content (contents: ReactElement list) =
+    Html.div [
+        prop.className Bulma.MediaContent
+        prop.children
+            [
+                Html.div [
+                    prop.className Bulma.Content
+                    prop.children contents
+                ]
+            ]
+    ]
+
+let render imageUrl contents =
+    Html.article [
+        prop.className Bulma.Media
+        prop.children [
+            figure imageUrl
+            content contents
+        ]
     ]

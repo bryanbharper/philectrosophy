@@ -1,50 +1,63 @@
 ﻿module BaseError
 
+open Client.Components.Layout
 open Feliz
-open Feliz.Bulma
 open Styles
 
 let private layout (contents: ReactElement) =
-    Bulma.section [
-        Bulma.columns [
-            Bulma.column [
-                column.isOffsetOneQuarter
-                column.isHalf
+    Html.div [
+        prop.className Bulma.Columns
+        prop.children [
+            Html.div [ prop.className Bulma.Column ]
+            Html.div [
+                prop.classes [
+                    Bulma.Column
+                    Bulma.IsHalf
+                ]
                 prop.children contents
             ]
+            Html.div [ prop.className Bulma.Column ]
         ]
     ]
 
 let private messageBlock color (headMsg: string) (bodyMsg: string) =
-    Bulma.message [
+    Html.article [
         prop.classes [
+            Bulma.Message
             color
             Bulma.IsMedium
             Bulma.HasTextCentered
         ]
         prop.children [
-            Bulma.messageHeader [
+            Html.div [
+                prop.className Bulma.MessageHeader
                 prop.text headMsg
             ]
-            Bulma.messageBody [ prop.text bodyMsg ]
+            Html.div [
+                prop.className Bulma.MessageBody
+                prop.text bodyMsg
+            ]
         ]
     ]
 
 let private imageBlock src =
     Html.div [
         prop.className Bulma.HasTextCentered
-        prop.children [
-            Bulma.image [
-                prop.className Bulma.IsInlineBlock
-                prop.children [
-                    Html.img [ prop.src src ]
+        prop.children
+            [
+                Html.figure [
+                    prop.classes [
+                        Bulma.Image
+                        Bulma.IsInlineBlock
+                    ]
+                    prop.children [ Html.img [ prop.src src ] ]
                 ]
             ]
-        ]
     ]
 
 let render color headerMsg bodyMsg imgSrc =
-    Bulma.section [
-        messageBlock color headerMsg bodyMsg |> layout
+    Section.render [
+        messageBlock color headerMsg bodyMsg
+        |> layout
         imageBlock imgSrc
     ]

@@ -1,10 +1,10 @@
 ﻿module Client.Pages.Blog
 
 open Client.Components
+open Client.Components.Layout
 open Elmish
 open Fable.Remoting.Client
 open Feliz
-open Feliz.Bulma
 open Feliz.Router
 open Shared
 open Styles
@@ -29,11 +29,16 @@ let update (msg: Msg) (state: State): State * Cmd<Msg> =
     | ApiError _ -> state, Cmd.navigate "500"
 
 let renderEntry dispatch entry =
-    let title = Bulma.title.h4 [ prop.text entry.Title ]
+    let title =
+        Html.p [
+            prop.classes [ Bulma.Title; Bulma.Is4 ]
+            prop.text entry.Title
+        ]
 
     let subTitle =
-        Bulma.subtitle.p [
+        Html.p [
             prop.classes [
+                Bulma.Subtitle
                 Bulma.Is6
                 Bulma.HasTextGreyLight
                 Bulma.IsItalic
@@ -63,10 +68,14 @@ let render (state: State) (dispatch: Msg -> unit) =
             |> List.map (renderEntry dispatch)
             |> Html.div
 
-    Bulma.section [
-        Bulma.container [
-            Bulma.title.h2 [ prop.text "Blog" ]
-            Html.hr []
-            entries
+    Section.render
+        [
+            Container.render [
+                Html.h1 [
+                    prop.classes [ Bulma.Title; Bulma.Is2 ]
+                    prop.text "Blog"
+                ]
+                Html.hr []
+                entries
+            ]
         ]
-    ]

@@ -5,7 +5,6 @@ storage: none
 nuget Expecto.FsCheck
 nuget Fable.Remoting.Giraffe
 nuget Feliz
-nuget Feliz.Bulma
 nuget Feliz.Router
 nuget Foq
 nuget Saturn
@@ -20,6 +19,7 @@ nuget Fable.FontAwesome.Free
 nuget Fable.Mocha
 nuget Fable.React
 nuget Fable.Remoting.Client
+nuget Fulma
 nuget Zanaptak.TypedCssClasses
 
 group Build

@@ -5,14 +5,17 @@ open Styles
 
 let render =
     Html.div [
-        prop.className [ Bulma.HasTextCentered; "mt-6" ]
+        prop.style [
+            style.textAlign.center
+            style.marginTop 20
+        ]
         prop.children [
             Html.i [
                 prop.classes [
                     FA.Fa
                     FA.FaCog
                     FA.FaSpin
-                    FA.Fa3X
+                    FA.Fa2X
                 ]
             ]
         ]
