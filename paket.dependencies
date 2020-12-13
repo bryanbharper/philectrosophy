@@ -5,6 +5,7 @@ storage: none
 nuget Expecto.FsCheck
 nuget Fable.Remoting.Giraffe
 nuget Feliz
+nuget Feliz.Bulma
 nuget Feliz.Router
 nuget Foq
 nuget Saturn

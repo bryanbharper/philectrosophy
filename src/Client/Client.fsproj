@@ -14,8 +14,6 @@
         <Compile Include="Markdown.fs" />
         <Compile Include="Components\Navbar.fs" />
         <Compile Include="Components\Spinner.fs" />
-        <Compile Include="Components\Error.fs" />
-        <Compile Include="Components\Layout.fs" />
         <Compile Include="Components\MediaObject.fs" />
         <Compile Include="Pages\About.fs" />
         <Compile Include="Pages\Blog.fs" />
