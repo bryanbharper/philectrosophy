@@ -7,7 +7,7 @@ let render =
     Html.div [
         prop.className [
             Bulma.HasTextCentered
-            "mt-6"
+            Bulma.Mt6
         ]
         prop.children
             [

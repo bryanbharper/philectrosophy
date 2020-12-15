@@ -48,7 +48,7 @@ let renderEntry dispatch entry =
         |> MediaObject.render entry.ThumbNailUrl
 
     Html.div [
-        prop.classes [ Style.Clickable; "mb-6" ]
+        prop.classes [ Style.Clickable; Bulma.Mb6 ]
         prop.onClick (fun _ -> ("blog", entry.Slug) |> Router.navigate)
         prop.children media
     ]
