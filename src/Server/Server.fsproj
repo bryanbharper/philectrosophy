@@ -9,6 +9,7 @@
     <Compile Include="File.fs" />
     <Compile Include="Data.fs" />
     <Compile Include="BlogApi.fs" />
+    <Compile Include="Error.fs" />
     <Compile Include="Server.fs" />
   </ItemGroup>
   <ItemGroup>

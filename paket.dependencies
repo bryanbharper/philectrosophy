@@ -8,6 +8,7 @@ nuget Feliz
 nuget Feliz.Bulma
 nuget Feliz.Router
 nuget Foq
+nuget Giraffe.SerilogExtensions
 nuget Saturn
 nuget Expecto
 
@@ -21,6 +22,7 @@ nuget Fable.Mocha
 nuget Fable.React
 nuget Fable.Remoting.Client
 nuget Fulma
+nuget Serilog.Sinks.Console
 nuget Zanaptak.TypedCssClasses
 
 group Build

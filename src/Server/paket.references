@@ -1,2 +1,4 @@
 Saturn
 Fable.Remoting.Giraffe
+Giraffe.SerilogExtensions
+Serilog.Sinks.Console
