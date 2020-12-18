@@ -18,7 +18,6 @@
         <Compile Include="Pages\About.fs" />
         <Compile Include="Pages\Blog.fs" />
         <Compile Include="Pages\BlogEntry.fs" />
-        <Compile Include="Pages\Lexicon.fs" />
         <Compile Include="Pages\Search.fs" />
         <Compile Include="Pages\ErrorPages\BaseError.fs" />
         <Compile Include="Pages\ErrorPages\UnexpectedError.fs" />

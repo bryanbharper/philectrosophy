@@ -38,7 +38,6 @@ let render =
                 [
                     Bulma.navbarEnd.div [
                         navLink "blog"
-                        navLink "lexicon"
                         navLink "about"
                         navLinkIcon "search" FA.FaSearch
                     ]

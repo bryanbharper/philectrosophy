@@ -22,7 +22,6 @@ let all =
                         ([], Url.Blog)
                         ([ "blog" ], Url.Blog)
                         ([ "blog"; slug ], Url.BlogEntry "some-slug")
-                        ([ "lexicon" ], Url.Lexicon)
                         ([ "not-found" ], Url.NotFound)
                         ([ "search" ], Url.Search)
                         ([ "tac-o-cat" ], Url.NotFound)
@@ -45,7 +44,6 @@ let all =
                         Url.About, About.init() |> fst |> Page.About
                         Url.Blog, Blog.init() |> fst |> Page.Blog
                         Url.BlogEntry slug, slug |> BlogEntry.init |> fst |> Page.BlogEntry
-                        Url.Lexicon, Lexicon.init() |> fst |> Page.Lexicon
                         Url.Search, Search.init() |> fst |> Page.Search
                         Url.NotFound, Page.NotFound
                     ]
@@ -72,7 +70,6 @@ let all =
                         Url.About, About.init() |> fst |> Page.About
                         Url.Blog, Blog.init() |> fst |> Page.Blog
                         Url.BlogEntry slug, slug |> BlogEntry.init |> fst |> Page.BlogEntry
-                        Url.Lexicon, Lexicon.init() |> fst |> Page.Lexicon
                         Url.Search, Search.init() |> fst |> Page.Search
                         Url.NotFound, Page.NotFound
                     ]
