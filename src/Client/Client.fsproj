@@ -11,6 +11,7 @@
         <None Include="index.html" />
         <None Include="paket.references" />
         <Compile Include="Styles.fs" />
+        <Compile Include="Urls.fs" />
         <Compile Include="Components\Navbar.fs" />
         <Compile Include="Components\Spinner.fs" />
         <Compile Include="Components\MediaObject.fs" />

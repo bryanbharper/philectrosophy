@@ -11,6 +11,7 @@ let all =
             BlogEntryTests.all
             BlogTests.all
             IndexTests.all
+            UrlsTests.all
         ]
 
 [<EntryPoint>]

@@ -7,6 +7,7 @@
     <Compile Include="Blog.Tests.fs" />
     <Compile Include="BlogEntry.Tests.fs" />
     <Compile Include="Index.Tests.fs" />
+    <Compile Include="Urls.Tests.fs" />
     <Compile Include="Client.Tests.fs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,8 +1,8 @@
 ﻿module Client.Pages.BlogEntry
 
-open Client
 open Client.Components
 open Client.Styles
+open Client.Urls
 open Elmish
 open Fable.Remoting.Client
 open Feliz
@@ -36,8 +36,8 @@ let init (slug: string): State * Cmd<Msg> =
 
 let update (msg: Msg) (state: State): State * Cmd<Msg> =
     match msg with
-    | ApiError _ -> state, Cmd.navigate "500"
-    | GotEntry None -> state, Cmd.navigate "not-found"
+    | ApiError _ -> state, Url.UnexpectedError.asString |> Cmd.navigate
+    | GotEntry None -> state, Url.NotFound.asString |> Cmd.navigate
     | GotEntry (Some (metadata, content)) ->
         let entry =
             {

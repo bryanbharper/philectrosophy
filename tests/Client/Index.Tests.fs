@@ -3,6 +3,7 @@
 open Client
 open Client.Index
 open Client.Pages
+open Client.Urls
 open Fable.Mocha
 
 module Target = Index
@@ -22,10 +23,13 @@ let all =
                         ([], Url.Blog)
                         ([ "blog" ], Url.Blog)
                         ([ "blog"; slug ], Url.BlogEntry "some-slug")
-                        ([ "not-found" ], Url.NotFound)
+                        ([ "notfound" ], Url.NotFound)
+                        ([ "Notfound" ], Url.NotFound)
+                        ([ "notFound" ], Url.NotFound)
                         ([ "search" ], Url.Search)
                         ([ "tac-o-cat" ], Url.NotFound)
-                        ([ "500" ], Url.UnexpectedError)
+                        ([ "UnexpectedError" ], Url.UnexpectedError)
+                        ([ "unexpectedError" ], Url.UnexpectedError)
                     ]
 
                 for url, page in testParams do

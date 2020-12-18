@@ -2,6 +2,7 @@
 
 open Client.Components
 open Client.Styles
+open Client.Urls
 open Elmish
 open Fable.Remoting.Client
 open Feliz
@@ -26,7 +27,7 @@ let init (): State * Cmd<Msg> =
 let update (msg: Msg) (state: State): State * Cmd<Msg> =
     match msg with
     | GotEntries result -> { state with Entries = Resolved result }, Cmd.none
-    | ApiError _ -> state, Cmd.navigate "500"
+    | ApiError _ -> state, Url.UnexpectedError.asString |> Cmd.navigate
 
 let renderEntry dispatch entry =
     let title = Bulma.title.h4 [ prop.text entry.Title ]
@@ -49,7 +50,7 @@ let renderEntry dispatch entry =
 
     Html.div [
         prop.classes [ Style.Clickable; Bulma.Mb6 ]
-        prop.onClick (fun _ -> ("blog", entry.Slug) |> Router.navigate)
+        prop.onClick (fun _ -> (Url.Blog.asString.ToLower(), entry.Slug) |> Router.navigate)
         prop.children media
     ]
 

@@ -2,6 +2,7 @@ module Client.Index
 
 open Client.Components
 open Client.Pages
+open Client.Urls
 open Elmish
 open Shared
 open Feliz
@@ -16,15 +17,6 @@ type Page =
     | Blog of Blog.State
     | BlogEntry of BlogEntry.State
     | Search of Search.State
-    | NotFound
-    | UnexpectedError
-
-[<RequireQualifiedAccess>]
-type Url =
-    | About
-    | Blog
-    | BlogEntry of slug: string
-    | Search
     | NotFound
     | UnexpectedError
 
@@ -43,13 +35,12 @@ type Msg =
 *******************************************)
 let parseUrl url =
     match url with
-    | [ "about" ] -> Url.About
-    | []
-    | [ "blog" ] -> Url.Blog
-    | [ "blog"; slug: string ] -> Url.BlogEntry slug
-    | [ "not-found" ] -> Url.NotFound
-    | [ "search" ] -> Url.Search
-    | [ "500" ] -> Url.UnexpectedError
+    | [] -> Url.Blog
+    | [ _: string; slug: string ] -> Url.BlogEntry slug
+    | [ page: string ] ->
+        match Url.fromString page with
+        | Some url -> url
+        | None -> Url.NotFound
     | _ -> Url.NotFound
 
 let onUrlChanged state dispatch url =
@@ -126,10 +117,10 @@ let render (state: State) (dispatch: Msg -> unit): ReactElement =
     Html.div
         [
             prop.children [
-                Navbar.render
+                Navbar.render state.CurrentUrl
                 React.router [
                     router.onUrlChanged (onUrlChanged state dispatch)
-                    router.children [ activePage ]
+                    router.children activePage
                 ]
             ]
         ]
