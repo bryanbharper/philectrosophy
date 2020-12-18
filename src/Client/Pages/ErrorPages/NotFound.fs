@@ -1,6 +1,6 @@
 ﻿module Client.Pages.NotFound
 
-open Styles
+open Client.Styles
 
 let render =
     BaseError.render

@@ -1,7 +1,7 @@
 ﻿module Client.Components.Spinner
 
+open Client.Styles
 open Feliz
-open Styles
 
 let render =
     Html.div [

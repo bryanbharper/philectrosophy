@@ -11,10 +11,10 @@
         <None Include="index.html" />
         <None Include="paket.references" />
         <Compile Include="Styles.fs" />
-        <Compile Include="Markdown.fs" />
         <Compile Include="Components\Navbar.fs" />
         <Compile Include="Components\Spinner.fs" />
         <Compile Include="Components\MediaObject.fs" />
+        <Compile Include="Components\Markdown.fs" />
         <Compile Include="Pages\About.fs" />
         <Compile Include="Pages\Blog.fs" />
         <Compile Include="Pages\BlogEntry.fs" />

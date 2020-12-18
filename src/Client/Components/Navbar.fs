@@ -1,9 +1,9 @@
 ﻿module Client.Components.Navbar
 
+open Client.Styles
 open Feliz
-open Feliz.Router
 open Feliz.Bulma
-open Styles
+open Feliz.Router
 
 let navLink (name: string) =
     Bulma.navbarItem.a [

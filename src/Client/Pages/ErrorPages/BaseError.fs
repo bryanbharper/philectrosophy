@@ -1,8 +1,8 @@
-﻿module BaseError
+﻿module Client.Pages.BaseError
 
+open Client.Styles
 open Feliz
 open Feliz.Bulma
-open Styles
 
 let private layout (contents: ReactElement) =
     Bulma.section [

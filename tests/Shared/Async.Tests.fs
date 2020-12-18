@@ -9,7 +9,6 @@ open System.Linq
 
 open Shared
 
-
 #if !FABLE_COMPILER
 let properties = testList "String Property Tests" [
 

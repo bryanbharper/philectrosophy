@@ -1,6 +1,6 @@
-﻿module UnexpectedError
+﻿module Client.Pages.UnexpectedError
 
-open Styles
+open Client.Styles
 
 let private headerMsg = "Well this is embarrassing..."
 

@@ -1,9 +1,9 @@
 ﻿module Client.Pages.About
 
+open Client.Styles
 open Elmish
 open Feliz
 open Feliz.Bulma
-open Styles
 
 type State = unit
 
