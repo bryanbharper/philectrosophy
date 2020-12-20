@@ -30,6 +30,9 @@ type InMemoryRepository() =
             |> BlogEntry.create
             "Epiphenomenalism in Plantinga's E.A.A.N."
             |> BlogEntry.create
+
+            "The 555 Timer IC"
+            |> BlogEntry.create
         ]
 
     interface IRepository with

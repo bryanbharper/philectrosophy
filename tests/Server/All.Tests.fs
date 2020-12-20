@@ -6,6 +6,7 @@ let all =
     testList "All"
         [
             Shared.Tests.All.all
+            Markdown.all
             BlogApi.all
             File.all
         ]

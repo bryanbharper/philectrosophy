@@ -20,7 +20,7 @@ type PublicFileStore() =
             if fileInfo.Exists then
                 File.ReadAllTextAsync(fileInfo.FullName)
                 |> Async.AwaitTask
-                |> Async.map (fun s -> Some s)
+                |> Async.map Some
             else
                 None |> async.Return
 
@@ -31,3 +31,4 @@ type BlogContentStore(fileAccess: IFileAccess) =
         member this.GetBlogEntryContentAsync slug =
             sprintf "public/blog.posts/%s.md" slug
             |> fileAccess.ReadFileAsync
+            |> Async.map (Option.map Markdown.Latex.replaceALlMath)

@@ -122,6 +122,17 @@ let properties = testList "String Property Tests" [
         // assert
         result |> Seq.forall (fun c -> stripSeq.Contains(c) |> not)
 
+    testProperty "String.urlEncode: testOracle."
+    <| fun (NonNull value) ->
+        // arrange
+        let oracle = System.Uri.EscapeDataString value
+
+        // act
+        let result = value |> String.urlEncode
+
+        // assert
+        result = oracle
+
 ]
 #endif
 let all = testList "String" [

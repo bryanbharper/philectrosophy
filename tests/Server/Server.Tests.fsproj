@@ -5,6 +5,7 @@
         <TargetFramework>netcoreapp3.1</TargetFramework>
     </PropertyGroup>
     <ItemGroup>
+        <Compile Include="Markdown.Tests.fs" />
         <Compile Include="File.Tests.fs" />
         <Compile Include="BlogApi.Tests.fs" />
         <Compile Include="All.Tests.fs" />

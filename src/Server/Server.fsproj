@@ -6,6 +6,7 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="paket.references" />
+    <Compile Include="Markdown.fs" />
     <Compile Include="File.fs" />
     <Compile Include="Data.fs" />
     <Compile Include="BlogApi.fs" />
@@ -20,9 +21,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="public\blog.posts\img\**" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="public\pdfs" />
   </ItemGroup>
   <Import Project="..\..\.paket\Paket.Restore.targets" />
 </Project>
