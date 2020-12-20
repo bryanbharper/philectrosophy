@@ -6,6 +6,32 @@ open Feliz
 open Feliz.Bulma
 open Feliz.Router
 
+type State =
+    {
+        BurgerExpanded: bool
+        ActivePage: Url
+    }
+
+type Msg =
+    | BurgerClicked
+    | UrlChanged of Url
+
+let init (): State =
+    let url = Router.currentUrl () |> Url.parseFeliz
+
+    {
+        BurgerExpanded = false
+        ActivePage = url
+    }
+
+let update (msg: Msg) (state: State): State =
+    match msg with
+    | BurgerClicked ->
+        { state with
+            BurgerExpanded = not state.BurgerExpanded
+        }
+    | UrlChanged url -> { state with ActivePage = url }
+
 let navLink (url: Url) isActive =
     Bulma.navbarItem.a [
         prop.classes [
@@ -32,7 +58,7 @@ let navLinkIcon (url: Url) isActive icon =
         ]
     ]
 
-let render (activePage: Url) =
+let render (state: State) (dispatch: Msg -> unit): ReactElement =
     let matchBlog url =
         match url with
         | Url.Blog
@@ -51,7 +77,8 @@ let render (activePage: Url) =
                     ]
                 ]
                 Bulma.navbarBurger [
-                    //                        navbarBurger.isActive
+                    if state.BurgerExpanded then navbarBurger.isActive
+                    prop.onClick (fun _ -> Msg.BurgerClicked |> dispatch)
                     prop.children [
                         Html.span []
                         Html.span []
@@ -62,11 +89,15 @@ let render (activePage: Url) =
 
             ]
             Bulma.navbarMenu [
-                Bulma.navbarEnd.div [
-                    navLink Url.Blog (activePage |> matchBlog)
-                    navLink Url.About (activePage = Url.About)
-                    navLinkIcon Url.Search (activePage = Url.Search) FA.FaSearch
+                if state.BurgerExpanded then navbarMenu.isActive
+                prop.children [
+                    Bulma.navbarEnd.div [
+                        navLink Url.Blog (state.ActivePage |> matchBlog)
+                        navLink Url.About (state.ActivePage = Url.About)
+                        navLinkIcon Url.Search (state.ActivePage = Url.Search) FA.FaSearch
+                    ]
                 ]
+
             ]
 
         ]

@@ -20,57 +20,56 @@ type Page =
     | NotFound
     | UnexpectedError
 
-type State = { CurrentUrl: Url; CurrentPage: Page }
+type State =
+    {
+        CurrentUrl: Url
+        CurrentPage: Page
+        Navbar: Navbar.State
+    }
 
 [<RequireQualifiedAccess>]
 type Msg =
     | About of About.Msg
     | Blog of Blog.Msg
     | BlogEntry of BlogEntry.Msg
+    | Navbar of Navbar.Msg
     | Search of Search.Msg
     | UrlChanged of Url
 
 (*******************************************
 *        HELPERS
 *******************************************)
-let parseUrl url =
-    match url with
-    | [] -> Url.Blog
-    | [ _: string; slug: string ] -> Url.BlogEntry slug
-    | [ page: string ] ->
-        match Url.fromString page with
-        | Some url -> url
-        | None -> Url.NotFound
-    | _ -> Url.NotFound
-
 let onUrlChanged state dispatch url =
-    match parseUrl url with
+    match Url.parseFeliz url with
     | url when state.CurrentUrl = url -> ()
     | url -> url |> Msg.UrlChanged |> dispatch
 
-let pageInitFromUrl url =
-    let initializer (state, cmd) pageMapper msgMapper =
+let initFromUrl url =
+    let pageInit (state, cmd) pageMapper msgMapper =
         {
             CurrentUrl = url
             CurrentPage = pageMapper state
+            Navbar = Navbar.init ()
         },
         Cmd.map msgMapper cmd
 
     match url with
-    | Url.About -> initializer (About.init ()) Page.About Msg.About
-    | Url.Blog -> initializer (Blog.init ()) Page.Blog Msg.Blog
-    | Url.BlogEntry slug -> initializer (BlogEntry.init slug) Page.BlogEntry Msg.BlogEntry
-    | Url.Search -> initializer (Search.init ()) Page.Search Msg.Search
+    | Url.About -> pageInit (About.init ()) Page.About Msg.About
+    | Url.Blog -> pageInit (Blog.init ()) Page.Blog Msg.Blog
+    | Url.BlogEntry slug -> pageInit (BlogEntry.init slug) Page.BlogEntry Msg.BlogEntry
+    | Url.Search -> pageInit (Search.init ()) Page.Search Msg.Search
     | Url.UnexpectedError ->
         {
             CurrentUrl = url
             CurrentPage = Page.UnexpectedError
+            Navbar = Navbar.init ()
         },
         Cmd.none
     | Url.NotFound ->
         {
             CurrentUrl = url
             CurrentPage = Page.NotFound
+            Navbar = Navbar.init ()
         },
         Cmd.none
 
@@ -79,13 +78,14 @@ let pageInitFromUrl url =
 *******************************************)
 let init (): State * Cmd<Msg> =
     Router.currentUrl ()
-    |> parseUrl
-    |> pageInitFromUrl
+    |> Url.parseFeliz
+    |> initFromUrl
 
 let update (msg: Msg) (state: State): State * Cmd<Msg> =
     let updater pageMsg pageState pageUpdater msgMapper pageMapper =
         let newState, newCmd = pageUpdater pageMsg pageState
         let cmd = Cmd.map msgMapper newCmd
+
         { state with
             CurrentPage = pageMapper newState
         },
@@ -96,7 +96,12 @@ let update (msg: Msg) (state: State): State * Cmd<Msg> =
     | Msg.Blog msg', Page.Blog state' -> updater msg' state' Blog.update Msg.Blog Page.Blog
     | Msg.BlogEntry msg', Page.BlogEntry state' -> updater msg' state' BlogEntry.update Msg.BlogEntry Page.BlogEntry
     | Msg.Search msg', Page.Search state' -> updater msg' state' Search.update Msg.Search Page.Search
-    | Msg.UrlChanged nextUrl, _ -> pageInitFromUrl nextUrl
+    | Msg.UrlChanged nextUrl, _ -> initFromUrl nextUrl
+    | Msg.Navbar msg', _ ->
+        { state with
+            Navbar = Navbar.update msg' state.Navbar
+        },
+        Cmd.none
     | _ -> state, Cmd.none
 
 (*******************************************
@@ -114,13 +119,12 @@ let render (state: State) (dispatch: Msg -> unit): ReactElement =
         | Page.UnexpectedError -> UnexpectedError.render
         | Page.NotFound -> NotFound.render
 
-    Html.div
-        [
-            prop.children [
-                Navbar.render state.CurrentUrl
-                React.router [
-                    router.onUrlChanged (onUrlChanged state dispatch)
-                    router.children activePage
-                ]
+    Html.div [
+        prop.children [
+            Navbar.render state.Navbar (Msg.Navbar >> dispatch)
+            React.router [
+                router.onUrlChanged (onUrlChanged state dispatch)
+                router.children activePage
             ]
         ]
+    ]
