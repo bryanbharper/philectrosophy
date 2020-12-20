@@ -1,4 +1,4 @@
-module Shared.Tests
+module Shared.Tests.All
 
 #if FABLE_COMPILER
 open Fable.Mocha
@@ -35,10 +35,10 @@ let route =
 
 
 let all = testList "Shared" [
-    StringTests.all
-    DomainModelsTests.all
-    AsyncTests.all
-    DateTests.all
+    String.all
+    DomainModels.all
+    Async.all
+    Date.all
     route
 
 #if !FABLE_COMPILER

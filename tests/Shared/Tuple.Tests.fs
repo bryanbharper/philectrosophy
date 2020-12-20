@@ -1,4 +1,4 @@
-﻿module TupleTests
+﻿module Shared.Tests.Tuple
 
 #if FABLE_COMPILER
 open Fable.Mocha

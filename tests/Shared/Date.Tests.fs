@@ -1,4 +1,4 @@
-﻿module DateTests
+﻿module Shared.Tests.Date
 
 #if FABLE_COMPILER
 open Fable.Mocha

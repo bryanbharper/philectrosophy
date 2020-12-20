@@ -7,7 +7,7 @@
     <ItemGroup>
         <Compile Include="File.Tests.fs" />
         <Compile Include="BlogApi.Tests.fs" />
-        <Compile Include="Server.Tests.fs" />
+        <Compile Include="All.Tests.fs" />
         <Content Include="test-files\test.txt" />
     </ItemGroup>
     <ItemGroup>

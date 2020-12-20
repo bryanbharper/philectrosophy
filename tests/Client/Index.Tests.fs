@@ -1,4 +1,4 @@
-﻿module IndexTests
+﻿module Client.Tests.Index
 
 open Client
 open Client.Components

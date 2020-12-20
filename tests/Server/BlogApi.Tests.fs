@@ -1,8 +1,8 @@
-﻿module BlogApiTests
+﻿module Server.Tests.BlogApi
 
-open System
-open Data
-open File
+open Server
+open Server.Data
+open Server.File
 open Expecto
 open Foq
 open Shared

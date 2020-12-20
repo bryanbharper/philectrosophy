@@ -10,7 +10,7 @@
     <Compile Include="Data.fs" />
     <Compile Include="BlogApi.fs" />
     <Compile Include="Error.fs" />
-    <Compile Include="Server.fs" />
+    <Compile Include="Program.fs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Shared\Shared.fsproj" />

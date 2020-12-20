@@ -1,4 +1,4 @@
-﻿module Error
+﻿module Server.Error
 
 open System
 open Fable.Remoting.Server

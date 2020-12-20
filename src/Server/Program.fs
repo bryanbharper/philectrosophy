@@ -1,4 +1,4 @@
-module Server
+module Server.Program
 
 open Data
 open Fable.Remoting.Server
@@ -28,13 +28,10 @@ let webAppWithLogging = SerilogAdapter.Enable(webApp)
 
 Log.Logger <-
     LoggerConfiguration()
-      // this helps Serilog deserialize the fsharp types like unions/records
       .Destructure.FSharpTypes()
-      // use package Serilog.Sinks.Console
-      // https://github.com/serilog/serilog-sinks-console
-      .WriteTo.Console()
-      // add more sinks etc.
+      .WriteTo.Console() // https://github.com/serilog/serilog-sinks-console
       .CreateLogger()
+      // add more sinks etc.
 
 let app =
     application {

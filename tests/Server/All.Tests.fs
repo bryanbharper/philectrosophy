@@ -1,13 +1,13 @@
-module Server.Tests
+module Server.Tests.All
 
 open Expecto
 
 let all =
     testList "All"
         [
-            Shared.Tests.all
-            BlogApiTests.all
-            FileTests.all
+            Shared.Tests.All.all
+            BlogApi.all
+            File.all
         ]
 
 [<EntryPoint>]

@@ -1,7 +1,7 @@
-﻿module FileTests
+﻿module Server.Tests.File
 
 open System
-open File
+open Server.File
 open Expecto
 open Foq
 

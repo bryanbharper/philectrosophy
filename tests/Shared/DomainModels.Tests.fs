@@ -1,4 +1,4 @@
-﻿module DomainModelsTests
+﻿module Shared.Tests.DomainModels
 
 #if FABLE_COMPILER
 open Fable.Mocha

@@ -1,4 +1,4 @@
-﻿module File
+﻿module Server.File
 
 type IFileAccess =
     abstract ReadFileAsync: string -> Async<string option>

@@ -1,4 +1,4 @@
-﻿module StringTests
+﻿module Shared.Tests.String
 
 #if FABLE_COMPILER
 open Fable.Mocha

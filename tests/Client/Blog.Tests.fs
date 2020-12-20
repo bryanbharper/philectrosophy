@@ -1,4 +1,4 @@
-﻿module BlogTests
+﻿module Client.Tests.Blog
 
 open System
 open Client.Pages.Blog

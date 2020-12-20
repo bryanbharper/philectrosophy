@@ -1,4 +1,4 @@
-﻿module BlogApi
+﻿module Server.BlogApi
 
 open System
 open Data

@@ -1,4 +1,4 @@
-﻿module BlogEntryTests
+﻿module Client.Tests.BlogEntry
 
 open Client.Pages
 open Fable.Mocha

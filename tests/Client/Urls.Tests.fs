@@ -1,8 +1,6 @@
-﻿module UrlsTests
+﻿module Client.Tests.Urls
 
 open Client
-open Client.Index
-open Client.Pages
 open Client.Urls
 open Fable.Mocha
 

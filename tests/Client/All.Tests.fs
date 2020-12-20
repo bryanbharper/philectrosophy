@@ -1,4 +1,4 @@
-module Client.Tests
+module Client.Tests.All
 
 open Fable.Mocha
 
@@ -6,12 +6,12 @@ let all =
     testList "All"
         [
 #if FABLE_COMPILER // This preprocessor directive makes editor happy
-            Shared.Tests.all
+            Shared.Tests.All.all
 #endif
-            BlogEntryTests.all
-            BlogTests.all
-            IndexTests.all
-            UrlsTests.all
+            BlogEntry.all
+            Blog.all
+            Index.all
+            Urls.all
         ]
 
 [<EntryPoint>]

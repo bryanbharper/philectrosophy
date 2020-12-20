@@ -1,4 +1,4 @@
-﻿module AsyncTests
+﻿module Shared.Tests.Async
 
 #if FABLE_COMPILER
 open Fable.Mocha
