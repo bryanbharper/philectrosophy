@@ -21,5 +21,8 @@
     </Content>
     <Content Include="public\blog.posts\img\**" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="public\pdfs" />
+  </ItemGroup>
   <Import Project="..\..\.paket\Paket.Restore.targets" />
 </Project>

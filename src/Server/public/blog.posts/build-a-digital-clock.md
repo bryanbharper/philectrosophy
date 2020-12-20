@@ -1,23 +1,6 @@
 [1]: http://www.cburch.com/logisim/ "Logism"
 [2]: http://k-map.sourceforge.net/ "K-Map Minimizer"
 
-## Introduction:
-#### Outline:
-
-- [Introduction:](#introduction)
-    - [Outline:](#outline)
-    - [Recommended Free-ware:](#recommended-free-ware)
-- [The Big Picture:](#the-big-picture)
-- [The 0-9 Counter:](#the-0-9-counter)
-  - [Synchronous Design:](#synchronous-design)
-  - [Asynchronous Design:](#asynchronous-design)
-- [The 0-5 Counter:](#the-0-5-counter)
-- [The 0-5 Counter:](#the-0-5-counter-1)
-- [The Minute Decoders:](#the-minute-decoders)
-- [The Hour Decoder:](#the-hour-decoder)
-- [Putting It All Together:](#putting-it-all-together)
-- [Download:](#download)
-
 #### Recommended Free-ware:
 
 * [Logisim—graphical tool for designing and simulating digital logic circuits.][1]

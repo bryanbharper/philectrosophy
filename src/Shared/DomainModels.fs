@@ -29,3 +29,11 @@ module BlogEntry =
             Subtitle = "SUB " + title
             UpdatedOn = None
         }
+
+    let setSubtitle subTitle entry = { entry with Subtitle = subTitle }
+
+    let setThumbNail url entry = { entry with ThumbNailUrl = url }
+
+    let setCreatedOn date entry = { entry with CreatedOn = date }
+
+    let setSynopsis synopsis entry = { entry with Synopsis = synopsis }
