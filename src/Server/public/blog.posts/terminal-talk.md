@@ -32,7 +32,7 @@ The image below shows the same conversation as above, but from Putnam's perspect
 
 ### Report & API
 I documented and explained the app pretty extensively in the paper I submitted for the assignment. Feel free to have a look:
-[El E 245 -- TerminalTalk](pdfs/TerminalTalk.pdf)
+[El E 245 -- TerminalTalk](resources/TerminalTalk.pdf)
 
 
 #### Bonus:

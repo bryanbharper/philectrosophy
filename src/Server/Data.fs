@@ -20,7 +20,7 @@ type InMemoryRepository() =
             |> BlogEntry.create
             "Build A Digital Clock"
             |> BlogEntry.create
-            |> BlogEntry.setSubtitle "The Logical Design"
+            |> BlogEntry.setSubtitle "How, theoretically, to construct a digital clock."
             |> BlogEntry.setThumbNail "img/build-a-digital-clock-thumbnail.jpg"
             |> BlogEntry.setCreatedOn (DateTime(2016, 1, 19))
             |> BlogEntry.setSynopsis "This post is the first of a three part series on the design and implementation a digital clock from the underlying logical design to the electronics that implement it."
@@ -33,7 +33,7 @@ type InMemoryRepository() =
 
             "The 555 Timer IC"
             |> BlogEntry.create
-            |> BlogEntry.setSubtitle "A Practical Analysis"
+            |> BlogEntry.setSubtitle "An Analysis for a Practical Understanding"
             |> BlogEntry.setThumbNail "img/555-ic-thumbnail.png"
             |> BlogEntry.setCreatedOn (DateTime(2017, 1, 6))
             |> BlogEntry.setSynopsis "The 555 Timer IC is a versatile chip in wide use. This entry gives a theoretical overview of its primary operation modes."

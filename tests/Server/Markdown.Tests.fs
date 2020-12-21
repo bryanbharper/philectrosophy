@@ -49,7 +49,7 @@ let all =
 
             properties
 
-            testCase "Markdown.Latex.replaceMath: replaces string of only [MATH]"
+            testCase "Markdown.Latex.convertDisplayMath: replaces string of only [MATH]"
             <| fun _ ->
                 // arrange
                 let expression =
@@ -66,7 +66,7 @@ let all =
                 // assert
                 Expect.equal result expected ""
 
-            testCase "Markdown.Latex.replaceMath: replaces multiples [MATH] tags."
+            testCase "Markdown.Latex.convertDisplayMath: replaces multiples [MATH] tags."
             <| fun _ ->
                 // arrange
                 let expression1 =
@@ -91,7 +91,7 @@ let all =
                 // assert
                 Expect.equal result expected ""
 
-            testCase "Markdown.Latex.replaceMath: ignores [iMATH] tags."
+            testCase "Markdown.Latex.convertDisplayMath: ignores [IMATH] tags."
             <| fun _ ->
                 // arrange
                 let expression1 =
@@ -122,7 +122,7 @@ let all =
                 // assert
                 Expect.equal result expected ""
 
-            testCase "Markdown.Latex.replaceInlineMath: replaces string of only [iMATH]"
+            testCase "Markdown.Latex.convertInlineMath: replaces string of only [IMATH]"
             <| fun _ ->
                 // arrange
                 let expression = @"X^2 \frac{1}{2} IMATH [] \overline{taco}"
@@ -141,7 +141,7 @@ let all =
                 // assert
                 Expect.equal result expected ""
 
-            testCase "Markdown.Latex.replaceInlineMath: replaces multiples [iMATH] tags."
+            testCase "Markdown.Latex.convertInlineMath: replaces multiples [IMATH] tags."
             <| fun _ ->
                 // arrange
                 let expression1 =
@@ -170,7 +170,7 @@ let all =
                 // assert
                 Expect.equal result expected ""
 
-            testCase "Markdown.Latex.replaceInlineMath: ignores [MATH] tags."
+            testCase "Markdown.Latex.convertInlineMath: ignores [MATH] tags."
             <| fun _ ->
                 // arrange
                 let expression1 =
@@ -199,7 +199,7 @@ let all =
                 // assert
                 Expect.equal result expected ""
 
-            testCase "Markdown.Latex.replaceAllMath: replaces both inline and normal math tags."
+            testCase "Markdown.Latex.convertMath: replaces both inline and display math tags."
             <| fun _ ->
                 // arrange
                 let expression1 =
@@ -228,7 +228,7 @@ let all =
                 // assert
                 Expect.equal result expected ""
 
-            testCase "Markdown.Latex.replace: replaces all instances of pattern using replacer"
+            testCase "Markdown.Latex.convert: converts all instances of pattern using converter"
             <| fun _ ->
                 // arrange
                 let patternText = "dogs are cool"

@@ -23,7 +23,7 @@ With all this in mind, a diagrammatic representation of our digital clock might 
 
 ![digital-clock-design-big-picture](img/diagrammatic-outline-of-digital-clock-design.png)
 
-There are four 7-segment displays — two displays represent each digit of the hour, and two others display each minute digit. For clarity, let's denote the most significant hour digit as H&#x2081; and the least significant hour digit as *H&#x2080;*. Likewise for the minutes (i.e, *M&#x2081;* and  *M&#x2080;*).
+There are four 7-segment displays — two displays represent each digit of the hour, and two other displays represent each minute digit. For clarity, let's denote the most significant hour digit as H&#x2081; and the least significant hour digit as *H&#x2080;*. Likewise for the minutes (i.e, *M&#x2081;* and  *M&#x2080;*).
 
 Each display is driven by a counter, intermediated by a decoder. The counters output a binary digit, and the decoders translate binary to something decipherable by the 7-segment display.
 
@@ -66,11 +66,11 @@ If you are unfamiliar with K-map minimization, read through this [wikipedia page
 
 The resulting equations are as follows:
 
-![0-9-counter-k-map-resulting-equations](https://latex.codecogs.com/gif.latex?%5Cbegin%7Balign*%7D%20T_3%20%26%3D%20Q_3Q_0%20&plus;%20Q_2Q_1Q_0%20%5C%5C%20T_2%20%26%3D%20Q_1Q_0%20%5C%5C%20T_1%20%26%3D%20%5Coverline%7BQ_3%7DQ_0%20%5C%5C%20T_0%20%26%3D%201%20%5Cend%7Balign*%7D)
+[MATH] \begin{align*} T_3 &= Q_3 Q_0 + Q_2 Q_1 Q_0 \\ T_2 &= Q_1 Q_0 \\ T_1 &= \overline{Q_3} Q_0 \\ T_0 &= 1 \end{align*}[/MATH]
 
 A similar analysis yields the function for the output clk signal:
 
-![0-9-clock-out](https://latex.codecogs.com/gif.latex?%5Ctext%7BClk%20Out%7D%20%3D%20%5Coverline%7BQ_3%7D%20%5C%2C%20%5Coverline%7BQ_2%7D%5C%2C%20%5Coverline%7BQ_1%7D%20%5C%2C%20%5Coverline%7BQ_0%7D)
+[MATH]\text{Clk Out} = \overline{Q_3} \, \overline{Q_2}\, \overline{Q_1} \, \overline{Q_0}[/MATH]
 
 All that is left to do is to implement these equations into a logic circuit with our four flip-flops (below).
 
@@ -104,9 +104,15 @@ The solution is simple! We simply need to set each *Reset*&#8342; to '1' at the 
 
 Utilizing a truth table (below) with the properties specified above, and some Karnaugh minimization we can derive the requisite boolean function for the Reset inputs:
 
-![async-0-9-counter-truth-table](img/async-0-9-counter-truth-table.png) ![Reset Eq](https://latex.codecogs.com/gif.latex?\text{Reset}&space;=&space;Q_3Q_1)
+![async-0-9-counter-truth-table](img/async-0-9-counter-truth-table.png)
 
-And don't forget that we need an output clock signal for the 0-5 counter. Since this signal should occur at exactly the same time as  occurs, the function is identical: ![Clock Out Eq](https://latex.codecogs.com/gif.latex?\text{Clk&space;Out}&space;=&space;Q_3Q_1)
+Yields:
+
+[MATH]\text{Reset} = Q_3 Q_1[/MATH]
+
+And don't forget that we need an output clock signal for the 0-5 counter. Since this signal should occur at exactly the same time as  occurs, the function is identical:
+
+[MATH]\text{Clk Out} = Q_3 Q_1[/MATH]
 
 All that is left to do is assemble the circuit (below).
 
@@ -115,7 +121,7 @@ All that is left to do is assemble the circuit (below).
 It's clear that when it comes to counting circuits, because of the correspondence between when bits flip and when clk-signals must occur, employing an asynchronous design yields a more compact circuit. Thus, for all subsequent counters we will only go over asynchrnous designs. *(Note that the output clock signal is not visible in the circuit below because it occurs for only a fraction of a second)*.
 
 ## The 0-5 Counter:
-The procedure here is exactly like before. The only notable difference is that in order to represent our largest number 5&#x2081;&#x2080; we only need 3 bits 1015&#x2082;  and thus only 3 flip flops.
+The procedure here is exactly like before. The only notable difference is that in order to represent our largest number 5&#x2081;&#x2080; we only need 3 bits 101&#x2082;  and thus only 3 flip flops.
 
 ![async-complete-0-5-counter-circuit](img/async-complete-0-5-counter-circuit.gif)
 
@@ -151,13 +157,13 @@ Decoders use [Combinational Logic](). So, we'll need a truth table. *(Note: I ap
 
 In order to fill out the truth table, it helps have on hand which segments need to be illuminated in order to represent each number:
 
-![number-to-segment-eq](https://latex.codecogs.com/gif.latex?%5Cbegin%7Balign*%7D%209_%7B10%7D%20%26%3D%20ABCDFG%20%5C%5C%208_%7B10%7D%20%26%3D%20ABCDEFG%20%5C%5C%207_%7B10%7D%20%26%3D%20ABC%20%5C%5C%206_%7B10%7D%20%26%3D%20ACDEFG%20%5C%5C%205_%7B10%7D%20%26%3D%20ACDFG%20%5C%5C%204_%7B10%7D%20%26%3D%20BCFG%20%5C%5C%203_%7B10%7D%20%26%3D%20ABCDG%20%5C%5C%202_%7B10%7D%20%26%3D%20ABDEG%20%5C%5C%201_%7B10%7D%20%26%3D%20BC%20%5C%5C%200_%7B10%7D%20%26%3D%20ABCDF%20%5Cend%7Balign*%7D)
+[MATH]\begin{align*} 9_{10} &= ABCDFG \\ 8_{10} &= ABCDEFG \\ 7_{10} &= ABC \\ 6_{10} &= ACDEFG \\ 5_{10} &= ACDFG \\ 4_{10} &= BCFG \\ 3_{10} &= ABCDG \\ 2_{10} &= ABDEG \\ 1_{10} &= BC \\ 0_{10} &= ABCDF \end{align*}[/MATH]
 
 Each input to the decoder I&#x2083;, I&#x2082;, I&#x2081;, and I&#x2080; corresponds to the outputs of the counter, Q&#x2083;, Q&#x2082; etc..
 
 Utilizing K-Map minimization again we derive the following output equations:
 
-![minute-decoder-eqs](https://latex.codecogs.com/gif.latex?%5Cbegin%7Balign*%7D%20A%20%26%3D%20I_2%20I_0%20&plus;%20%5Coverline%7BI_2%7D%20%5C%3B%20%5Coverline%7BI_0%7D%20&plus;%20I_3%20&plus;%20I_1%20%5C%5C%20B%20%26%3D%20I_2%20I_0%20&plus;%20%5Coverline%7BI_2%7D%20%5C%3B%20%5Coverline%7BI_0%7D%20&plus;%5Coverline%7BI_2%7D%20%5C%5C%20C%20%26%3D%20I_2%20&plus;%20%5Coverline%7BI_1%7D%20&plus;%20I_0%20%5C%5C%20D%20%26%3D%20I_2%20&plus;%20%5Coverline%7BI_1%7D%20&plus;%20I_0%20%5C%5C%20E%20%26%3D%20%28%5Coverline%7BI_2%7D%20&plus;%20I_1%29%5Coverline%7BI_0%7D%20%5C%5C%20F%20%26%3D%20%28%5Coverline%7BI_1%7D%20&plus;%20%5Coverline%7BI_0%7D%29%20I_2%20&plus;%20%5Coverline%7BI_1%7D%20%5C%3B%20%5Coverline%7BI_0%7D%20&plus;%20I_3%20%5C%5C%20G%20%26%3D%20%28%5Coverline%7BI_1%7D%20&plus;%20%5Coverline%7BI_0%7D%29%20I_2%20&plus;%20%5Coverline%7BI_2%7D%20%5C%3B%20%5Coverline%7BI_1%7D%20&plus;%20I_3%20%5Cend%7Balign*%7D)
+[MATH]\begin{align*} A &= I_2 I_0 &plus; \overline{I_2} \; \overline{I_0} &plus; I_3 &plus; I_1 \\ B &= I_2 I_0 &plus; \overline{I_2} \; \overline{I_0} &plus;\overline{I_2} \\ C &= I_2 &plus; \overline{I_1} &plus; I_0 \\ D &= I_2 &plus; \overline{I_1} &plus; I_0 \\ E &= (\overline{I_2} &plus; I_1)\overline{I_0} \\ F &= (\overline{I_1} &plus; \overline{I_0}) I_2 &plus; \overline{I_1} \; \overline{I_0} &plus; I_3 \\ G &= (\overline{I_1} &plus; \overline{I_0}) I_2 &plus; \overline{I_2} \; \overline{I_1} &plus; I_3 \end{align*}[/MATH]
 
 And finally, we can construct the circuit... it's a large cumbersome thing, but it gets the job done.
 
@@ -188,4 +194,4 @@ That's it! Feel free to comment below with any questions (WIP).
 ## Download:
 I'm frequently asked for the Logisim files for the completed project. Thus, I'm including a download link below. Be sure to have [Logisim][1] installed.
 
-* [Download]()
+* [Download](resources/DigitalClock.zip)
