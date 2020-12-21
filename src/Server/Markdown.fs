@@ -3,20 +3,20 @@
 open System.Text.RegularExpressions
 open Shared
 
-let keyword = "MATH"
-let inlineKeyword = "IMATH"
-let openTag = sprintf "[%s]" keyword
-let closeTag = sprintf "[/%s]" keyword
-
-let patternTemplate keyword =
+let displayPatternTemplate keyword =
     sprintf "\[%s\](.*?)\[\/%s\]" keyword keyword
 
-let pattern = patternTemplate keyword
+let displayKeyword = "MATH"
+let displayOpenTag = sprintf "[%s]" displayKeyword
+let displayCloseTag = sprintf "[/%s]" displayKeyword
+let displayPattern = displayPatternTemplate displayKeyword
+let urlStart = "https://latex.codecogs.com/gif.latex?"
+
+
+let inlineKeyword = "IMATH"
 let inlineOpenTag = sprintf "[%s]" inlineKeyword
 let inlineCloseTag = sprintf "[/%s]" inlineKeyword
-let inlinePattern = patternTemplate inlineKeyword
-
-let urlStart = "https://latex.codecogs.com/gif.latex?"
+let inlinePattern = displayPatternTemplate inlineKeyword
 let inlineUrlStart = urlStart + "%5Cinline%20%5Csmall%20"
 
 let image url = sprintf "![equation](%s)" url
@@ -25,18 +25,17 @@ module Latex =
     let encodedImage prefix input =
         input |> String.urlEncode |> (+) prefix |> image
 
-    let mathImage input = encodedImage urlStart input
+    let displayMathImage = encodedImage urlStart
 
-    let inlineMathImage input = encodedImage inlineUrlStart input
+    let inlineMathImage = encodedImage inlineUrlStart
 
-    let replace pattern converter input =
+    let convert pattern converter input =
         Regex.Matches(input, pattern)
-        |> Seq.map (fun m -> (m.Value, converter m.Groups.[1].Value))
+        |> Seq.map (fun m -> m.Value, m.Groups.[1].Value |> converter)
         |> Seq.fold (fun acc (m, v) -> acc |> String.replace m v) input
 
-    let replaceMath input = replace pattern mathImage input
+    let convertDisplayMath = convert displayPattern displayMathImage
 
-    let replaceInlineMath input =
-        replace inlinePattern inlineMathImage input
+    let convertInlineMath = convert inlinePattern inlineMathImage
 
-    let replaceALlMath = replaceMath >> replaceInlineMath
+    let convertMath = convertDisplayMath >> convertInlineMath

@@ -27,7 +27,7 @@ let properties = testList "String Property Tests" [
     testProperty "Markdown.Latex.mathImage: prefixes CodeCogs URL"
     <| fun (NonNull url) ->
         // act
-        let result = Markdown.Latex.mathImage url
+        let result = Markdown.Latex.displayMathImage url
 
         // assert
         result = (sprintf "![equation](%s%s)" Markdown.urlStart (String.urlEncode url))
@@ -56,12 +56,12 @@ let all =
                     @"V_c \equiv V_{trig} M AT [H] \equiv V_{thresh} = L"
 
                 let input =
-                    Markdown.openTag + expression + Markdown.closeTag
+                    Markdown.displayOpenTag + expression + Markdown.displayCloseTag
 
-                let expected = Markdown.Latex.mathImage expression
+                let expected = Markdown.Latex.displayMathImage expression
 
                 // act
-                let result = Markdown.Latex.replaceMath input
+                let result = Markdown.Latex.convertDisplayMath input
 
                 // assert
                 Expect.equal result expected ""
@@ -79,14 +79,14 @@ let all =
 
                 let input =
                     template
-                        (Markdown.openTag + expression1 + Markdown.closeTag)
-                        (Markdown.openTag + expression2 + Markdown.closeTag)
+                        (Markdown.displayOpenTag + expression1 + Markdown.displayCloseTag)
+                        (Markdown.displayOpenTag + expression2 + Markdown.displayCloseTag)
 
                 let expected =
-                    template (Markdown.Latex.mathImage expression1) (Markdown.Latex.mathImage expression2)
+                    template (Markdown.Latex.displayMathImage expression1) (Markdown.Latex.displayMathImage expression2)
 
                 // act
-                let result = Markdown.Latex.replaceMath input
+                let result = Markdown.Latex.convertDisplayMath input
 
                 // assert
                 Expect.equal result expected ""
@@ -104,20 +104,20 @@ let all =
 
                 let input =
                     template
-                        (Markdown.openTag + expression1 + Markdown.closeTag)
+                        (Markdown.displayOpenTag + expression1 + Markdown.displayCloseTag)
                         (Markdown.inlineOpenTag
                          + expression2
                          + Markdown.inlineOpenTag)
 
                 let expected =
                     template
-                        (Markdown.Latex.mathImage expression1)
+                        (Markdown.Latex.displayMathImage expression1)
                         (Markdown.inlineOpenTag
                          + expression2
                          + Markdown.inlineOpenTag)
 
                 // act
-                let result = Markdown.Latex.replaceMath input
+                let result = Markdown.Latex.convertDisplayMath input
 
                 // assert
                 Expect.equal result expected ""
@@ -136,7 +136,7 @@ let all =
                     Markdown.Latex.inlineMathImage expression
 
                 // act
-                let result = Markdown.Latex.replaceInlineMath input
+                let result = Markdown.Latex.convertInlineMath input
 
                 // assert
                 Expect.equal result expected ""
@@ -165,7 +165,7 @@ let all =
                     template (Markdown.Latex.inlineMathImage expression1) (Markdown.Latex.inlineMathImage expression2)
 
                 // act
-                let result = Markdown.Latex.replaceInlineMath input
+                let result = Markdown.Latex.convertInlineMath input
 
                 // assert
                 Expect.equal result expected ""
@@ -183,18 +183,18 @@ let all =
 
                 let input =
                     template
-                        (Markdown.openTag + expression1 + Markdown.closeTag)
+                        (Markdown.displayOpenTag + expression1 + Markdown.displayCloseTag)
                         (Markdown.inlineOpenTag
                          + expression2
                          + Markdown.inlineCloseTag)
 
                 let expected =
                     template
-                        (Markdown.openTag + expression1 + Markdown.closeTag)
+                        (Markdown.displayOpenTag + expression1 + Markdown.displayCloseTag)
                         (Markdown.Latex.inlineMathImage expression2)
 
                 // act
-                let result = Markdown.Latex.replaceInlineMath input
+                let result = Markdown.Latex.convertInlineMath input
 
                 // assert
                 Expect.equal result expected ""
@@ -212,18 +212,18 @@ let all =
 
                 let input =
                     template
-                        (Markdown.openTag + expression1 + Markdown.closeTag)
+                        (Markdown.displayOpenTag + expression1 + Markdown.displayCloseTag)
                         (Markdown.inlineOpenTag
                          + expression2
                          + Markdown.inlineCloseTag)
 
                 let expected =
                     template
-                        (Markdown.Latex.mathImage expression1)
+                        (Markdown.Latex.displayMathImage expression1)
                         (Markdown.Latex.inlineMathImage expression2)
 
                 // act
-                let result = Markdown.Latex.replaceALlMath input
+                let result = Markdown.Latex.convertMath input
 
                 // assert
                 Expect.equal result expected ""
@@ -239,7 +239,7 @@ let all =
                 let input = inputPattern patternText
 
                 // act
-                let result = Markdown.Latex.replace pattern converter input
+                let result = Markdown.Latex.convert pattern converter input
 
                 // assert
                 Expect.equal result (inputPattern (String.slugify pattern)) ""

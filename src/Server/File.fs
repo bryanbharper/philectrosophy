@@ -31,4 +31,4 @@ type BlogContentStore(fileAccess: IFileAccess) =
         member this.GetBlogEntryContentAsync slug =
             sprintf "public/blog.posts/%s.md" slug
             |> fileAccess.ReadFileAsync
-            |> Async.map (Option.map Markdown.Latex.replaceALlMath)
+            |> Async.map (Option.map Markdown.Latex.convertMath)
