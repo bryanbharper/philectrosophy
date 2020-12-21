@@ -33,6 +33,10 @@ type InMemoryRepository() =
 
             "The 555 Timer IC"
             |> BlogEntry.create
+            |> BlogEntry.setSubtitle "A Practical Analysis"
+            |> BlogEntry.setThumbNail "img/555-ic-thumbnail.png"
+            |> BlogEntry.setCreatedOn (DateTime(2017, 1, 6))
+            |> BlogEntry.setSynopsis "The 555 Timer IC is a versatile chip in wide use. This entry gives a theoretical overview of its primary operation modes."
         ]
 
     interface IRepository with
