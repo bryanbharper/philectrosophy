@@ -1,39 +1,11 @@
-﻿# Omega
+﻿> **READ THIS:** The game discussed below is currently *broken*. I've left the original post intact (below), but I've removed the canvas that housed the game. I've included a zip of the game files below, in case you're the type who enjoys looking at that kind of thing. I *DO* plan on rebuilding the game at some point. It's just a matter of finding the time.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+[omega.zip](resources/omega.zip)
 
-# h1
-## h2
-### h3
-#### h4
-##### h5
-###### h6
+I've been meaning to freshen up my Javascript know-how, and with a week off from school, building a game seemed like a fun way to be "productive". So, I give you OMEGA! The half-baked video game.
 
-1. An
-2. Ordered
-    1. A
-    2. Nested
-    3. List
-3. List
+#### Credits:
+* Art by [Hunter Johnson](https://www.instagram.com/hunterrosej/)
+* Music by [Brecht Vissers](http://opengameart.org/content/adventure-on-various-songs)
 
-* An
-* Unordered
-    - A
-    - Nested
-    - List
-* List
-
-
-1. An
-2. Ordered
-    - A
-    - Nested
-    - List
-3. List
-
-* An
-* Unordered
-    1. A
-    2. Nested
-    3. List
-* List
+> The game went here :(

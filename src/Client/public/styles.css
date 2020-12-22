@@ -84,9 +84,9 @@
 
 .markdown blockquote {
     background: #f3f1f1;
-    font-style: italic;
+    /*font-style: italic;*/
     border-left: 3px solid #7a6193;
-    margin: 1.5em 10px;
+    margin: 1em 5px;
     padding: 0.5em 10px;
     quotes: none;
 }

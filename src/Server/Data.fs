@@ -18,6 +18,11 @@ type InMemoryRepository() =
             |> BlogEntry.setSynopsis "TerminalTalk is a terminal based chat application. It was created as a project for my computer networking class."
             "Omega"
             |> BlogEntry.create
+            |> BlogEntry.setSubtitle "The Half Baked Video Game"
+            |> BlogEntry.setThumbNail "img/omega-thumbnail.png"
+            |> BlogEntry.setCreatedOn (DateTime(2016, 03, 12))
+            |> BlogEntry.setSynopsis "With a week off from school, I decided to try my hand at making a browser game using Javascript! It's rather crumby. But its mine, and I'm proud of it."
+
             "Build A Digital Clock"
             |> BlogEntry.create
             |> BlogEntry.setSubtitle "How, theoretically, to construct a digital clock."
