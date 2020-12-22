@@ -5,20 +5,22 @@ open Data
 open File
 open Shared
 
-let getEntriesAsync (repo: IRepository) = repo.GetBlogEntriesAsync()
+let getEntriesAsync (repo: IRepository) =
+    repo.GetBlogEntriesAsync()
+    |> Async.map (List.sortByDescending (fun e -> e.CreatedOn))
 
-let getEntryAsync (repo: IRepository) (file: IBlogContentStore) slug =
-    (repo.GetBlogEntryAsync slug, file.GetBlogEntryContentAsync slug)
+let getEntryAsync (repo: IRepository) (fileStore: IBlogContentStore) slug =
+    (repo.GetBlogEntryAsync slug, fileStore.GetBlogEntryContentAsync slug)
     |> Tuple.sequenceAsync
     |> Async.map Tuple.sequenceOption
 
 let blogApiReader =
     reader {
         let! repo = resolve<IRepository> ()
-        let! file = resolve<IBlogContentStore> ()
+        let! filreStore = resolve<IBlogContentStore> ()
 
         return {
                    GetEntries = fun () -> getEntriesAsync repo
-                   GetEntry = fun slug -> getEntryAsync repo file slug
+                   GetEntry = getEntryAsync repo filreStore
                }
     }

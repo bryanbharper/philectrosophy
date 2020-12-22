@@ -1,5 +1,6 @@
 ﻿module Server.Tests.BlogApi
 
+open System
 open Server
 open Server.Data
 open Server.File
@@ -11,14 +12,25 @@ let all =
     testList
         "BlogApi Tests"
         [
-            testCase "BlogApi.getEntriesAsync: returns all entries from repo."
+
+            testCase "BlogApi.getEntriesAsync: returns all entries ordered by created date."
             <| fun _ ->
                 // arrange
+                let earliest =
+                    BlogEntry.create "Earliest"
+                    |> BlogEntry.setCreatedOn (DateTime(2017, 1, 1))
+                let middle =
+                    BlogEntry.create "Middle"
+                    |> BlogEntry.setCreatedOn (DateTime(2018, 1, 1))
+                let latest =
+                    BlogEntry.create "Latest"
+                    |> BlogEntry.setCreatedOn (DateTime(2019, 1, 1))
+
                 let entries =
                     [
-                        BlogEntry.create "Terminal Talk"
-                        BlogEntry.create "Omega"
-                        BlogEntry.create "Build A Digital Clock"
+                        middle
+                        latest
+                        earliest
                     ]
 
                 let repo =
@@ -31,7 +43,7 @@ let all =
                     |> Async.RunSynchronously
 
                 // assert
-                Expect.equal result entries "Result is equal to entries from repo."
+                Expect.sequenceContainsOrder result (entries |>List.sortByDescending (fun e -> e.CreatedOn)) "Results are ordered by CreatedOn"
 
             testCase "BlogApi.getEntryAsync: returns metadata from repo and content from file store."
             <| fun _ ->

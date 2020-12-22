@@ -189,7 +189,7 @@ A couple of things to note:
 
 ![complete-clock-circuit](img/complete-clock-circuit.gif)
 
-That's it! Feel free to comment below with any questions (WIP).
+That's it! Feel free to contact me with any questions.
 
 ## Download:
 I'm frequently asked for the Logisim files for the completed project. Thus, I'm including a download link below. Be sure to have [Logisim][1] installed.
