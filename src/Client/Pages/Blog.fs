@@ -33,13 +33,31 @@ let renderEntry dispatch entry =
     let title = Bulma.title.h4 [ prop.text entry.Title ]
 
     let subTitle =
+        let updatedMsg =
+            match entry.UpdatedOn with
+            | None -> Html.none
+            | Some date ->
+                Html.span [
+                    prop.classes [
+                        Bulma.HasTextGrey
+                        Bulma.IsItalic
+                        Bulma.Ml1
+                    ]
+                    prop.text (sprintf "Updated: %s" (Date.format date))
+                ]
+
         Bulma.subtitle.p [
-            prop.classes [
-                Bulma.Is6
-                Bulma.HasTextGreyLight
-                Bulma.IsItalic
+            prop.classes [ Bulma.Is6 ]
+            prop.children [
+                Html.span [
+                    prop.classes [
+                        Bulma.HasTextGreyLight
+                        if entry.UpdatedOn.IsSome then Style.IsStrikeThrough else Bulma.IsItalic
+                    ]
+                    prop.text (sprintf "Posted the %s" (Date.format entry.CreatedOn))
+                ]
+                updatedMsg
             ]
-            prop.text (sprintf "Posted by %s on %s" entry.Author (Date.format entry.CreatedOn))
         ]
 
     let synopsis = Html.p entry.Synopsis
@@ -49,8 +67,13 @@ let renderEntry dispatch entry =
         |> MediaObject.render entry.ThumbNailUrl
 
     Html.div [
-        prop.classes [ Style.Clickable; Bulma.Mb6 ]
-        prop.onClick (fun _ -> (Url.Blog.asString.ToLower(), entry.Slug) |> Router.navigate)
+        prop.classes [
+            Style.Clickable
+            Bulma.Mb6
+        ]
+        prop.onClick (fun _ ->
+            (Url.Blog.asString.ToLower(), entry.Slug)
+            |> Router.navigate)
         prop.children media
     ]
 

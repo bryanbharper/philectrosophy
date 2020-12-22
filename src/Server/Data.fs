@@ -21,6 +21,7 @@ type InMemoryRepository() =
             |> BlogEntry.setSubtitle "The Half Baked Video Game"
             |> BlogEntry.setThumbNail "img/omega-thumbnail.png"
             |> BlogEntry.setCreatedOn (DateTime(2016, 03, 12))
+            |> BlogEntry.setUpdatedOn ((2020, 12, 21) |> DateTime |> Some)
             |> BlogEntry.setSynopsis "With a week off from school, I decided to try my hand at making a browser game using Javascript! It's rather crumby. But its mine, and I'm proud of it."
 
             "Build A Digital Clock"

@@ -31,9 +31,7 @@ module BlogEntry =
         }
 
     let setSubtitle subTitle entry = { entry with Subtitle = subTitle }
-
     let setThumbNail url entry = { entry with ThumbNailUrl = url }
-
     let setCreatedOn date entry = { entry with CreatedOn = date }
-
     let setSynopsis synopsis entry = { entry with Synopsis = synopsis }
+    let setUpdatedOn dateOption entry = { entry with UpdatedOn = dateOption }

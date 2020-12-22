@@ -47,6 +47,34 @@ let update (msg: Msg) (state: State): State * Cmd<Msg> =
 
         { state with Entry = Resolved entry }, Cmd.none
 
+let subTitle metadata =
+        let updatedMsg =
+            match metadata.UpdatedOn with
+            | None -> Html.none
+            | Some date ->
+                Html.span [
+                    prop.classes [
+                        Bulma.HasTextGrey
+                        Bulma.IsItalic
+                        Bulma.Ml1
+                    ]
+                    prop.text (sprintf "Updated: %s" (Date.format date))
+                ]
+
+        Bulma.subtitle.p [
+            prop.classes [ Bulma.Is6 ]
+            prop.children [
+                Html.span [
+                    prop.classes [
+                        Bulma.HasTextGreyLight
+                        if metadata.UpdatedOn.IsSome then Style.IsStrikeThrough else Bulma.IsItalic
+                    ]
+                    prop.text (sprintf "Posted the %s" (Date.format metadata.CreatedOn))
+                ]
+                updatedMsg
+            ]
+        ]
+
 let header metadata =
     [
         Bulma.title.h2 [
@@ -56,13 +84,7 @@ let header metadata =
             prop.classes [ Bulma.HasTextGrey ]
             prop.text metadata.Subtitle
         ]
-        Bulma.subtitle.h6 [
-            prop.classes [
-                Bulma.HasTextGreyLight
-                Bulma.IsItalic
-            ]
-            prop.text (sprintf "Posted by %s on %s" metadata.Author (Date.format metadata.CreatedOn))
-        ]
+        subTitle metadata
         Html.hr []
     ]
     |> Html.div
