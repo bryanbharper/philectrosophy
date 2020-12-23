@@ -11,6 +11,7 @@ type MarkedOptions = { sanitize: bool; smartypants: bool }
 type IMarkedProps =
     | [<CompiledName("value")>] Content of string
     | [<CompiledName("markedOptions")>] Options of MarkedOptions
+    | [<CompiledName("className")>] Class of string
     interface IHTMLProp
 
 let render content =
@@ -18,13 +19,7 @@ let render content =
         [
             Content content
             Options { sanitize = false; smartypants = true }
+            Class Client.Styles.Style.Markdown
         ]
 
-    Html.div [
-        prop.classes [
-            Client.Styles.Style.Markdown
-        ]
-        prop.children [
-            ofImport "MarkdownPreview" "react-marked-markdown" (keyValueList CaseRules.LowerFirst props) []
-        ]
-    ]
+    ofImport "MarkdownPreview" "react-marked-markdown" (keyValueList CaseRules.LowerFirst props) []

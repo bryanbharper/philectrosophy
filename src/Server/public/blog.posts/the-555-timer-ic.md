@@ -34,7 +34,7 @@ Finally, make note of the *dis* pin's relationship to our primary inputs. The *d
 ### The Astable Operating Mode:
 #### Astable Mode — Big Picture:
 
-The astable mode of the 555 IC generates a square wave. Let's begin our analysis of this configuration by first seeing the astable configuration in action. Open the [url](https://everycircuit.com/circuit/6574783370362880) below in a new tab &mdash; you can see that so configured, the 555 IC produces a square wave at the output (orange).
+The astable mode of the 555 IC generates a square wave. Let's begin our analysis of this configuration by first seeing the astable configuration in action. Open the [url](https://everycircuit.com/circuit/6574783370362880) below in a new tab --- you can see that so configured, the 555 IC produces a square wave at the output (orange).
 
 [Astable Mode Simulation][astable sim]
 
