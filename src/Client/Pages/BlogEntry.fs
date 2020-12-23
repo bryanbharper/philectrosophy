@@ -89,16 +89,6 @@ let header metadata =
     ]
     |> Html.div
 
-
-let content (content: string) =
-    Markdown.render [
-        Markdown.Content content
-        Markdown.Options [
-            Markdown.LangPrefix "hljs"
-            Markdown.GithubFlavoured
-        ]
-    ]
-
 let layout (contents: ReactElement list) =
     Bulma.section [
         Bulma.columns [
@@ -118,5 +108,5 @@ let render (state: State) (dispatch: Msg -> unit): ReactElement =
         | InProgress -> Spinner.render
         | Resolved entry ->
             header entry.Metadata
-            content entry.Content
+            Markdown.render entry.Content
     ]

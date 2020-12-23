@@ -6,24 +6,24 @@ open Fable.React.Props
 open Fable.React.Helpers
 open Feliz
 
-type IMarkedOptions =
-    | [<CompiledName("gfc")>] GithubFlavoured
-    | Tables
-    | Sanitize of bool
-    | SmartLists
-    | Pedantic
-    | Breaks
-    | Smartypants
-    | LangPrefix of string
+type MarkedOptions = { sanitize: bool; smartypants: bool }
 
 type IMarkedProps =
     | [<CompiledName("value")>] Content of string
-    | [<CompiledName("markedOptions")>] Options of IMarkedOptions list
+    | [<CompiledName("markedOptions")>] Options of MarkedOptions
     interface IHTMLProp
 
-let render (props: IHTMLProp list) =
+let render content =
+    let props =
+        [
+            Content content
+            Options { sanitize = false; smartypants = true }
+        ]
+
     Html.div [
-        prop.classes [ Client.Styles.Style.Markdown ]
+        prop.classes [
+            Client.Styles.Style.Markdown
+        ]
         prop.children [
             ofImport "MarkdownPreview" "react-marked-markdown" (keyValueList CaseRules.LowerFirst props) []
         ]
