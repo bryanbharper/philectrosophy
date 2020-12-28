@@ -32,14 +32,20 @@ type InMemoryRepository() =
             |> BlogEntry.setSynopsis "This post is the first of a three part series on the design and implementation a digital clock from the underlying logical design to the electronics that implement it."
             "MIPS Microprocessor"
             |> BlogEntry.create
+
             "Inevitable Atoms"
             |> BlogEntry.create
+            |> BlogEntry.setSubtitle "In a Gunky World"
+            |> BlogEntry.setThumbNail "img/inevitable-atoms-thumbnail.jpg"
+            |> BlogEntry.setCreatedOn (DateTime(2014, 7, 23))
+            |> BlogEntry.setUpdatedOn ((2020, 12, 28) |> DateTime |> Some)
+            |> BlogEntry.setSynopsis "A metaphysics paper that raises objections to Ted Sider's 1993 objections to Compositional Nihilism."
 
             "On the Evolutionary Argument Against Naturalism"
             |> BlogEntry.create
             |> BlogEntry.setSubtitle "Objections to Plantinga's argument that naturalism is self defeating."
             |> BlogEntry.setThumbNail "img/eaan-thumbnail.png"
-            |> BlogEntry.setCreatedOn (DateTime(2014, 7, 23))
+            |> BlogEntry.setCreatedOn (DateTime(2015, 10, 2))
             |> BlogEntry.setUpdatedOn ((2020, 12, 27) |> DateTime |> Some)
             |> BlogEntry.setSynopsis "This post is a response to the various forms of Alvin Plantinga's argument that naturalism is a self-defeating belief, collectively know as The Evolutionary Argument Against Naturalism."
 
