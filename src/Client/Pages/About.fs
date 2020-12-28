@@ -267,7 +267,7 @@ let philosophy =
     let projects =
         [
             "Inevitable Atoms", "#/blog/build-a-digital-clock"
-            "Epiphenomenalism in E.A.A.N", "#/blog/epiphenomenalism-in-plantingas-eaan"
+            "On Plantinga's E.A.A.N", "#/blog/on-the-evolutionary-argument-against-naturalism"
         ]
 
     [

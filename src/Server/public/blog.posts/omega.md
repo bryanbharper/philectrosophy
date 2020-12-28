@@ -5,7 +5,7 @@
 I've been meaning to freshen up my Javascript know-how, and with a week off from school, building a game seemed like a fun way to be "productive". So, I give you OMEGA! The half-baked video game.
 
 #### Credits:
-* Art by [Hunter Johnson](https://www.instagram.com/hunterrosej/)
+* Art by [Hunter Johnson](https://www.instagram.com/hunterrosejshop/)
 * Music by [Brecht Vissers](http://opengameart.org/content/adventure-on-various-songs)
 
 > The game went here :(

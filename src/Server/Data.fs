@@ -34,8 +34,14 @@ type InMemoryRepository() =
             |> BlogEntry.create
             "Inevitable Atoms"
             |> BlogEntry.create
-            "Epiphenomenalism in Plantinga's E.A.A.N."
+
+            "On the Evolutionary Argument Against Naturalism"
             |> BlogEntry.create
+            |> BlogEntry.setSubtitle "Objections to Plantinga's argument that naturalism is self defeating."
+            |> BlogEntry.setThumbNail "img/eaan-thumbnail.png"
+            |> BlogEntry.setCreatedOn (DateTime(2014, 7, 23))
+            |> BlogEntry.setUpdatedOn ((2020, 12, 27) |> DateTime |> Some)
+            |> BlogEntry.setSynopsis "This post is a response to the various forms of Alvin Plantinga's argument that naturalism is a self-defeating belief, collectively know as The Evolutionary Argument Against Naturalism."
 
             "The 555 Timer IC"
             |> BlogEntry.create
