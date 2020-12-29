@@ -25,11 +25,11 @@ With all this in mind, a diagrammatic representation of our digital clock might 
 
 There are four 7-segment displays — two displays represent each digit of the hour, and two other displays represent each minute digit. For clarity, let's denote the most significant hour digit as H&#x2081; and the least significant hour digit as *H&#x2080;*. Likewise for the minutes (i.e, *M&#x2081;* and  *M&#x2080;*).
 
-Each display is driven by a counter, intermediated by a decoder. The counters output a binary digit, and the decoders translate binary to something decipherable by the 7-segment display.
+Each display is driven by a counter, intermediated by a decoder. The counters output a binary digit, and the decoders translate the binary into something decipherable by the 7-segment displays.
 
-Note the way the counters are arranged in a cascading fashion, starting with the clock signal and ending with the AM / PM indicator. The clock signal iterates the 0-9 counter (representing *M&#x2080;*) once each minute *1&#x2044;60 Hz*). Each time the 0-9 counter iterates from *M&#x2080; = 9* to *M&#x2080; = 0* it sends out a signal that iterates the 0-5 counter (representing *M&#x2081;*). A similar process takes place for the 1-12 counter and AM / PM indicator.
+Note the way the counters are arranged in a cascading fashion, starting with the clock signal and ending with the AM / PM indicator. The clock signal iterates the 0-9 counter (representing *M&#x2080;*) once each minute (*1&#x2044;60 Hz*). Each time the 0-9 counter iterates from *M&#x2080; = 9* to *M&#x2080; = 0* it sends out a signal that iterates the 0-5 counter (representing *M&#x2081;*). A similar process takes place for the 1-12 counter and AM / PM indicator.
 
-A couple of notes about this diagrammatic sketch: first, there are any number of ways we might sketch out and design our digital clock. This is just the simplest I could come up with. Second, you might be wondering why the *H&#x2081;* and *H&#x2080;* digits are together driven by a single counter, whereas the *M&#x2081;* and *M&#x2080;* are individually driven by two separate counters. Again, this isn't the only possible choice, but I'll explain why I did this in a [later section](#the-1-12-counter-).
+A couple of notes about this diagrammatic sketch: first, there are any number of ways we might sketch out and design our digital clock. This is just the simplest I could come up with. Second, you might be wondering why the *H&#x2081;* and *H&#x2080;* digits are together driven by a single counter, whereas the *M&#x2081;* and *M&#x2080;* are individually driven by two separate counters. Again, this isn't the only possible design choice, but I'll explain why I chose to do this in a later section.
 
 ## The 0-9 Counter:
 A counter circuit is a [sequential logic]() circuit. Thus, we could design [synchronous]() or [asynchronous]() versions of the circuit. For this first counter I'll illustrate both methods: we'll find that asynchronous counters are generally simpler, so I'll only provide asynchronous designs for the 0-5 and 1-12 counters.
@@ -40,21 +40,28 @@ Generally, a sequential circuit requires the use of *flip-flops*. For our design
 
 ![t-flip-flop-diagrams-and-table](img/t-flip-flop-diagrams-and-table-horizontal.gif)
 
-The T flip-flop's logic circuit, block diagram, and excitation table are shown above. When the *T* input of the the T flip-flop is '1' (true or high), the current state of the flip flop, *Q*, toggles to its logical opposite on each clock pulse. If the *T* input is '0' (false or low) the state of the flip-flop is unchanged. Lastly, if the *Preset* or *Reset* inputs are '1', the state will asynchrnously (i.e., instantly, irrespective of *clk*) become '1' or '0' respectively.
+The T flip-flop's logic circuit, block diagram, and excitation table are shown above. When the *T* input of the T flip-flop is '1' (true or high), the current state of the flip flop, *Q*, toggles to its logical opposite on each clock pulse. If the *T* input is '0' (false or low) the state of the flip-flop is unchanged. Lastly, if the *Preset* or *Reset* inputs are '1', the state will asynchrnously (i.e., instantly, irrespective of *clk*) become '1' or '0' respectively.
 
 As always in digital electronics, we'll be doing our counting in binary. For the 0-9 counter, the largest number we will need to represent is 9&#x2081;&#x2080;, which in binary is four bits, 1001&#x2082;. Each bit will be expressed by the output, *Q*, of a flip flop. So we'll need four flip-flops.
 
 Let's enumerate the flip-flop inputs and outputs for ease of communication. We'll denote the output of the flip-flop representing the least significant bit as *Q&#x2080;* and its corresponding input as *T&#x2080;*. The next input-output pair will be *Q&#x2081;* and *T&#x2081;*, and so on. Thus, if we want to represent the number 5&#x2081;&#x2080; (i.e.,  0101&#x2082;), then the output of each flip-flop should be *Q&#x2083; = 0*,  *Q&#x2082; = 1*,  *Q&#x2081; = 0*, and  *Q&#x2080; = 1*.
 
-Now we have all the information we need to compose an excitation table for our 0-9 counter circuit:
+Now we need to construct an excitation table for our 0-9 counter circuit. We can do so with the following pieces of information:
 
-For each value represented by the current state, Q&#x2083;( t ) Q&#x2082;( t ) Q&#x2081;( t ) Q&#x2080;( t ), the corresponding next state, Q&#x2083;( t + 1 ) Q&#x2082;( t + 1 ) Q&#x2081;( t + 1 ) Q&#x2080;( t + 1 ), must represent the current value plus one (i.e., we're counting).
+* For each value represented by the current state, [IMATH]Q_3(t)Q_2(t)Q_1(t)Q_0(t)[/IMATH], the corresponding next state, [IMATH]Q_3(t+1)Q_2(t+1)Q_1(t+1)Q_0(t+1)[/IMATH], must represent the current value plus one (i.e., we're counting).
 
-To determine the value of a given T&#8342; we consult the T flip-flop's excitation table. If  , then  . If Q&#8342;( t ) &#8800; Q&#8342;( t + 1 ), then T&#8342; = 0.
+* To determine the value of a given T&#8342; we consult the T flip-flop's excitation table[POP] ![t-flip-flop-excitation-table](img/t-flip-flop-excitation-table.jpg) [/POP]. From this we see that:
 
-The Clk Out values are determined merely by recalling that we want the circuit to send out a clock signal whenever it has flipped from its highest to lowest numeric value.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[MATH]Q_{k}(t) \neq Q_{k}(t+1) \; \rightarrow \; T_k = 1[/MATH]
 
-Finally, the 'x's denote "don't care" conditions; if our circuit has been properly designed, the inputs with the "don't care" conditions will never occur, so we can safely assume that a given 'x' is either a '1' or '0', whichever simplifies our function most.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[MATH]Q_{k}(t) = Q_{k}(t+1) \; \rightarrow\;  T_k = 0[/MATH]
+
+
+* The Clk Out values are determined merely by recalling that we want the circuit to send out a clock signal whenever it has flipped from its highest to lowest numeric value. So we'll fill those out in the table accordingly.
+
+* Finally, the 'x's denote ["don't care" conditions](https://en.wikipedia.org/wiki/Don%27t-care_term); if our circuit has been properly designed, the inputs with the "don't care" conditions will never occur, so we can safely assume that a given 'x' is either a '1' or '0', whichever simplifies our function most.
+
+Using the bullet points above, we construct the excitation table for our 0-9 counter circuit below:
 
 ![0-9-counter-excitation-table](img/0-9-counter-excitation-table.jpg)
 
@@ -118,7 +125,8 @@ All that is left to do is assemble the circuit (below).
 
 ![async-complete-0-9-counter-circuit](img/async-complete-0-9-counter-circuit.gif)
 
-It's clear that when it comes to counting circuits, because of the correspondence between when bits flip and when clk-signals must occur, employing an asynchronous design yields a more compact circuit. Thus, for all subsequent counters we will only go over asynchrnous designs. *(Note that the output clock signal is not visible in the circuit below because it occurs for only a fraction of a second)*.
+It's clear that when it comes to counting circuits, because of the correspondence between when bits flip and when clk-signals must occur, employing an asynchronous design yields a more compact circuit. Thus, for all subsequent counters we will only go over asynchrnous designs.
+> *Note: the output clock signal is not visible in the circuit above as it only occurs for a fraction of a second. I though about editing the gif to make it visible, but I'm too lazy, so you'll have to just use your imagination.*
 
 ## The 0-5 Counter:
 The procedure here is exactly like before. The only notable difference is that in order to represent our largest number 5&#x2081;&#x2080; we only need 3 bits 101&#x2082;  and thus only 3 flip flops.
@@ -126,16 +134,16 @@ The procedure here is exactly like before. The only notable difference is that i
 ![async-complete-0-5-counter-circuit](img/async-complete-0-5-counter-circuit.gif)
 
 ## The 1-12 Counter:
-Recall from [The Big Picture](#the-big-picture) that the H&#x2081; and H&#x2080; digits are together driven by a single counter, whereas the M&#x2081; and M&#x2080; were individually driven by two separate counters. Why have I designed it this way?
+Recall from our big picture diagram[POP]![digital-clock-design-big-picture](img/diagrammatic-outline-of-digital-clock-design.png)[/POP] that the H&#x2081; and H&#x2080; digits are together driven by a single counter, whereas the M&#x2081; and M&#x2080; were individually driven by two separate counters. Why have I designed it this way?
 
 Well, imagine for a moment designing the hour counters such that one counter drove H&#x2081; and another drove H&#x2080;, as we did with the minutes. This would require the H&#x2080; counter to count from 1 to 9, then from 1 to 2 (and repeat). And the H&#x2081; counter would have to count from 0 to 1, but at irregular intervals. These would make for some pretty unwieldy circuits. Counters like this *could* be built (probably synchronously), but it would be a somewhat awkward and confusing procedure. And why bother with that?
 
-We can greatly simplify matters by having a single circuit that counts from 1-12. However, in order to have this single counter drive two 7-segment displays (one for H&#x2081; and one for H&#x2080;), we'll later have to construct a decoder the splits the outputs into to two separate sets. But we'll cross that bridge when we get there.
+We can greatly simplify matters by having a single circuit that counts from 1-12. However, in0 order to have this single counter drive *two* 7-segment displays (one for H&#x2081; and one for H&#x2080;), we'll later have to construct a decoder the splits the outputs into to two separate sets. But we'll cross that bridge when we get there.
 
-The procedure here is very much that same as with our previous counters, with two exceptions:
+The procedure here is very much the same as with our previous counters, with two exceptions:
 
 * First, when our 1-12 counter resets it flips to 1&#x2081;&#x2080; rather than 0&#x2081;&#x2080;. This translates to the necessity that Q&#x2080; = 1 whenever we begin a new cycle. To do this, instead of connecting a wire to Reset&#x2080;, we connect it to Preset&#x2080;, which will instantly set Q&#x2080; = 1 when the wire is 'ON'.
-* Second,the output clock signal should trigger when the counter reaches 12&#x2081;&#x2080; rather than when the hours reset to 1&#x2081;&#x2080; (because... twelve hour clocks are weird. *Seriously, wouldn't it make more sense if the am/pm switch happened at 1am/pm?!* Just me? *Alternatively we could swap 12 for 0*..., anyway).
+* Second, the output clock signal should trigger when the counter reaches 12&#x2081;&#x2080; rather than when the hours reset to 1&#x2081;&#x2080; (because... twelve hour clocks are weird.).
 
 The circuit is below:
 
@@ -150,7 +158,8 @@ To translate from binary to individually lit segments we need a *decoder circuit
 
 Since both the M&#x2081; and M&#x2080; decoders translate binary digits to a single 7-segment display, we can use the same design for both.
 
-Decoders use [Combinational Logic](). So, we'll need a truth table. *(Note: I appear to have been a bit lazy in making the truth table below; interpret blank spaces as zeros).*
+Decoders use [Combinational Logic](). So, we'll need a truth table.
+> *Note: I appear to have had a mental lapse when making the truth table below; interpret blank spaces as zeros.*
 
 ![minute-decoder-truth-table](img/minute-decoder-truth-table.png)
 
@@ -159,7 +168,7 @@ In order to fill out the truth table, it helps have on hand which segments need 
 
 [MATH]\begin{align*} 9_{10} &= ABCDFG \\ 8_{10} &= ABCDEFG \\ 7_{10} &= ABC \\ 6_{10} &= ACDEFG \\ 5_{10} &= ACDFG \\ 4_{10} &= BCFG \\ 3_{10} &= ABCDG \\ 2_{10} &= ABDEG \\ 1_{10} &= BC \\ 0_{10} &= ABCDF \end{align*}[/MATH]
 
-Each input to the decoder I&#x2083;, I&#x2082;, I&#x2081;, and I&#x2080; corresponds to the outputs of the counter, Q&#x2083;, Q&#x2082; etc..
+Each input to the decoder, I&#x2083;, I&#x2082;, I&#x2081;, and I&#x2080;, corresponds to the outputs of the counter, Q&#x2083;, Q&#x2082; etc..
 
 Utilizing K-Map minimization again we derive the following output equations:
 
@@ -173,7 +182,8 @@ And finally, we can construct the circuit... it's a large cumbersome thing, but 
 
 Exactly the same principles are employed to design the hour decoder as were used with the minute decoders. However, in this case there will be two sets of outputs. Thus, our truth table and circuit will be twice as large and cumbersome as last time. They are included below.
 
-In the circuit and truth table the A&#x2081;, B&#x2081;, C&#x2081;, ... etc. outputs all go to the H&#x2081; display, and the A&#x2080;, B&#x2080;, C&#x2080;,... etc. outputs all go to the H&#x2080; display. (Once again, blanks are to be interpreted as zeros).
+In the circuit and truth table the A&#x2081;, B&#x2081;, C&#x2081;, ... etc. outputs all go to the H&#x2081; display, and the A&#x2080;, B&#x2080;, C&#x2080;,... etc. outputs all go to the H&#x2080; display.
+> *Once again, blanks are to be interpreted as zeros.*
 
 ![hour-decoder-truth-table-and-circuit](img/hour-decoder-truth-table-and-circuit.png)
 
@@ -192,6 +202,6 @@ A couple of things to note:
 That's it! Feel free to contact me with any questions.
 
 ## Download:
-I'm frequently asked for the Logisim files for the completed project. Thus, I'm including a download link below. Be sure to have [Logisim][1] installed.
+I'm frequently asked for the Logisim files for the completed project. So, I'm including a download link below. Be sure to have [Logisim][1] installed.
 
 * [Download](resources/DigitalClock.zip)

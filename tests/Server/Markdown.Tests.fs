@@ -30,7 +30,7 @@ let properties = testList "String Property Tests" [
         let result = Markdown.Latex.displayMathImage url
 
         // assert
-        result = (sprintf "![equation](%s%s)" Markdown.urlStart (String.urlEncode url))
+        result = (sprintf "![equation](%s%s)" Markdown.codeCogsUrl (String.urlEncode url))
 
     testProperty "Markdown.Latex.inlineMathImage: prefixes CodeCogs URL with inline prefix"
     <| fun (NonNull url) ->
@@ -38,16 +38,32 @@ let properties = testList "String Property Tests" [
         let result = Markdown.Latex.inlineMathImage url
 
         // assert
-        result = (sprintf "![equation](%s%s)" Markdown.inlineUrlStart (String.urlEncode url))
+        result = (sprintf "![equation](%s%s)" Markdown.codeCogsUrlInline (String.urlEncode url))
 
     ]
 
 let all =
     testList
-        "Latex Tests"
+        "Markdown Tests"
         [
 
             properties
+
+            testCase "Markdown.convert: converts all instances of pattern using converter"
+            <| fun _ ->
+                // arrange
+                let patternText = "dogs are cool"
+                let pattern = sprintf "(%s)" patternText
+                let converter = String.slugify
+
+                let inputPattern x = sprintf "Some stuff blah %s and other stuff %s" x x
+                let input = inputPattern patternText
+
+                // act
+                let result = Markdown.convert pattern converter input
+
+                // assert
+                Expect.equal result (inputPattern (String.slugify pattern)) ""
 
             testCase "Markdown.Latex.convertDisplayMath: replaces string of only [MATH]"
             <| fun _ ->
@@ -56,7 +72,7 @@ let all =
                     @"V_c \equiv V_{trig} M AT [H] \equiv V_{thresh} = L"
 
                 let input =
-                    Markdown.displayOpenTag + expression + Markdown.displayCloseTag
+                    Markdown.displayMathOpenTag + expression + Markdown.displayMathCloseTag
 
                 let expected = Markdown.Latex.displayMathImage expression
 
@@ -79,8 +95,8 @@ let all =
 
                 let input =
                     template
-                        (Markdown.displayOpenTag + expression1 + Markdown.displayCloseTag)
-                        (Markdown.displayOpenTag + expression2 + Markdown.displayCloseTag)
+                        (Markdown.displayMathOpenTag + expression1 + Markdown.displayMathCloseTag)
+                        (Markdown.displayMathOpenTag + expression2 + Markdown.displayMathCloseTag)
 
                 let expected =
                     template (Markdown.Latex.displayMathImage expression1) (Markdown.Latex.displayMathImage expression2)
@@ -104,17 +120,17 @@ let all =
 
                 let input =
                     template
-                        (Markdown.displayOpenTag + expression1 + Markdown.displayCloseTag)
-                        (Markdown.inlineOpenTag
+                        (Markdown.displayMathOpenTag + expression1 + Markdown.displayMathCloseTag)
+                        (Markdown.inlineMathOpenTag
                          + expression2
-                         + Markdown.inlineOpenTag)
+                         + Markdown.inlineMathOpenTag)
 
                 let expected =
                     template
                         (Markdown.Latex.displayMathImage expression1)
-                        (Markdown.inlineOpenTag
+                        (Markdown.inlineMathOpenTag
                          + expression2
-                         + Markdown.inlineOpenTag)
+                         + Markdown.inlineMathOpenTag)
 
                 // act
                 let result = Markdown.Latex.convertDisplayMath input
@@ -128,9 +144,9 @@ let all =
                 let expression = @"X^2 \frac{1}{2} IMATH [] \overline{taco}"
 
                 let input =
-                    Markdown.inlineOpenTag
+                    Markdown.inlineMathOpenTag
                     + expression
-                    + Markdown.inlineCloseTag
+                    + Markdown.inlineMathCloseTag
 
                 let expected =
                     Markdown.Latex.inlineMathImage expression
@@ -154,12 +170,12 @@ let all =
 
                 let input =
                     template
-                        (Markdown.inlineOpenTag
+                        (Markdown.inlineMathOpenTag
                          + expression1
-                         + Markdown.inlineCloseTag)
-                        (Markdown.inlineOpenTag
+                         + Markdown.inlineMathCloseTag)
+                        (Markdown.inlineMathOpenTag
                          + expression2
-                         + Markdown.inlineCloseTag)
+                         + Markdown.inlineMathCloseTag)
 
                 let expected =
                     template (Markdown.Latex.inlineMathImage expression1) (Markdown.Latex.inlineMathImage expression2)
@@ -183,14 +199,14 @@ let all =
 
                 let input =
                     template
-                        (Markdown.displayOpenTag + expression1 + Markdown.displayCloseTag)
-                        (Markdown.inlineOpenTag
+                        (Markdown.displayMathOpenTag + expression1 + Markdown.displayMathCloseTag)
+                        (Markdown.inlineMathOpenTag
                          + expression2
-                         + Markdown.inlineCloseTag)
+                         + Markdown.inlineMathCloseTag)
 
                 let expected =
                     template
-                        (Markdown.displayOpenTag + expression1 + Markdown.displayCloseTag)
+                        (Markdown.displayMathOpenTag + expression1 + Markdown.displayMathCloseTag)
                         (Markdown.Latex.inlineMathImage expression2)
 
                 // act
@@ -212,10 +228,10 @@ let all =
 
                 let input =
                     template
-                        (Markdown.displayOpenTag + expression1 + Markdown.displayCloseTag)
-                        (Markdown.inlineOpenTag
+                        (Markdown.displayMathOpenTag + expression1 + Markdown.displayMathCloseTag)
+                        (Markdown.inlineMathOpenTag
                          + expression2
-                         + Markdown.inlineCloseTag)
+                         + Markdown.inlineMathCloseTag)
 
                 let expected =
                     template
@@ -228,20 +244,37 @@ let all =
                 // assert
                 Expect.equal result expected ""
 
-            testCase "Markdown.Latex.convert: converts all instances of pattern using converter"
+            testCase "Markdown.Bulma.wrapInPopover: puts input inside popover"
             <| fun _ ->
                 // arrange
-                let patternText = "dogs are cool"
-                let pattern = sprintf "(%s)" patternText
-                let converter = String.slugify
+                let input =
+                    @"![555-ic-comparator-1](img/555-ic-comparator-1.png)"
 
-                let inputPattern x = sprintf "Some stuff blah %s and other stuff %s" x x
-                let input = inputPattern patternText
+                let expected = """<sup class="popover"><span class="icon is-small"><i class="fas fa-window-restore"></i></span><span class="popover-content">"""
+                                + input
+                                + "</span></sup>"
 
                 // act
-                let result = Markdown.Latex.convert pattern converter input
+                let result = Markdown.Bulma.wrapInPopover input
 
                 // assert
-                Expect.equal result (inputPattern (String.slugify pattern)) ""
+                Expect.equal result expected ""
+
+            testCase "Markdown.Bulma.convertPopovers: replaces string of only [POP]"
+            <| fun _ ->
+                // arrange
+                let expression =
+                    @"![555-ic-comparator-1](img/555-ic-comparator-1.png)"
+
+                let input =
+                    Markdown.popoverOpenTag + expression + Markdown.popoverCloseTag
+
+                let expected = Markdown.Bulma.wrapInPopover expression
+
+                // act
+                let result = Markdown.Bulma.convertPopovers input
+
+                // assert
+                Expect.equal result expected ""
 
         ]

@@ -70,14 +70,43 @@ let all =
                 let slug = "some-slug"
                 let path = sprintf "public/blog.posts/%s.md" slug
                 let content =
-                    Markdown.displayOpenTag + "\overline{Q} \frac{1}{2} X^2 R_b" + Markdown.displayCloseTag
+                    Markdown.displayMathOpenTag + "\overline{Q} \frac{1}{2} X^2 R_b" + Markdown.displayMathCloseTag
                     + "Some random stuff"
-                    + Markdown.inlineOpenTag + "\sum x^2" + Markdown.inlineCloseTag
+                    + Markdown.inlineMathOpenTag + "\sum x^2" + Markdown.inlineMathCloseTag
 
                 let expected =
                     content
                     |> Markdown.Latex.convertDisplayMath
                     |> Markdown.Latex.convertInlineMath
+
+                let fileAccess =
+                    Mock<IFileAccess>().Setup(fun f -> <@ f.ReadFileAsync path @>)
+                        .Returns(content |> Some |> async.Return).Create()
+
+                let target =
+                    BlogContentStore(fileAccess) :> IBlogContentStore
+
+                // act
+                let result =
+                    target.GetBlogEntryContentAsync slug
+                    |> Async.RunSynchronously
+
+                // arrange
+                Expect.equal result (Some expected) ""
+
+            testCase "BlogContentStore.GetBlogEntryContentAsync: replaces popover blocks"
+            <| fun _ ->
+                // arrange
+                let slug = "some-slug"
+                let path = sprintf "public/blog.posts/%s.md" slug
+                let content =
+                    "Some random stuff"
+                    + Markdown.popoverOpenTag + "Hello! I'm in a popover." + Markdown.popoverCloseTag
+                    + "Some more random stuff"
+
+                let expected =
+                    content
+                    |> Markdown.Bulma.convertPopovers
 
                 let fileAccess =
                     Mock<IFileAccess>().Setup(fun f -> <@ f.ReadFileAsync path @>)

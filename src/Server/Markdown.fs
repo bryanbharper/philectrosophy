@@ -3,39 +3,52 @@
 open System.Text.RegularExpressions
 open Shared
 
-let displayPatternTemplate keyword =
+let codeCogsUrl = "https://latex.codecogs.com/gif.latex?"
+let patternTemplate keyword =
     sprintf "\[%s\](.*?)\[\/%s\]" keyword keyword
 
-let displayKeyword = "MATH"
-let displayOpenTag = sprintf "[%s]" displayKeyword
-let displayCloseTag = sprintf "[/%s]" displayKeyword
-let displayPattern = displayPatternTemplate displayKeyword
-let urlStart = "https://latex.codecogs.com/gif.latex?"
+let displayMathKeyword = "MATH"
+let displayMathOpenTag = sprintf "[%s]" displayMathKeyword
+let displayMathCloseTag = sprintf "[/%s]" displayMathKeyword
+let displayMathPattern = patternTemplate displayMathKeyword
 
 
-let inlineKeyword = "IMATH"
-let inlineOpenTag = sprintf "[%s]" inlineKeyword
-let inlineCloseTag = sprintf "[/%s]" inlineKeyword
-let inlinePattern = displayPatternTemplate inlineKeyword
-let inlineUrlStart = urlStart + "%5Cinline%20%5Csmall%20"
+let inlineMathKeyword = "IMATH"
+let inlineMathOpenTag = sprintf "[%s]" inlineMathKeyword
+let inlineMathCloseTag = sprintf "[/%s]" inlineMathKeyword
+let inlineMathPattern = patternTemplate inlineMathKeyword
+let codeCogsUrlInline = codeCogsUrl + "%5Cinline%20%5Csmall%20"
+
+let popoverKeyword = "POP"
+let popoverOpenTag = sprintf "[%s]" popoverKeyword
+let popoverCloseTag = sprintf "[/%s]" popoverKeyword
+let popoverPattern = patternTemplate popoverKeyword
 
 let image url = sprintf "![equation](%s)" url
+
+let convert pattern converter input =
+    Regex.Matches(input, pattern)
+    |> Seq.map (fun m -> m.Value, m.Groups.[1].Value |> converter)
+    |> Seq.fold (fun acc (m, v) -> acc |> String.replace m v) input
 
 module Latex =
     let encodedImage prefix input =
         input |> String.urlEncode |> (+) prefix |> image
 
-    let displayMathImage = encodedImage urlStart
+    let displayMathImage = encodedImage codeCogsUrl
 
-    let inlineMathImage = encodedImage inlineUrlStart
+    let inlineMathImage = encodedImage codeCogsUrlInline
 
-    let convert pattern converter input =
-        Regex.Matches(input, pattern)
-        |> Seq.map (fun m -> m.Value, m.Groups.[1].Value |> converter)
-        |> Seq.fold (fun acc (m, v) -> acc |> String.replace m v) input
+    let convertDisplayMath = convert displayMathPattern displayMathImage
 
-    let convertDisplayMath = convert displayPattern displayMathImage
-
-    let convertInlineMath = convert inlinePattern inlineMathImage
+    let convertInlineMath = convert inlineMathPattern inlineMathImage
 
     let convertMath = convertDisplayMath >> convertInlineMath
+
+module Bulma =
+    let wrapInPopover input =
+        """<sup class="popover"><span class="icon is-small"><i class="fas fa-window-restore"></i></span><span class="popover-content">"""
+        + input
+        + "</span></sup>"
+
+    let convertPopovers = convert popoverPattern wrapInPopover

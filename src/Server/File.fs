@@ -29,6 +29,10 @@ type BlogContentStore(fileAccess: IFileAccess) =
     interface IBlogContentStore with
 
         member this.GetBlogEntryContentAsync slug =
+            let preprocessor =
+                Markdown.Latex.convertMath
+                >> Markdown.Bulma.convertPopovers
+
             sprintf "public/blog.posts/%s.md" slug
             |> fileAccess.ReadFileAsync
-            |> Async.map (Option.map Markdown.Latex.convertMath)
+            |> Async.map (Option.map preprocessor)

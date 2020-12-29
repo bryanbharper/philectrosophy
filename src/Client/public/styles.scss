@@ -3,4 +3,5 @@
 @use "scss/theme";
 @use "scss/progress-bar";
 @use "scss/variables";
-@import "../../../node_modules/bulma/bulma";
+@use "../../../node_modules/bulma/bulma";
+@use "../../../node_modules/bulma-popover/css/bulma-popover.css";

@@ -1,4 +1,4 @@
-﻿[comparator]: https://en.wikipedia.org/wiki/Comparator#:~:text=In%20electronics%2C%20a%20comparator%20is,The%20output%20is%20ideally "Comparator"
+﻿[comparator]: https://en.wikipedia.org/wiki/Comparator "Comparator"
 [sr latch]: https://www.allaboutcircuits.com/textbook/digital/chpt-10/s-r-latch/ "SR Latch"
 [oscillator]: https://en.wikipedia.org/wiki/Electronic_oscillator "Oscillator"
 [astable sim]: https://everycircuit.com/circuit/6574783370362880 "Astable Mode Simulation"
@@ -16,18 +16,18 @@ The 555 Timer IC is a versatile chip that is in wide use. It is most commonly us
 
 Above is a schematic of the essential components of the 555 IC. Here are a few things to make note of at the outset:
 * The three resistors between pins 1 and 8 are the same value. Thus, they will equally divide [IMATH]V_{cc}[/IMATH] in three, as indicated on the schematic. (These three resistors are usually *5kΩ* and are the namesake of the IC).
-* The Control Voltage (*ctrl*) pin is a special purpose pin that often goes unused. Thus, you will see that in most applications it is simply connected to ground through a small capacitor (typically *10 nF* ) to stabilize it at [IMATH]\frac{2}{3} V_{cc}[/IMATH].
+* Pin 5, the Control Voltage (*ctrl*) pin is a special purpose pin that often goes unused. Thus, you will see that in most applications it is simply connected to ground through a small capacitor (typically *10 nF* ) in order to stabilize it at [IMATH]\frac{2}{3} V_{cc}[/IMATH].
 * The Trigger (*trig*) pin will determine the output of [comparator] 1, as the comparator's other input terminal is fixed at [IMATH]\frac{1}{3} V_{cc}[/IMATH]. Likewise, the Threshold (*thr*) pin will determine the output of comparator 2 as the comparator's other input terminal is fixed at [IMATH]\frac{2}{3} V_{cc}[/IMATH] (with exception of use of the *ctrl* pin, as discussed above). Together, the *trig* and *thresh* pins (generally) determine the Output (*out*) of the IC.
-* In the schematic shown, there is a grey dashed box labelled Output Stage. This is simply to indicate that there is more going on than what is shown. However, the important thing to know is that the signal is inverted.
+* In the schematic shown, there is a grey dashed box labelled Output Stage. This is simply to indicate that there is more going on than what is shown. But the details of the output stage won't be important for our purposes. *The important thing to know is that the signal gets inverted by this stage*.
 * Setting the Reset (*res*) pin to logic low will override all other inputs and set the *out* pin to logic low.
 
 To get an initial feel for the chip, let's consider how the primary inputs, *trig* and *thr*, effect the *out* and Discharge (*dis*) pins. This will not immediately elucidate the chip's operation, but it will come in handy later.
 
 Let [IMATH]H[/IMATH] stand for logic high and [IMATH]L[/IMATH] stand for logic low. Also, assume [IMATH]H > \frac{2}{3} V_{cc}[/IMATH] and [IMATH]L < \frac{1}{3} V_{cc}[/IMATH].
 
-The output of comparator 1, which is the Set (*S*) pin on the [SR Latch][sr latch], will be H when *trig* is L and L when *trig* is H. Likewise, the output of comparator 2, which is the Reset (*R*) pin on the SR latch, will be L when *thr* is L and H when *thr* is H. Since the output of the 555 IC is essentially the output of this SR latch we can see that when *trig* and *thr* are both L, *out* is H, when *trig* and *thr* are both H, *out* is L, and finally when *trig* is H and *thr* is L, the output maintains its current value.
+The output of comparator 1[POP]![555-ic-comparator-1](img/555-ic-comparator-1.png)[/POP], which is the Set (*S*) pin on the [SR Latch][sr latch][POP]![555-ic-sr-latch](img/555-ic-sr-latch.png)[/POP], will be H when *trig* is L and L when *trig* is H. Likewise, the output of comparator 2[POP]![555-ic-comparator-2](img/555-ic-comparator-2.png)[/POP], which is the Reset (*R*) pin on the SR latch, will be L when *thr* is L and H when *thr* is H. Since the output of the 555 IC is essentially the output of this SR latch we can see that when *trig* and *thr* are both L, *out* is H, when *trig* and *thr* are both H, *out* is L, and finally when *trig* is H and *thr* is L, the output maintains its current value.
 
-Finally, make note of the *dis* pin's relationship to our primary inputs. The *dis* pin is connected to the collector of an NPN transistor, which is controlled at the base by [IMATH]\overline{Q}[/IMATH] . As the name 'Discharge' indicates, when the base of the transistor is H (activating the transistor) this allows current to flow through (perhaps discharging a capacitor or some other component) the *dis* pin.
+Finally, make note of the *dis* pin's relationship to our primary inputs. The *dis* pin is connected to the collector of an <a href="https://www.electronics-tutorials.ws/transistor/tran_2.html">NPN transistor</a>[POP]![555-ic-npn-transistor](img/555-ic-npn-transistor.png)[/POP], which is controlled at the base by [IMATH]\overline{Q}[/IMATH] . As the name 'Discharge' indicates, when the base of the transistor is H (activating the transistor) this allows current to flow through (perhaps discharging a capacitor or some other component) the *dis* pin.
 
 ![555-timer-input-output-table](img/555-timer-input-output-table.png)
 
@@ -47,8 +47,8 @@ Let's strip down this circuit to its essential parts to understand its operation
 
 As is often the case, the key to oscillation in this circuit is a capacitor. This capacitor links the *trig* and *thresh* pins to ground and is charged through [IMATH] R_A [/IMATH] and [IMATH]R_B[/IMATH]. The basic operation of this circuit can be understood in two stages:
 
-1. At [IMATH]t = 0[/IMATH] the capacitor voltage, [IMATH]V_c \equiv V_{trig} \equiv V_{thresh} = L[/IMATH]. From the table above we see that [IMATH]out(t + 1) = H[/IMATH] . Additionally, dis is Off and thus the capacitor is unable to discharge through [IMATH]R_B[/IMATH].
-2. The capacitor charges and eventually [IMATH]V_c > \frac{2}{3} V_{cc}[/IMATH], or equivalently [IMATH]V_c = H[/IMATH]. From the table above we see that [IMATH]out(t + 1) = L[/IMATH]. However, *dis* is now On and so the capacitor can now discharge through [IMATH]R_B[/IMATH], eventually returning to stage one. Rinse and repeat.
+1. At [IMATH]t = 0[/IMATH] the capacitor voltage, [IMATH]V_c \equiv V_{trig} \equiv V_{thresh} = L[/IMATH]. From the table[POP]![555-timer-input-output-table](img/555-timer-input-output-table.png)[/POP] above we see that [IMATH]out(t + 1) = H[/IMATH]. Additionally, *dis* is Off and thus the capacitor is unable to discharge through [IMATH]R_B[/IMATH].
+2. The capacitor charges and eventually [IMATH]V_c > \frac{2}{3} V_{cc}[/IMATH], or equivalently [IMATH]V_c = H[/IMATH]. From the table above we see that [IMATH]out(t + 1) = L[/IMATH]. However, *dis* is now On and so the capacitor can now discharge through [IMATH]R_B[/IMATH], lowering the voltage back down and eventually returning to stage one. Rinse and repeat.
 
 Returning to the [simulation][astable sim] above, the charging and discharging of the capacitor (shown in blue) is clearly shown to be driving the output
 
@@ -68,13 +68,13 @@ As was uncovered in the qualitative analysis, the time in which the output is hi
 
 ...where [IMATH] \tau = R_{Eq} C[/IMATH].
 
-Let's first find [IMATH]T_H[/IMATH]. During the interval in which the capacitor is charging the NPN transistor is inactive, and thus we can model it as an open circuit. Also, note that no current ever flows into the comparators' input terminals (see op-amps). Thus, our circuit simplifies to the schematic shown on the below.
+Let's first find [IMATH]T_H[/IMATH]. During the interval in which the capacitor is charging the NPN transistor is inactive, and thus we can model it as an open circuit. Also, note that no current ever flows into the comparators' input terminals (see [op-amps](https://en.wikipedia.org/wiki/Operational_amplifier)). Thus, our circuit simplifies to the schematic shown on the below.
 
 ![Charging Capacitor Equivalent](img/charging-capacitor-equivalent-circuit.png)
 
 The equivalent resistance is straightforwardly [IMATH]R_{Eq} = R_{A} + R_{B}[/IMATH], and so [IMATH]\tau = \left( R_A + R_B \right) C[/IMATH]. Assuming that the circuit has been running, the initial voltage across the capacitor should be [IMATH]V_{c}(0) = \frac{1}{3} V_{cc}[/IMATH]. If we were to leave the circuit on the right as it is indefinitely, the capacitor would eventually become fully charged and no current would flow through it; since no current would be flowing through [IMATH]R_A[/IMATH] or [IMATH]R_B[/IMATH], there would be no voltage drop across the resistors and so [IMATH]V_{c}(\infty) = V{cc}[/IMATH].
 
-Finally, we know from our qualitative analysis that the outputs of the astable circuit ceases to be high when the voltage across the capacitor reaches [IMATH]\frac{2}{3}V_{cc}[/IMATH]. Thus, [IMATH]V_{c}(T_H) = \frac{2}{3}V_{cc}[/IMATH]. Plugging the parameters found above into the capacitor's transient equation yields:
+Finally, we know from our qualitative analysis that the outputs of the astable circuit ceases to be high when the voltage across the capacitor reaches [IMATH]\frac{2}{3}V_{cc}[/IMATH]. Thus, [IMATH]V_{c}(T_H) = \frac{2}{3}V_{cc}[/IMATH]. Plugging the parameters found above into the capacitor's transient equation (above) yields:
 
 [MATH]\frac{2}{3}V_{cc} = V{cc} + \left( \frac{1}{3} V_{cc} - V_{cc} \right) e^{ - T_H / \tau }[/MATH]
 
