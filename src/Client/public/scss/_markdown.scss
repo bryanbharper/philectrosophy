@@ -1,0 +1,105 @@
+﻿.markdown {
+    color: #363636;
+
+    h1 {
+        font-size: 3em;
+        margin-bottom: 1.5rem;
+        font-weight: 600;
+        line-height: 1.125;
+    }
+
+    h2 {
+        font-size: 2.5em;
+        margin-bottom: 1.5rem;
+        font-weight: 600;
+        line-height: 1.125;
+    }
+
+    h3 {
+        font-size: 2em;
+        margin-bottom: 1.5rem;
+        font-weight: 600;
+        line-height: 1.125;
+    }
+
+    h4 {
+        margin-bottom: 1.5rem;
+        font-weight: 600;
+        line-height: 1.125;
+    }
+
+    h5 {
+        font-size: 1.25em;
+        margin-bottom: 1.5rem;
+        font-weight: 600;
+        line-height: 1.125;
+    }
+
+    h6 {
+        font-size: 1em;
+        margin-bottom: 1.5rem;
+        font-weight: 600;
+        line-height: 1.125;
+    }
+
+    ul {
+        list-style-position: outside;
+        list-style-type: disc;
+        margin-left: 2em;
+        margin-top: 1em;
+
+        ul {
+            list-style-type: circle;
+            margin-top: .25em;
+            margin-bottom: .25em;
+        }
+
+        :not(:last-child) {
+            margin-bottom: 1em;
+        }
+    }
+
+    ol {
+        list-style-type: decimal;
+        list-style-position: outside;
+        margin-left: 2em;
+        margin-top: 1em;
+
+        ol {
+            list-style-type: lower-roman;
+            margin-top: .25em;
+            margin-bottom: .25em;
+        }
+
+        :not(:last-child) {
+            margin-bottom: 1em;
+        }
+    }
+
+    p {
+        display: block;
+        margin: 1em 0;
+    }
+
+    blockquote {
+        background: #f3f1f1;
+        /*font-style: italic;*/
+        border-left: 3px solid #7a6193;
+        margin: 1em 5px;
+        padding: 0.5em 10px;
+        quotes: none;
+
+        :before {
+            color: #ccc;
+            content: none;
+            font-size: 4em;
+            line-height: 0.1em;
+            margin-right: 0.25em;
+            vertical-align: -0.4em;
+        }
+
+        p {
+            display: inline;
+        }
+    }
+}

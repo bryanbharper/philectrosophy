@@ -276,7 +276,7 @@ let philosophy =
             "Earned a master's degree in philosophy. Also rusty, but enjoy the occasional omphaloskepsis — yes, that's a fancy word for 'navel-gaze'."
         interestsAndProjects interests projects
     ]
-    |> section Style.MidPurpleBg
+    |> section Style.LightPurpleBg
 
 let render (state: State) (dispatch: Msg -> unit): ReactElement =
     [
@@ -284,6 +284,6 @@ let render (state: State) (dispatch: Msg -> unit): ReactElement =
         programming
         engineering
         philosophy
-        section Style.LightPurpleBg []
+        section Style.LighterPurpleBg []
     ]
     |> Html.div

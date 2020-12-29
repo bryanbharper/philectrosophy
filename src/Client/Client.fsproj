@@ -6,8 +6,14 @@
     </PropertyGroup>
     <ItemGroup>
         <Content Include="public\favicon.png" />
-        <Content Include="public\styles.css" />
         <Content Include="public\phi.png" />
+        <Content Include="public\scss\_variables.scss" />
+        <Content Include="public\styles.scss" />
+        <Content Include="public\scss\_markdown.scss" />
+        <Content Include="public\scss\_helpers.scss" />
+        <Content Include="public\scss\_theme.scss" />
+        <Content Include="public\scss\_progress-bar.scss" />
+        <Content Include="public\styles.css" />
         <None Include="index.html" />
         <None Include="paket.references" />
         <Compile Include="Styles.fs" />

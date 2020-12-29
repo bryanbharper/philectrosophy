@@ -43,6 +43,10 @@ let execRawHandled cmd args workingDir =
 let execRaw cmd args workingDir =
     buildRawCmd cmd args workingDir |> Proc.run
 
+let sass input output =
+    let args = sprintf "--load-path=node_modules/bulma %s %s" input output
+    execRawHandled "sass" args ""
+
 let dotnet cmd workingDir =
     let result =
         DotNet.exec (DotNet.Options.withWorkingDirectory workingDir) cmd ""
@@ -65,6 +69,11 @@ Target.create "BlogImages"
 <| fun _ ->
     "Moving blog images to client." |> printSection
     Shell.copyDir (Path.combine clientPublicDir "img") blogImagePath (fun _ -> true)
+
+Target.create "BundleStyles"
+<| fun _ ->
+    "Transpiling .scss files into styles.css" |> printSection
+    sass ".\src\Client\public\styles.scss" ".\src\Client\public\styles.css"
 
 Target.create "InstallClient"
 <| fun _ ->
@@ -142,12 +151,14 @@ open Fake.Core.TargetOperators
 "Clean"
 ==> "InstallClient"
 ==> "BlogImages"
+==> "BundleStyles"
 ==> "Bundle"
 ==> "Azure"
 
 "Clean"
 ==> "InstallClient"
 ==> "BlogImages"
+==> "BundleStyles"
 ==> "Run"
 
 "Clean"
