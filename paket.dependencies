@@ -12,7 +12,7 @@ nuget Giraffe.SerilogExtensions
 nuget Saturn
 nuget Expecto
 
-nuget Fable.Core
+nuget Fable.Core 3.1.6
 nuget Fable.Elmish
 nuget Fable.Elmish.React
 nuget Fable.Elmish.Debugger
