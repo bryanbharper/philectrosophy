@@ -44,8 +44,8 @@ let execRaw cmd args workingDir =
     buildRawCmd cmd args workingDir |> Proc.run
 
 let sass input output =
-    let args = sprintf "--load-path=node_modules/bulma %s %s" input output
-    execRawHandled "sass" args ""
+    let args = sprintf "%s %s" input output
+    execRawHandled "sass" args "src\Client\public"
 
 let dotnet cmd workingDir =
     let result =
@@ -73,7 +73,7 @@ Target.create "BlogImages"
 Target.create "BundleStyles"
 <| fun _ ->
     "Transpiling .scss files into styles.css" |> printSection
-    sass ".\src\Client\public\styles.scss" ".\src\Client\public\styles.css"
+    sass "styles.scss" "styles.css"
 
 Target.create "InstallClient"
 <| fun _ ->
