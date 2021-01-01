@@ -16,6 +16,7 @@ type InMemoryRepository() =
             |> BlogEntry.setThumbNail "img/terminal-talk-thumbnail.jpg"
             |> BlogEntry.setCreatedOn (DateTime(2016, 12, 15))
             |> BlogEntry.setSynopsis "TerminalTalk is a terminal based chat application. It was created as a project for my computer networking class."
+
             "Omega"
             |> BlogEntry.create
             |> BlogEntry.setSubtitle "The Half Baked Video Game"
@@ -30,15 +31,20 @@ type InMemoryRepository() =
             |> BlogEntry.setThumbNail "img/build-a-digital-clock-thumbnail.jpg"
             |> BlogEntry.setCreatedOn (DateTime(2016, 1, 19))
             |> BlogEntry.setSynopsis "This post is the first of a three part series on the design and implementation a digital clock from the underlying logical design to the electronics that implement it."
-            "MIPS Microprocessor"
+
+            "The Identity of Indiscernibles"
             |> BlogEntry.create
+            |> BlogEntry.setSubtitle "In Defense of a Logical Law"
+            |> BlogEntry.setThumbNail "img/identity-of-indiscernibles-thumbnail.jpg"
+            |> BlogEntry.setCreatedOn (DateTime(2020, 12, 30))
+            |> BlogEntry.setSynopsis "Are two completely indistinguishable objects the same thing? To some, myself included, the answer is obviously yes. But others have raised doubts. In this post I give my reasons for not sharing those doubts..."
 
             "Inevitable Atoms"
             |> BlogEntry.create
             |> BlogEntry.setSubtitle "In a Gunky World"
             |> BlogEntry.setThumbNail "img/inevitable-atoms-thumbnail.jpg"
             |> BlogEntry.setCreatedOn (DateTime(2014, 7, 23))
-            |> BlogEntry.setUpdatedOn ((2020, 12, 28) |> DateTime |> Some)
+            |> BlogEntry.setUpdatedOn ((2020, 12, 31) |> DateTime |> Some)
             |> BlogEntry.setSynopsis "A metaphysics paper that raises objections to Ted Sider's 1993 objections to Compositional Nihilism."
 
             "On the Evolutionary Argument Against Naturalism"
