@@ -69,7 +69,7 @@ let subTitle metadata =
                         Bulma.HasTextGreyLight
                         if metadata.UpdatedOn.IsSome then Style.IsStrikeThrough else Bulma.IsItalic
                     ]
-                    prop.text (sprintf "Posted the %s" (Date.format metadata.CreatedOn))
+                    prop.text (sprintf "Posted: %s" (Date.format metadata.CreatedOn))
                 ]
                 updatedMsg
             ]

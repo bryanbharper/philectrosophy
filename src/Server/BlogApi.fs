@@ -6,7 +6,7 @@ open File
 open Shared
 
 let getEntriesAsync (repo: IRepository) =
-    repo.GetBlogEntriesAsync()
+    repo.GetPublishedEntriesAsync()
     |> Async.map (List.sortByDescending (fun e -> e.CreatedOn))
 
 let getEntryAsync (repo: IRepository) (fileStore: IBlogContentStore) slug =

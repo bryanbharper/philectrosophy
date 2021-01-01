@@ -6,6 +6,7 @@ type BlogEntry =
     {
         Author: string
         CreatedOn: DateTime
+        IsPublished: bool
         Slug: string
         Synopsis: string
         Tags: string option
@@ -21,6 +22,7 @@ module BlogEntry =
         {
             Author = "Bryan B. Harper"
             CreatedOn = DateTime.UtcNow
+            IsPublished = true
             Slug = String.slugify title
             Synopsis = sprintf "A blog about: %s" title
             Tags = None
@@ -30,8 +32,9 @@ module BlogEntry =
             UpdatedOn = None
         }
 
-    let setSubtitle subTitle entry = { entry with Subtitle = subTitle }
-    let setThumbNail url entry = { entry with ThumbNailUrl = url }
     let setCreatedOn date entry = { entry with CreatedOn = date }
+    let setIsPublished isPublished entry = { entry with IsPublished = isPublished }
+    let setSubtitle subTitle entry = { entry with Subtitle = subTitle }
     let setSynopsis synopsis entry = { entry with Synopsis = synopsis }
+    let setThumbNail url entry = { entry with ThumbNailUrl = url }
     let setUpdatedOn dateOption entry = { entry with UpdatedOn = dateOption }

@@ -34,7 +34,7 @@ let all =
                     ]
 
                 let repo =
-                    Mock<IRepository>().Setup(fun r -> <@ r.GetBlogEntriesAsync() @>).Returns(entries |> async.Return)
+                    Mock<IRepository>().Setup(fun r -> <@ r.GetPublishedEntriesAsync() @>).Returns(entries |> async.Return)
                         .Create()
 
                 // act
