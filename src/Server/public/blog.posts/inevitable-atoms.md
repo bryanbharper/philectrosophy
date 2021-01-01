@@ -68,9 +68,7 @@ The two atoms *and* the object they compose. If compositional nihilism is true, 
 Just to be clear, the compositional nihilist will still talk about tables and chairs, and they will agree that this chair is composed of parts from Ikea. But this is just an *informal* way of speaking. The correct / formal way to describe things is in terms of the arrangement of mereological atoms. And it is important that the two manners of speaking are not equivocated.
 
 
-### 3 &nbsp; Gunk in the Gears
-
-<p class="subtitle is-4">3.1 &nbsp; Sider's Argument</p>
+### 3 &nbsp; Sider's Argument
 
 Sider asks us to imagine the possibility of gunk, and of gunky worlds. There's no apparent contradiction to these concepts, so they appear possible in the metaphysical sense. Now, if compositional nihilism is true, then the only things which truly exist are atoms. But a gunky world contains no atoms:
 
@@ -90,17 +88,20 @@ Let's give structure to this argument:
 
 Premises (3.2) and (3.3) are just definitional. (3.4) and (3.5) are logically entailed by what's preceded. So the only premise available for objection is (3.1). Premise (3.1) emerges from the intuition that when we picture a gunky world, we can imagine stuff in in it, e.g., gunk shaped spheres and cubes. It should also be noted that premise (3.1) depends on gunk being metaphysically possible in the first place. So far, however, we've seen no reason to question this.
 
-<p class="subtitle is-4">3.2 &nbsp; Response</p>
+### 4 &nbsp; Response
+<p class="subtitle is-4">4.1 &nbsp; Are Gunk Worlds Empty?</p>
 
-Should the compositional nihilist agree to (3.1), that *a gunky world is not empty*? Should she agree that there are "tables and chairs, mountains and molehills"? If speaking formally, why should the compositional nihilist agree to this when they didn't agree to it in a non-gunky world? If we are speaking formally, has the argument has not begged the question, implicitly assuming that composition is possible? It would be no surprise then that we can derive the conclusion that compositional nihilism is false. So, if we are to agree to (3.1), it can only be in the informal sense that the compositional nihilist also agrees to the existence of table and chairs.
+Should the compositional nihilist agree to (3.1), that *a gunky world is not empty*? Should she agree that there are "tables and chairs, mountains and molehills"? If speaking formally, why should the compositional nihilist agree to this when they didn't agree to it in a non-gunky world? If we are speaking formally, has the argument has not begged the question, implicitly assuming that composition is possible? It would be no surprise then that we can derive the conclusion that compositional nihilism is false. So, if we are to agree to (3.1), it can only be in the informal sense in which the compositional nihilist also agrees to the existence of table and chairs in an atomistic world.
 
-But now look at that same phrase, "a gunky world is empty", in the antecedent of (3.4). In which way are we talking here? When the compositional nihilist looks into a room full of chairs and says, "there are no chairs in here", she is speaking formally. She would make no such denial when speaking informally. Likewise, we should only agree to (3.4) if we are speaking formally.
+But now look at that same phrase, "a gunky world is empty", in the antecedent of (3.4).[POP]If compositional nihilism is true, a gunky world is empty. [from 2 & 3][/POP] In which way are we talking here? When the compositional nihilist looks into a room full of chairs and says, "there are no chairs in here", she is speaking formally. She would make no such denial when speaking informally. Likewise, we should only agree to (3.4) if we are speaking formally.
 
 So in (3.1) we agree to the phrase "a gunky world is empty" informally, and in the antecedent of (3.4) we agree to it formally. It should be clear now, that in using (3.1) to negate the antecedent of (3.4), we have equivocated. These two phrases, while superficially the same, meant two different things. The argument is not valid.
 
-We have a sufficient rebuttal to Sider. But this does make me wonder about the tenability of our intuitions of a gunky world of "tables and chairs, mountains and molehills". The compositional nihilist doesn't have to agree to (3.1), but this does *seem* to imply that such a world is empty, which admittedly seems a bit odd. There's an alternative, however. Perhaps such a world isn't possible after all.
+<p class="subtitle is-4">4.2 &nbsp; Is Gunky Composition Possible?</p>
 
-### 4 &nbsp; Is Gunk Even Possible?
+We have a sufficient rebuttal to Sider, I think. But this does make me wonder about the tenability of our intuitions of a gunky world of "tables and chairs, mountains and molehills". The compositional nihilist doesn't have to agree to (3.1), but this does *seem* to imply that such a world is empty, which admittedly seems a bit odd.
+
+So here's a question. What should sider say exists, in the strict formal sense, in a gunky world? Atoms definitionally are out. But he believes "mountains and molehills" and the like exists. If we are to agree that the gunky world is not empty, in the strict sense, then *gunky composition must be possible.*
 
 In an episode of the television show Adventure Time, titled "The Real You", Finn puts on the "Glasses of Nerdicon" which allows him to see the complete depths of the Universe. He perceives that his universe is just a microscopic part
 of an exactly similar universe, and that down beneath the molecules, atoms, and quarks the world divides infinitely into more microscopic exactly similar universes. Let's call this kind of world a Nerdicon world.
@@ -108,12 +109,18 @@ of an exactly similar universe, and that down beneath the molecules, atoms, and 
 ![glasses-of-nerdicon](img/glasses-of-nerdicon.gif)
 
 Now, a Nerdicon-world would not be possible if Atomism were true, for division would stop at the mereological atoms. But in a world with no mereological atoms --- i.e., a gunky world --- a Nerdicon world *would be possible*! It would just
-be one possible configuration of a gunk world. For the sake of argument let us suppose that composition is possible in gunk worlds. A gunky Nerdicon world would have, then, among other things, universes as parts. But by [identity of indiscernibles](#/blog/the-identity-of-indiscernibles)[POP][MATH]\forall F\, \forall_x\,\forall_y\,[(Fx\leftrightarrow Fy)\rightarrow x=y][/MATH][/POP] each of these universes is identical. Thus, each universe has itself as a part.
+be one possible configuration of a gunk world.
 
-Now, recall the definition of a proper part (2.4).[POP][MATH]\begin{matrix} \forall_x \forall_y \left[PP_{xy} \leftrightarrow \left( P_{xy} \; \& \; x \neq y \right ) \right ] & (2.4) \end{matrix}[/MATH][/POP] If [IMATH]x[/IMATH] is a proper part of [IMATH]y[/IMATH], then [IMATH]x[/IMATH] and [IMATH]y[/IMATH] cannot be identical. It follows from this that in a Nerdicon world there would be no proper parts, since each universe would have itself as a part.[POP]And for every part: remember that part-hood is transitive. So take, for example some tree in a universe in a Nerdicon World. It will divide into a universe that has it as a part, and similarly is part of a universe that is a part of the tree.[/POP] Further, recall the definition of a mereological atom (2.5).[POP][MATH]\begin{matrix} \forall_x \left[ A_x \leftrightarrow \lnot \exists_y \left[ PP_{yx} \right ] \right ] & (2.5) \end{matrix}[/MATH][/POP] An object [IMATH]x[/IMATH] is an mereological atom iff there is no thing [IMATH]y[/IMATH] that is a proper part of it --- i.e., a mereological atom is a part with no proper-parts. But if there are no proper parts in a Nerdicon world, then by definition each universe is a mereological
-atom!
+Suppose that composition is possible is possible in a gunky world. A gunky Nerdicon world would have, then, among other things, universes as parts. But by identity of indiscernibles[POP][MATH]\forall F\, \forall_x\,\forall_y\,[(Fx\leftrightarrow Fy)\rightarrow x=y][/MATH][/POP] (defended [here](#/blog/the-identity-of-indiscernibles)) each of these universes is numerically identical. Thus, each universe has itself as a part.
 
-We might first be tempted to draw the conclusion that some gunky worlds, it turns out, reduce to atoms, and a Nerdicon world is just an instance of this. But this response won't due. For the notion of a gunk world has the negation of Atomism built in to it (2.6).[POP][MATH]\begin{matrix} \forall_x \left[ G_x \rightarrow \lnot \exists_y \left[ A_y \; \& \; P_{yx} \right ] \right ] & (2.6) \end{matrix}[/MATH][/POP] So we must either suppose that Nerdicon worlds or gunk worlds are not possible.
+Now, recall the definition of a proper part (2.4).[POP][MATH]\begin{matrix} \forall_x \forall_y \left[PP_{xy} \leftrightarrow \left( P_{xy} \; \& \; x \neq y \right ) \right ] & (2.4) \end{matrix}[/MATH][/POP] If [IMATH]x[/IMATH] is a proper part of [IMATH]y[/IMATH], then [IMATH]x[/IMATH] and [IMATH]y[/IMATH] cannot be identical. It follows from this that in a Nerdicon world there would be no proper parts, since each universe would have itself as a part.[POP]And for every part: remember that part-hood is transitive. So take, for example some tree in a universe in a Nerdicon World. It will divide into a universe that has it as a part, and similarly is part of a universe that is a part of the tree.[/POP]
 
-I do not have a conclusive argument either way. However I will say this in favor of rejecting gunky worlds. It's possible that gunk worlds  fall prey to [Zeno paradoxes](https://en.wikipedia.org/wiki/Zeno%27s_paradoxes) such as [Achilles and the tortoise](https://en.wikipedia.org/wiki/Zeno%27s_paradoxes#Achilles_and_the_tortoise). In the standard mathematical solutions, the objects in question, while infinitely divisible, are still atomic. But as Sider points out, this is not true for gunk.[POP]"However, a line segment is infinitely divisible, and yet has atomic parts: the points. A hunk of gunk does not even have atomic parts 'at infinity'; all parts of such an object have proper parts."[/POP]
+Next, recall the definition of a mereological atom (2.5).[POP][MATH]\begin{matrix} \forall_x \left[ A_x \leftrightarrow \lnot \exists_y \left[ PP_{yx} \right ] \right ] & (2.5) \end{matrix}[/MATH][/POP] An object [IMATH]x[/IMATH] is an mereological atom iff there is no thing [IMATH]y[/IMATH] that is a proper part of it --- i.e., a mereological atom is a part with no proper-parts. But if there are no proper parts in a Nerdicon world, then by definition *each universe is a mereological atom*!
+
+So, gunky composition fills a gunky world with atoms. But, of course, this is a contradiction. A gunky world is, definitionally, a world without atoms. So, reductio ad absurdum, we are forced to reject the assumption that gunky composition is possible.
+
+You might argue that it is a Nerdicon world which is not possible, rather than gunky composition. But by itself a Nerdicon world did not lead to the contradiction. It was only when we assumed gunky composition was possible that we found an issue.
+
+We started this section wondering about the apparent absurdity that, according to compositional nihilism, gunky worlds are empty. But we also saw that Sider needed gunky composition in order for us to agree that gunky worlds contained mountains, molehills, and the lik. But gunky composition lead to a contradiction. So, if anything, perhaps the apparent absurdity of empty gunk worlds has more to do with gunk than with compositional nihilism.
+
 
