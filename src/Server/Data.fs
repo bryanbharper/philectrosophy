@@ -49,7 +49,7 @@ type InMemoryRepository() =
             |> BlogEntry.setThumbNail "img/inevitable-atoms-thumbnail.jpg"
             |> BlogEntry.setCreatedOn (DateTime(2020, 12, 31))
             |> BlogEntry.setSynopsis
-                "A metaphysics paper that raises objections to Ted Sider's 1993 objections to Compositional Nihilism."
+                "Let's get metaphysical! Objections to Ted Sider's 'the Possibility of Gunk'"
 
             "On the Evolutionary Argument Against Naturalism"
             |> BlogEntry.create
@@ -58,7 +58,7 @@ type InMemoryRepository() =
             |> BlogEntry.setCreatedOn (DateTime(2015, 10, 2))
             |> BlogEntry.setUpdatedOn ((2020, 12, 27) |> DateTime |> Some)
             |> BlogEntry.setSynopsis
-                "This post is a response to the various forms of Alvin Plantinga's argument that naturalism is a self-defeating belief, collectively know as The Evolutionary Argument Against Naturalism."
+                "A response to the various forms of Alvin Plantinga's argument that naturalism is a self-defeating belief, collectively know as The Evolutionary Argument Against Naturalism."
 
             "The 555 Timer IC"
             |> BlogEntry.create

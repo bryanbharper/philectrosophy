@@ -2,6 +2,7 @@
 
 open Elmish
 open Feliz
+open Client.Pages
 
 type State = unit
 
@@ -11,4 +12,5 @@ let init (): State * Cmd<Msg> = (), Cmd.none
 
 let update (msg: Msg) (state: State): State * Cmd<Msg> = (), Cmd.none
 
-let render (state: State) (dispatch: Msg -> unit): ReactElement = Html.h1 "Search: Under Construction"
+let render (state: State) (dispatch: Msg -> unit): ReactElement =
+    NotImplemented.render
