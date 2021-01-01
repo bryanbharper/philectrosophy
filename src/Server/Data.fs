@@ -39,12 +39,11 @@ type InMemoryRepository() =
             |> BlogEntry.setCreatedOn (DateTime(2020, 12, 30))
             |> BlogEntry.setSynopsis "Are two completely indistinguishable objects the same thing? To some, myself included, the answer is obviously yes. But others have raised doubts. In this post I give my reasons for not sharing those doubts..."
 
-            "Inevitable Atoms"
+            "Gunky Atoms"
             |> BlogEntry.create
-            |> BlogEntry.setSubtitle "In a Gunky World"
+            |> BlogEntry.setSubtitle "On Sider's 'the Possibility of Gunk'"
             |> BlogEntry.setThumbNail "img/inevitable-atoms-thumbnail.jpg"
-            |> BlogEntry.setCreatedOn (DateTime(2014, 7, 23))
-            |> BlogEntry.setUpdatedOn ((2020, 12, 31) |> DateTime |> Some)
+            |> BlogEntry.setCreatedOn (DateTime(2020, 12, 31))
             |> BlogEntry.setSynopsis "A metaphysics paper that raises objections to Ted Sider's 1993 objections to Compositional Nihilism."
 
             "On the Evolutionary Argument Against Naturalism"

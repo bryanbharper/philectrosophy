@@ -107,25 +107,56 @@ let all = testList "Date" [
         // assert
         Expect.equal result "20th July 1969" "Houston, we have a problem."
 
-    testCase "Date.daySuffix: maps to correct suffix."
+    testCase "Date.daySuffix: handles 'st' cases"
     <| fun _ ->
-        // arrange
-        let getExpected i =
-            match i % 10 with
-            | 1 -> "st"
-            | 2 -> "nd"
-            | 3 -> "rd"
-            | _ -> "th"
+        for d in [1; 21; 31] do
+            // arrange
+            let expected = "st"
 
-        let testData =
-            [1..31]
-            |> List.map (fun i -> (DayInt.create i, getExpected i))
-
-        for d, expected in testData do
             // act
-            let result = Date.daySuffix d
+            let result = d |> DayInt.create |> Date.daySuffix
 
             // assert
-            Expect.equal result expected "Suffix should be correct."
+            Expect.equal result expected (sprintf "Wrong suffix for %i" d)
+
+    testCase "Date.daySuffix: handles 'nd' cases"
+    <| fun _ ->
+        for d in [2; 22] do
+            // arrange
+            let expected = "nd"
+
+            // act
+            let result = d |> DayInt.create |> Date.daySuffix
+
+            // assert
+            Expect.equal result expected (sprintf "Wrong suffix for %i" d)
+
+    testCase "Date.daySuffix: handles 'rd' cases"
+    <| fun _ ->
+        for d in [3; 23] do
+            // arrange
+            let expected = "rd"
+
+            // act
+            let result = d |> DayInt.create |> Date.daySuffix
+
+            // assert
+            Expect.equal result expected (sprintf "Wrong suffix for %i" d)
+
+    testCase "Date.daySuffix: handles 'default' cases"
+    <| fun _ ->
+        let testData =
+            [1..31]
+            |> List.filter (fun d -> not <| List.contains d [1; 21; 31; 2; 22; 3; 23 ])
+
+        for d in testData do
+            // arrange
+            let expected = "th"
+
+            // act
+            let result = d |> DayInt.create |> Date.daySuffix
+
+            // assert
+            Expect.equal result expected (sprintf "Wrong suffix for %i" d)
 
 ]

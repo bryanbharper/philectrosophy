@@ -43,10 +43,15 @@ module Date =
 
     let daySuffix (dInt: DayInt): string =
         let (DInt i) = dInt
-        match i % 10 with
-        | 1 -> "st"
-        | 2 -> "nd"
-        | 3 -> "rd"
+
+        match i with
+        | 1
+        | 21
+        | 31 -> "st"
+        | 2
+        | 22 -> "nd"
+        | 3
+        | 23 -> "rd"
         | _ -> "th"
 
     let format (date: DateTime): string =
