@@ -9,6 +9,7 @@ let all =
             Markdown.all
             BlogApi.all
             File.all
+            Rank.all
         ]
 
 [<EntryPoint>]

@@ -8,6 +8,7 @@
     <None Include="paket.references" />
     <Compile Include="Markdown.fs" />
     <Compile Include="File.fs" />
+    <Compile Include="Rank.fs" />
     <Compile Include="Data.fs" />
     <Compile Include="BlogApi.fs" />
     <Compile Include="Error.fs" />

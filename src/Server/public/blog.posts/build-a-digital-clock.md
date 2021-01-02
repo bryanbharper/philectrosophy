@@ -40,7 +40,7 @@ Generally, a sequential circuit requires the use of *flip-flops*. For our design
 
 ![t-flip-flop-diagrams-and-table](img/t-flip-flop-diagrams-and-table-horizontal.gif)
 
-The T flip-flop's logic circuit, block diagram, and excitation table are shown above. When the *T* input of the T flip-flop is '1' (true or high), the current state of the flip flop, *Q*, toggles to its logical opposite on each clock pulse. If the *T* input is '0' (false or low) the state of the flip-flop is unchanged. Lastly, if the *Preset* or *Reset* inputs are '1', the state will asynchrnously (i.e., instantly, irrespective of *clk*) become '1' or '0' respectively.
+The T flip-flop's logic circuit, block diagram, and excitation table are shown above. When the *T* input of the T flip-flop is '1' (true or high), the current state of the flip flop, *Q*, toggles to its logical opposite on each clock pulse. If the *T* input is '0' (false or low) the state of the flip-flop is unchanged. Lastly, if the *Preset* or *Reset* inputs are '1', the state will asynchronously (i.e., instantly, irrespective of *clk*) become '1' or '0' respectively.
 
 As always in digital electronics, we'll be doing our counting in binary. For the 0-9 counter, the largest number we will need to represent is 9&#x2081;&#x2080;, which in binary is four bits, 1001&#x2082;. Each bit will be expressed by the output, *Q*, of a flip flop. So we'll need four flip-flops.
 
@@ -125,7 +125,7 @@ All that is left to do is assemble the circuit (below).
 
 ![async-complete-0-9-counter-circuit](img/async-complete-0-9-counter-circuit.gif)
 
-It's clear that when it comes to counting circuits, because of the correspondence between when bits flip and when clk-signals must occur, employing an asynchronous design yields a more compact circuit. Thus, for all subsequent counters we will only go over asynchrnous designs.
+It's clear that when it comes to counting circuits, because of the correspondence between when bits flip and when clk-signals must occur, employing an asynchronous design yields a more compact circuit. Thus, for all subsequent counters we will only go over asynchronous designs.
 > *Note: the output clock signal is not visible in the circuit above as it only occurs for a fraction of a second. I though about editing the gif to make it visible, but I'm too lazy, so you'll have to just use your imagination.*
 
 ## The 0-5 Counter:

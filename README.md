@@ -20,5 +20,5 @@ dotnet femto .\src\Client\Client.fsproj install Feliz.Bulma
 Used for dependency management in place of Nuget (backend only). Example usage:
 
 ```shell
-dotnet packet add Foq -p Server
+dotnet paket add Foq -p Server
 ```

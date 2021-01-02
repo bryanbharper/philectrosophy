@@ -27,3 +27,6 @@ release.sh
 
 # Copied images
 src/Client/public/img/
+
+# Config
+appsettings.*.json

@@ -14,13 +14,20 @@ let getEntryAsync (repo: IRepository) (fileStore: IBlogContentStore) slug =
     |> Tuple.sequenceAsync
     |> Async.map Tuple.sequenceOption
 
+let getSearchResults (repo: IRepository) query =
+    repo.GetPublishedEntriesAsync()
+    |> Async.map (Rank.entries query)
+
+
 let blogApiReader =
     reader {
         let! repo = resolve<IRepository> ()
-        let! filreStore = resolve<IBlogContentStore> ()
+        let! fileStore = resolve<IBlogContentStore> ()
 
-        return {
-                   GetEntries = fun () -> getEntriesAsync repo
-                   GetEntry = getEntryAsync repo filreStore
-               }
+        return
+            {
+                GetEntries = fun () -> getEntriesAsync repo
+                GetEntry = getEntryAsync repo fileStore
+                GetSearchResults = getSearchResults repo
+            }
     }

@@ -114,4 +114,39 @@ let all =
                 // assert
                 Expect.isNone result "Result should be None."
 
+            testCase "BlogApi.getSearchResults: correctly ranks entires"
+            <| fun _ ->
+                // arrange
+                let query = "hippo talk duck walk book eat cheese"
+
+                let lowest =
+                    "Lowest Entry"
+                    |> BlogEntry.create
+                    |> BlogEntry.setTags "hippo,not,above"
+
+                let middle =
+                    "Middle Entry"
+                    |> BlogEntry.create
+                    |> BlogEntry.setTags "nope,hippo,blah,duck,nada"
+
+                let highest =
+                    "Highest Entry"
+                    |> BlogEntry.create
+                    |> BlogEntry.setTags "blah,talk,hippo,eat,nope"
+
+                let entries = [lowest; highest; middle]
+
+                let repo =
+                    Mock<IRepository>().Setup(fun r -> <@ r.GetPublishedEntriesAsync() @>).Returns(entries |> async.Return)
+                        .Create()
+
+                // act
+                let result =
+                    BlogApi.getSearchResults repo query
+                    |> Async.RunSynchronously
+
+                // assert
+                Expect.equal result.[0] highest "Highest should be first."
+                Expect.equal result.[1] middle "Middle should be second."
+                Expect.equal result.[2] lowest "Lowest should be last."
         ]
