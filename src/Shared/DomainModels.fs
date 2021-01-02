@@ -9,11 +9,12 @@ type BlogEntry =
         IsPublished: bool
         Slug: string
         Synopsis: string
+        Subtitle: string option
         Tags: string option
         ThumbNailUrl: string
         Title: string
-        Subtitle: string
         UpdatedOn: DateTime option
+        ViewCount: int
     }
 
 module BlogEntry =
@@ -28,8 +29,9 @@ module BlogEntry =
             Tags = None
             ThumbNailUrl = "https://picsum.photos/100/100"
             Title = title
-            Subtitle = "SUB " + title
+            Subtitle = "SUB " + title |> Some
             UpdatedOn = None
+            ViewCount = 0
         }
 
     let setCreatedOn date entry = { entry with CreatedOn = date }

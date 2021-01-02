@@ -12,7 +12,7 @@ type InMemoryRepository() =
         [
             "Terminal Talk"
             |> BlogEntry.create
-            |> BlogEntry.setSubtitle "A Network Application in Python"
+            |> BlogEntry.setSubtitle (Some "A Network Application in Python")
             |> BlogEntry.setThumbNail "img/terminal-talk-thumbnail.jpg"
             |> BlogEntry.setCreatedOn (DateTime(2016, 12, 15))
             |> BlogEntry.setSynopsis
@@ -20,7 +20,7 @@ type InMemoryRepository() =
 
             "Omega"
             |> BlogEntry.create
-            |> BlogEntry.setSubtitle "The Half Baked Video Game"
+            |> BlogEntry.setSubtitle (Some "The Half Baked Video Game")
             |> BlogEntry.setThumbNail "img/omega-thumbnail.png"
             |> BlogEntry.setCreatedOn (DateTime(2016, 03, 12))
             |> BlogEntry.setUpdatedOn ((2020, 12, 21) |> DateTime |> Some)
@@ -29,7 +29,7 @@ type InMemoryRepository() =
 
             "Build A Digital Clock"
             |> BlogEntry.create
-            |> BlogEntry.setSubtitle "How, theoretically, to construct a digital clock."
+            |> BlogEntry.setSubtitle (Some "How, theoretically, to construct a digital clock.")
             |> BlogEntry.setThumbNail "img/build-a-digital-clock-thumbnail.jpg"
             |> BlogEntry.setCreatedOn (DateTime(2016, 1, 19))
             |> BlogEntry.setSynopsis
@@ -37,7 +37,7 @@ type InMemoryRepository() =
 
             "The Identity of Indiscernibles"
             |> BlogEntry.create
-            |> BlogEntry.setSubtitle "In Defense of a Logical Law"
+            |> BlogEntry.setSubtitle (Some "In Defense of a Logical Law")
             |> BlogEntry.setThumbNail "img/identity-of-indiscernibles-thumbnail.jpg"
             |> BlogEntry.setCreatedOn (DateTime(2020, 12, 30))
             |> BlogEntry.setSynopsis
@@ -45,7 +45,7 @@ type InMemoryRepository() =
 
             "Gunky Atoms"
             |> BlogEntry.create
-            |> BlogEntry.setSubtitle "On Sider's 'the Possibility of Gunk'"
+            |> BlogEntry.setSubtitle (Some "On Sider's 'the Possibility of Gunk'")
             |> BlogEntry.setThumbNail "img/inevitable-atoms-thumbnail.jpg"
             |> BlogEntry.setCreatedOn (DateTime(2020, 12, 31))
             |> BlogEntry.setSynopsis
@@ -53,7 +53,7 @@ type InMemoryRepository() =
 
             "On the Evolutionary Argument Against Naturalism"
             |> BlogEntry.create
-            |> BlogEntry.setSubtitle "Objections to Plantinga's argument that naturalism is self defeating."
+            |> BlogEntry.setSubtitle (Some "Objections to Plantinga's argument that naturalism is self defeating.")
             |> BlogEntry.setThumbNail "img/eaan-thumbnail.png"
             |> BlogEntry.setCreatedOn (DateTime(2015, 10, 2))
             |> BlogEntry.setUpdatedOn ((2020, 12, 27) |> DateTime |> Some)
@@ -62,7 +62,7 @@ type InMemoryRepository() =
 
             "The 555 Timer IC"
             |> BlogEntry.create
-            |> BlogEntry.setSubtitle "An Analysis for a Practical Understanding"
+            |> BlogEntry.setSubtitle (Some "An Analysis for a Practical Understanding")
             |> BlogEntry.setThumbNail "img/555-ic-thumbnail.png"
             |> BlogEntry.setCreatedOn (DateTime(2017, 1, 6))
             |> BlogEntry.setSynopsis

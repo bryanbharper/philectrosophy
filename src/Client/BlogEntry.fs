@@ -47,7 +47,7 @@ let update (msg: Msg) (state: State): State * Cmd<Msg> =
 
         { state with Entry = Resolved entry }, Cmd.none
 
-let subTitle metadata =
+let dateHeader metadata =
         let updatedMsg =
             match metadata.UpdatedOn with
             | None -> Html.none
@@ -80,11 +80,14 @@ let header metadata =
         Bulma.title.h2 [
             prop.text metadata.Title
         ]
-        Bulma.subtitle.h4 [
-            prop.classes [ Bulma.HasTextGrey ]
-            prop.text metadata.Subtitle
-        ]
-        subTitle metadata
+        match metadata.Subtitle with
+        | None -> Html.none
+        | Some subtitle ->
+            Bulma.subtitle.h4 [
+                prop.classes [ Bulma.HasTextGrey ]
+                prop.text subtitle
+            ]
+        dateHeader metadata
         Html.hr []
     ]
     |> Html.div
