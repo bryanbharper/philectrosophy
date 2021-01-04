@@ -1,5 +1,6 @@
 module Server.Program
 
+open Dapper.FSharp
 open Data
 open Fable.Remoting.Server
 open Fable.Remoting.Giraffe
@@ -13,7 +14,8 @@ open Shared
 
 let configureServices (services : IServiceCollection) =
     services
-        .AddSingleton<IRepository, InMemoryRepository>()
+        .AddSingleton<IContext, DbContext>()
+        .AddSingleton<IRepository, BlogRepository>()
         .AddSingleton<IFileAccess, PublicFileStore>()
         .AddSingleton<IBlogContentStore, BlogContentStore>()
 
@@ -25,6 +27,8 @@ let webApp =
     |> Remoting.buildHttpHandler
 
 let webAppWithLogging = SerilogAdapter.Enable(webApp)
+
+OptionTypes.register ()
 
 Log.Logger <-
     LoggerConfiguration()
@@ -42,6 +46,5 @@ let app =
         use_static "public"
         use_gzip
     }
-
 
 run app

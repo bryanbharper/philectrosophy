@@ -24,7 +24,7 @@ The second important point is that while we'll grant that naturalism is dependen
 
 #### Premise 2
 
-> [MATH]P \left( R | N \& E \right ) \text{is low.}[/MATH]
+> [MATH]P \left( R | N \& E \right) \text{is low.}[/MATH]
 
 Which reads, the probability that *our beliefs are reliable* ([IMATH]R[/IMATH]) given *naturalism and evolution* ([IMATH]N \&E[/IMATH]) is low.
 

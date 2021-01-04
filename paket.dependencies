@@ -2,6 +2,7 @@ source https://api.nuget.org/v3/index.json
 framework: netcoreapp3.1
 storage: none
 
+nuget Dapper.FSharp
 nuget Expecto.FsCheck
 nuget Fable.Remoting.Giraffe
 nuget Feliz
@@ -9,7 +10,9 @@ nuget Feliz.Bulma
 nuget Feliz.Bulma.Popover
 nuget Feliz.Router
 nuget Foq
+nuget FSharp.Data
 nuget Giraffe.SerilogExtensions
+nuget MySql.Data
 nuget Saturn
 nuget Expecto
 

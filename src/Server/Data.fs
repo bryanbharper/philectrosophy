@@ -1,11 +1,54 @@
 ﻿module Server.Data
 
-open System
+open Dapper.FSharp
+open Dapper.FSharp.MySQL
+open Microsoft.Extensions.Configuration
+open MySql.Data.MySqlClient
+open Server.Config
 open Shared
+open System
+open System.Data
+
+type IContext =
+    abstract GetTable: tableName:string -> Async<'a seq>
+    abstract GetByValue: tableName:string -> column:string -> exactValue:'a -> Async<'b seq>
+
+type DbContext(config: IConfiguration) =
+    let connStr =
+        config.Get<Config>().Database.ConnectionString
+
+    let connection: IDbConnection =
+        upcast new MySqlConnection(connStr)
+
+    interface IContext with
+        member this.GetTable<'a> tableName =
+            select {
+                table tableName
+            }
+            |> connection.SelectAsync<'a>
+            |> Async.AwaitTask
+
+        member this.GetByValue<'a, 'b> tableName column (exactValue: 'a) =
+            select {
+                table tableName
+                where (eq column exactValue)
+            }
+            |> connection.SelectAsync<'b>
+            |> Async.AwaitTask
 
 type IRepository =
-    abstract GetPublishedEntriesAsync: unit -> Async<BlogEntry list>
-    abstract GetBlogEntryAsync: string -> Async<BlogEntry option>
+    abstract GetBlogEntriesAsync: unit -> Async<BlogEntry list>
+    abstract GetBlogEntryAsync: slug:string -> Async<BlogEntry option>
+
+type BlogRepository(context: IContext) =
+    interface IRepository with
+        member this.GetBlogEntriesAsync() =
+            context.GetTable "blogentries"
+            |> Async.map List.ofSeq
+
+        member this.GetBlogEntryAsync slug =
+            context.GetByValue "blogentries" "Slug" slug
+            |> Async.map (fun r -> if (Seq.length r) > 0 then r |> Seq.head |> Some else None)
 
 type InMemoryRepository() =
     let entries =
@@ -82,9 +125,8 @@ type InMemoryRepository() =
 
     interface IRepository with
 
-        member this.GetPublishedEntriesAsync() =
+        member this.GetBlogEntriesAsync() =
             entries
-            |> List.filter (fun e -> e.IsPublished)
             |> async.Return
 
         member this.GetBlogEntryAsync slug =

@@ -13,7 +13,7 @@ let all =
         "BlogApi Tests"
         [
 
-            testCase "BlogApi.getEntriesAsync: returns all entries ordered by created date."
+            testCase "BlogApi.getEntriesAsync: returns entries ordered by created date."
             <| fun _ ->
                 // arrange
                 let earliest =
@@ -34,7 +34,7 @@ let all =
                     ]
 
                 let repo =
-                    Mock<IRepository>().Setup(fun r -> <@ r.GetPublishedEntriesAsync() @>).Returns(entries |> async.Return)
+                    Mock<IRepository>().Setup(fun r -> <@ r.GetBlogEntriesAsync() @>).Returns(entries |> async.Return)
                         .Create()
 
                 // act
@@ -44,6 +44,38 @@ let all =
 
                 // assert
                 Expect.sequenceContainsOrder result (entries |>List.sortByDescending (fun e -> e.CreatedOn)) "Results are ordered by CreatedOn"
+
+            testCase "BlogApi.getEntriesAsync: returns published entries only."
+            <| fun _ ->
+                // arrange
+                let published =
+                    BlogEntry.create "Published"
+                    |> BlogEntry.setCreatedOn (DateTime(2017, 1, 1))
+                    |> BlogEntry.setIsPublished true
+                let draft =
+                    BlogEntry.create "Not Published"
+                    |> BlogEntry.setCreatedOn (DateTime(2018, 1, 1))
+                    |> BlogEntry.setIsPublished false
+
+
+                let entries =
+                    [
+                        draft
+                        published
+                    ]
+
+                let repo =
+                    Mock<IRepository>().Setup(fun r -> <@ r.GetBlogEntriesAsync() @>).Returns(entries |> async.Return)
+                        .Create()
+
+                // act
+                let result =
+                    BlogApi.getEntriesAsync repo
+                    |> Async.RunSynchronously
+
+                // assert
+                Expect.hasCountOf result 1u (fun _ -> true) "Only one entry was published."
+                Expect.equal result.[0] published "Only entry is published."
 
             testCase "BlogApi.getEntryAsync: returns metadata from repo and content from file store."
             <| fun _ ->
@@ -137,7 +169,7 @@ let all =
                 let entries = [lowest; highest; middle]
 
                 let repo =
-                    Mock<IRepository>().Setup(fun r -> <@ r.GetPublishedEntriesAsync() @>).Returns(entries |> async.Return)
+                    Mock<IRepository>().Setup(fun r -> <@ r.GetBlogEntriesAsync() @>).Returns(entries |> async.Return)
                         .Create()
 
                 // act
