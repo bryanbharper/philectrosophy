@@ -17,7 +17,7 @@ type Msg =
     | UrlChanged of Url
 
 let init (): State =
-    let url = Router.currentUrl () |> Url.parseFeliz
+    let url = Router.currentPath () |> Url.parseFeliz
 
     {
         BurgerExpanded = false
@@ -38,7 +38,7 @@ let navLink (url: Url) isActive =
             if isActive then Bulma.IsActive
         ]
         url.asString.ToLower()
-        |> Router.format
+        |> Router.formatPath
         |> prop.href
         url.asString.ToLower() |> prop.text
     ]
@@ -49,7 +49,7 @@ let navLinkIcon (url: Url) isActive icon =
             if isActive then Bulma.IsActive
         ]
         url.asString.ToLower()
-        |> Router.format
+        |> Router.formatPath
         |> prop.href
         prop.children [
             Bulma.icon [
@@ -71,7 +71,7 @@ let render (state: State) (dispatch: Msg -> unit): ReactElement =
         prop.children [
             Bulma.navbarBrand.div [
                 Bulma.navbarItem.a [
-                    prop.href "#"
+                    prop.href "/"
                     prop.children [
                         Html.img [ prop.src "phi.png" ]
                     ]

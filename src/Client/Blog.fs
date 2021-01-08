@@ -27,7 +27,7 @@ let init (): State * Cmd<Msg> =
 let update (msg: Msg) (state: State): State * Cmd<Msg> =
     match msg with
     | GotEntries result -> { state with Entries = Resolved result }, Cmd.none
-    | ApiError _ -> state, Url.UnexpectedError.asString |> Cmd.navigate
+    | ApiError _ -> state, Url.UnexpectedError.asString |> Cmd.navigatePath
 
 let render (state: State) (dispatch: Msg -> unit) =
     let entries =

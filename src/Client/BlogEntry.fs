@@ -36,8 +36,8 @@ let init (slug: string): State * Cmd<Msg> =
 
 let update (msg: Msg) (state: State): State * Cmd<Msg> =
     match msg with
-    | ApiError _ -> state, Url.UnexpectedError.asString |> Cmd.navigate
-    | GotEntry None -> state, Url.NotFound.asString |> Cmd.navigate
+    | ApiError _ -> state, Url.UnexpectedError.asString |> Cmd.navigatePath
+    | GotEntry None -> state, Url.NotFound.asString |> Cmd.navigatePath
     | GotEntry (Some (metadata, content)) ->
         let entry =
             {

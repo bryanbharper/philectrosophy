@@ -77,7 +77,7 @@ let initFromUrl url =
 *        INIT & UPDATE
 *******************************************)
 let init (): State * Cmd<Msg> =
-    Router.currentUrl ()
+    Router.currentPath ()
     |> Url.parseFeliz
     |> initFromUrl
 
@@ -123,6 +123,7 @@ let render (state: State) (dispatch: Msg -> unit): ReactElement =
         prop.children [
             Navbar.render state.Navbar (Msg.Navbar >> dispatch)
             React.router [
+                router.pathMode
                 router.onUrlChanged (onUrlChanged state dispatch)
                 router.children activePage
             ]
