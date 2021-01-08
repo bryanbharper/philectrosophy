@@ -1,3 +1,5 @@
+open System.Net
+
 #r "paket: groupref build //"
 #load "./.fake/build.fsx/intellisense.fsx"
 #r "netstandard"
@@ -8,18 +10,26 @@ open Fake.IO
 open Farmer
 open Farmer.Builders
 open Fake.JavaScript
+open FluentFTP
+open FSharp.Data
 
 Target.initEnvironment ()
 
+type Config = JsonProvider<"src/Server/appsettings.Development.json">
+
 // Constants
-let sharedPath = Path.getFullName "./src/Shared"
-let serverPath = Path.getFullName "./src/Server"
-let deployDir = Path.getFullName "./deploy"
-let sharedTestsPath = Path.getFullName "./tests/Shared"
-let serverTestsPath = Path.getFullName "./tests/Server"
+let appName = "philectrosophy"
 let blogImagePath =
     Path.getFullName "./src/Server/public/blog.posts/img"
 let clientPublicDir = Path.getFullName "./src/Client/public"
+let config = Config.GetSample()
+let deployDir = "deploy"
+let deployPath =  sprintf "./%s" deployDir |> Path.getFullName
+let serverTestsPath = Path.getFullName "./tests/Server"
+let serverPath = Path.getFullName "./src/Server"
+let sharedPath = Path.getFullName "./src/Shared"
+let sharedTestsPath = Path.getFullName "./tests/Shared"
+
 
 // Helpers
 let buildRawCmd cmd args workingDir =
@@ -63,7 +73,7 @@ let printSection msg =
 Target.create "Clean"
 <| fun _ ->
     "Clean Deploy Directory" |> printSection
-    Shell.cleanDir deployDir
+    Shell.cleanDir deployPath
 
 Target.create "BlogImages"
 <| fun _ ->
@@ -83,17 +93,31 @@ Target.create "InstallClient"
 Target.create "Bundle"
 <| fun _ ->
     "Bundling App" |> printSection
-    dotnet (sprintf "publish -c Release -o \"%s\"" deployDir) serverPath
+    dotnet (sprintf "publish -c Release -o \"%s\"" deployPath) serverPath
     Npm.run "build" id
+
+Target.create "Deploy"
+<| fun _ ->
+    "Deploying App" |> printSection
+
+    use client = new FtpClient(config.Ftp.Host)
+    client.Credentials <- NetworkCredential(config.Ftp.User, config.Ftp.Secret)
+    client.Connect()
+
+    client.UploadDirectory(deployPath, sprintf "/%s/%s" appName deployDir, FtpFolderSyncMode.Mirror) |> ignore
+
+    client.Disconnect()
+
 
 Target.create "Azure"
 <| fun _ ->
     "Deploying to Azure" |> printSection
-    let appName = "philectrosophy"
 
     let web =
         webApp {
             name appName
+//            sku WebApp.Sku.D1
+            app_insights_off
             zip_deploy "deploy"
         }
 
@@ -152,23 +176,27 @@ open Fake.Core.TargetOperators
 ==> "InstallClient"
 ==> "BlogImages"
 ==> "BundleStyles"
+
+"BundleStyles"
 ==> "Bundle"
+
+"Bundle"
 ==> "Azure"
 
-"Clean"
-==> "InstallClient"
-==> "BlogImages"
-==> "BundleStyles"
+"Bundle"
+==> "Deploy"
+
+"BundleStyles"
 ==> "Run"
 
 "Clean"
 ==> "InstallClient"
 ==> "BuildSharedTests"
+
+"BuildSharedTests"
 ==> "Test"
 
-"Clean"
-==> "InstallClient"
-==> "BuildSharedTests"
+"BuildSharedTests"
 ==> "LiveTest"
 
 Target.runOrDefault "List"

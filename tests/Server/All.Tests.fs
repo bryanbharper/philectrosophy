@@ -5,11 +5,12 @@ open Expecto
 let all =
     testList "All"
         [
-            Shared.Tests.All.all
-            Markdown.all
+            Data.all
             BlogApi.all
             File.all
+            Markdown.all
             Rank.all
+            Shared.Tests.All.all
         ]
 
 [<EntryPoint>]

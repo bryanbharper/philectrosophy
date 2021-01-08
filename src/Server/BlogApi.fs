@@ -6,8 +6,8 @@ open File
 open Shared
 
 let getEntriesAsync (repo: IRepository) =
-    repo.GetPublishedEntriesAsync()
-    |> Async.map (List.sortByDescending (fun e -> e.CreatedOn))
+    repo.GetBlogEntriesAsync()
+    |> Async.map (List.filter (fun e -> e.IsPublished) >> List.sortByDescending (fun e -> e.CreatedOn))
 
 let getEntryAsync (repo: IRepository) (fileStore: IBlogContentStore) slug =
     (repo.GetBlogEntryAsync slug, fileStore.GetBlogEntryContentAsync slug)
@@ -15,7 +15,7 @@ let getEntryAsync (repo: IRepository) (fileStore: IBlogContentStore) slug =
     |> Async.map Tuple.sequenceOption
 
 let getSearchResults (repo: IRepository) query =
-    repo.GetPublishedEntriesAsync()
+    repo.GetBlogEntriesAsync()
     |> Async.map (Rank.entries query)
 
 

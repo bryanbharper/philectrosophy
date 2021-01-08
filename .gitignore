@@ -29,5 +29,5 @@ release.sh
 src/Client/public/img/
 
 # Config
-appsettings.*.json
 appsettings.json
+appsettings.*.json
