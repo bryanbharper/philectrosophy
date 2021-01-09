@@ -116,7 +116,7 @@ Target.create "Azure"
     let web =
         webApp {
             name appName
-//            sku WebApp.Sku.D1
+            sku WebApp.Sku.D1
             app_insights_off
             zip_deploy "deploy"
         }
