@@ -46,7 +46,11 @@ let update (msg: Msg) (state: State): State * Cmd<Msg> =
             | Idle -> state
             | InProgress -> state
             | Resolved entry ->
-                let meta = { entry.Metadata with ViewCount = newCount }
+                let meta =
+                    { entry.Metadata with
+                        ViewCount = newCount
+                    }
+
                 let entry = { entry with Metadata = meta }
                 { state with Entry = entry |> Resolved }
 
@@ -59,36 +63,50 @@ let update (msg: Msg) (state: State): State * Cmd<Msg> =
                 Content = content
             }
 
-        { state with Entry = Resolved entry }, Cmd.OfAsync.either blogApi.UpdateViewCount state.Slug CountUpdated IgnorableError
+        { state with Entry = Resolved entry },
+        Cmd.OfAsync.either blogApi.UpdateViewCount state.Slug CountUpdated IgnorableError
     | IgnorableError _ -> state, Cmd.none
 
 let dateHeader metadata =
-        let updatedMsg =
-            match metadata.UpdatedOn with
-            | None -> Html.none
-            | Some date ->
-                Html.span [
-                    prop.classes [
-                        Bulma.HasTextGrey
-                        Bulma.IsItalic
-                        Bulma.Ml1
-                    ]
-                    prop.text (sprintf "Updated: %s" (Date.format date))
+    let updatedMsg =
+        match metadata.UpdatedOn with
+        | None -> Html.none
+        | Some date ->
+            Html.span [
+                prop.classes [
+                    Bulma.HasTextGrey
+                    Bulma.IsItalic
+                    Bulma.Ml1
                 ]
-
-        Bulma.subtitle.p [
-            prop.classes [ Bulma.Is6 ]
-            prop.children [
-                Html.span [
-                    prop.classes [
-                        Bulma.HasTextGreyLight
-                        if metadata.UpdatedOn.IsSome then Style.IsStrikeThrough else Bulma.IsItalic
-                    ]
-                    prop.text (sprintf "Posted: %s" (Date.format metadata.CreatedOn))
-                ]
-                updatedMsg
+                prop.text (sprintf "Updated: %s" (Date.format date))
             ]
+
+    Bulma.subtitle.p [
+        prop.classes [ Bulma.Is6; Bulma.Mb1 ]
+        prop.children [
+            Html.span [
+                prop.classes [
+                    Bulma.HasTextGreyLight
+                    if metadata.UpdatedOn.IsSome then Style.IsStrikeThrough else Bulma.IsItalic
+                ]
+                prop.text (sprintf "Posted: %s" (Date.format metadata.CreatedOn))
+            ]
+            updatedMsg
         ]
+    ]
+
+let viewCount count =
+    Html.span [
+        prop.classes [ Bulma.HasTextGreyLight ]
+        prop.children [
+            Bulma.icon [
+                Html.i [
+                    prop.classes [ FA.Fas; FA.FaEye ]
+                ]
+            ]
+            Html.text (sprintf "%i" count)
+        ]
+    ]
 
 let header metadata =
     [
@@ -99,10 +117,14 @@ let header metadata =
         | None -> Html.none
         | Some subtitle ->
             Bulma.subtitle.h4 [
-                prop.classes [ Bulma.HasTextGrey ]
+                prop.classes [
+                    Bulma.HasTextGrey
+                    Bulma.Mb1
+                ]
                 prop.text subtitle
             ]
         dateHeader metadata
+        viewCount metadata.ViewCount
         Html.hr []
     ]
     |> Html.div

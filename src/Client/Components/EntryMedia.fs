@@ -25,7 +25,7 @@ let render (entry: BlogEntry) =
                 ]
 
         Bulma.subtitle.p [
-            prop.classes [ Bulma.Is6 ]
+            prop.classes [ Bulma.Is6; Bulma.Mb1 ]
             prop.children [
                 Html.span [
                     prop.classes [
@@ -38,21 +38,10 @@ let render (entry: BlogEntry) =
             ]
         ]
 
-    let viewCount =
-        Html.none
-//        Html.p [
-//            prop.children
-//                [
-//                    Bulma.icon [
-//                        Html.i [ prop.classes [ FA.Fas; FA.FaEye ] ]
-//                    ]
-//                ]
-//        ]
-
     let synopsis = Html.p entry.Synopsis
 
     let media =
-        [ title; subTitle; viewCount; synopsis ]
+        [ title; subTitle; synopsis ]
         |> MediaObject.render entry.ThumbNailUrl
 
     Html.div [
