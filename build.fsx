@@ -96,9 +96,9 @@ Target.create "Bundle"
     dotnet (sprintf "publish -c Release -o \"%s\"" deployPath) serverPath
     Npm.run "build" id
 
-Target.create "Sandbox"
+Target.create "SmarterAsp"
 <| fun _ ->
-    "Deploying App" |> printSection
+    "Deploying to SmarterAsp" |> printSection
 
     use client = new FtpClient(config.Ftp.Host)
     client.Credentials <- NetworkCredential(config.Ftp.User, config.Ftp.Secret)
@@ -108,10 +108,30 @@ Target.create "Sandbox"
 
     client.Disconnect()
 
-
-Target.create "Azure"
+Target.create "Sandbox"
 <| fun _ ->
-    "Deploying to Azure" |> printSection
+    "Deploying to Sandbox Environment on Azure" |> printSection
+
+    let web =
+        webApp {
+            name (appName + "-sbx")
+            app_insights_off
+            zip_deploy "deploy"
+        }
+
+    let deployment =
+        arm {
+            location Location.CentralUS
+            add_resource web
+        }
+
+    deployment
+    |> Deploy.execute appName Deploy.NoParameters
+    |> ignore
+
+Target.create "Deploy"
+<| fun _ ->
+    "Deploying to Production Environment on Azure" |> printSection
 
     let web =
         webApp {
@@ -181,23 +201,6 @@ open Fake.Core.TargetOperators
 
 "Clean"
 ==> "InstallClient"
-==> "BlogImages"
-==> "BundleStyles"
-
-"BundleStyles"
-==> "Bundle"
-
-"Bundle"
-==> "Azure"
-
-"Bundle"
-==> "Sandbox"
-
-"BundleStyles"
-==> "Run"
-
-"Clean"
-==> "InstallClient"
 ==> "BuildSharedTests"
 
 "BuildSharedTests"
@@ -212,5 +215,25 @@ open Fake.Core.TargetOperators
 "TestClient"
 ==> "Test"
 
+"Clean"
+==> "InstallClient"
+==> "BlogImages"
+==> "BundleStyles"
+
+"BundleStyles"
+==> "Bundle"
+
+"BundleStyles"
+==> "Run"
+
+"Bundle"
+==> "SmarterAsp"
+
+"Bundle"
+==> "Sandbox"
+
+"Test"
+==> "Bundle"
+==> "Deploy"
 
 Target.runOrDefault "List"
