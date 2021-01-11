@@ -62,6 +62,6 @@ let render (entry: BlogEntry) =
         ]
         prop.onClick (fun _ ->
             (Url.Blog.asString.ToLower(), entry.Slug)
-            |> Router.navigatePath)
+            |> Router.navigate)
         prop.children media
     ]
