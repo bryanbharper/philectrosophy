@@ -96,7 +96,7 @@ Target.create "Bundle"
     dotnet (sprintf "publish -c Release -o \"%s\"" deployPath) serverPath
     Npm.run "build" id
 
-Target.create "Deploy"
+Target.create "Sandbox"
 <| fun _ ->
     "Deploying App" |> printSection
 
@@ -149,12 +149,19 @@ Target.create "BuildSharedTests"
     "Building Shared Tests" |> printSection
     dotnet "build" sharedTestsPath
 
-Target.create "Test"
+Target.create "TestServer"
 <| fun _ ->
     "Run Server Tests" |> printSection
     dotnet "run" serverTestsPath
+
+Target.create "TestClient"
+<| fun _ ->
     "Run Client Tests" |> printSection
     Npm.run "test" id
+
+Target.create "Test"
+<| fun _ ->
+    "Running All Tests" |> printSection
 
 Target.create "LiveTest"
 <| fun _ ->
@@ -184,7 +191,7 @@ open Fake.Core.TargetOperators
 ==> "Azure"
 
 "Bundle"
-==> "Deploy"
+==> "Sandbox"
 
 "BundleStyles"
 ==> "Run"
@@ -194,9 +201,16 @@ open Fake.Core.TargetOperators
 ==> "BuildSharedTests"
 
 "BuildSharedTests"
-==> "Test"
+==> "TestClient"
 
 "BuildSharedTests"
 ==> "LiveTest"
+
+"TestServer"
+==> "Test"
+
+"TestClient"
+==> "Test"
+
 
 Target.runOrDefault "List"

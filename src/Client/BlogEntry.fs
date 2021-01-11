@@ -28,16 +28,30 @@ type State =
     }
 
 type Msg =
-    | GotEntry of Option<BlogEntry * string>
     | ApiError of exn
+    | CountUpdated of int option
+    | GotEntry of Option<BlogEntry * string>
+    | IgnorableError of exn
 
 let init (slug: string): State * Cmd<Msg> =
     { Slug = slug; Entry = InProgress }, Cmd.OfAsync.either blogApi.GetEntry slug GotEntry ApiError
 
 let update (msg: Msg) (state: State): State * Cmd<Msg> =
     match msg with
-    | ApiError _ -> state, Url.UnexpectedError.asString |> Cmd.navigatePath
-    | GotEntry None -> state, Url.NotFound.asString |> Cmd.navigatePath
+    | ApiError _ -> state, Url.UnexpectedError.asString |> Cmd.navigate
+    | CountUpdated None -> state, Cmd.none
+    | CountUpdated (Some newCount) ->
+        let newState =
+            match state.Entry with
+            | Idle -> state
+            | InProgress -> state
+            | Resolved entry ->
+                let meta = { entry.Metadata with ViewCount = newCount }
+                let entry = { entry with Metadata = meta }
+                { state with Entry = entry |> Resolved }
+
+        newState, Cmd.none
+    | GotEntry None -> state, Url.NotFound.asString |> Cmd.navigate
     | GotEntry (Some (metadata, content)) ->
         let entry =
             {
@@ -45,7 +59,8 @@ let update (msg: Msg) (state: State): State * Cmd<Msg> =
                 Content = content
             }
 
-        { state with Entry = Resolved entry }, Cmd.none
+        { state with Entry = Resolved entry }, Cmd.OfAsync.either blogApi.UpdateViewCount state.Slug CountUpdated IgnorableError
+    | IgnorableError _ -> state, Cmd.none
 
 let dateHeader metadata =
         let updatedMsg =

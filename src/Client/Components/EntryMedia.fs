@@ -38,10 +38,21 @@ let render (entry: BlogEntry) =
             ]
         ]
 
+    let viewCount =
+        Html.none
+//        Html.p [
+//            prop.children
+//                [
+//                    Bulma.icon [
+//                        Html.i [ prop.classes [ FA.Fas; FA.FaEye ] ]
+//                    ]
+//                ]
+//        ]
+
     let synopsis = Html.p entry.Synopsis
 
     let media =
-        [ title; subTitle; synopsis ]
+        [ title; subTitle; viewCount; synopsis ]
         |> MediaObject.render entry.ThumbNailUrl
 
     Html.div [

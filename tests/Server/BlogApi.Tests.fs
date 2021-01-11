@@ -1,6 +1,7 @@
 ﻿module Server.Tests.BlogApi
 
 open System
+open Fable.Mocha
 open Server
 open Server.Data
 open Server.File
@@ -19,22 +20,21 @@ let all =
                 let earliest =
                     BlogEntry.create "Earliest"
                     |> BlogEntry.setCreatedOn (DateTime(2017, 1, 1))
+
                 let middle =
                     BlogEntry.create "Middle"
                     |> BlogEntry.setCreatedOn (DateTime(2018, 1, 1))
+
                 let latest =
                     BlogEntry.create "Latest"
                     |> BlogEntry.setCreatedOn (DateTime(2019, 1, 1))
 
-                let entries =
-                    [
-                        middle
-                        latest
-                        earliest
-                    ]
+                let entries = [ middle; latest; earliest ]
 
                 let repo =
-                    Mock<IRepository>().Setup(fun r -> <@ r.GetBlogEntriesAsync() @>).Returns(entries |> async.Return)
+                    Mock<IRepository>()
+                        .Setup(fun r -> <@ r.GetAll() @>)
+                        .Returns(entries |> async.Return)
                         .Create()
 
                 // act
@@ -43,7 +43,11 @@ let all =
                     |> Async.RunSynchronously
 
                 // assert
-                Expect.sequenceContainsOrder result (entries |>List.sortByDescending (fun e -> e.CreatedOn)) "Results are ordered by CreatedOn"
+                Expect.sequenceContainsOrder
+                    result
+                    (entries
+                     |> List.sortByDescending (fun e -> e.CreatedOn))
+                    "Results are ordered by CreatedOn"
 
             testCase "BlogApi.getEntriesAsync: returns published entries only."
             <| fun _ ->
@@ -52,20 +56,19 @@ let all =
                     BlogEntry.create "Published"
                     |> BlogEntry.setCreatedOn (DateTime(2017, 1, 1))
                     |> BlogEntry.setIsPublished true
+
                 let draft =
                     BlogEntry.create "Not Published"
                     |> BlogEntry.setCreatedOn (DateTime(2018, 1, 1))
                     |> BlogEntry.setIsPublished false
 
 
-                let entries =
-                    [
-                        draft
-                        published
-                    ]
+                let entries = [ draft; published ]
 
                 let repo =
-                    Mock<IRepository>().Setup(fun r -> <@ r.GetBlogEntriesAsync() @>).Returns(entries |> async.Return)
+                    Mock<IRepository>()
+                        .Setup(fun r -> <@ r.GetAll() @>)
+                        .Returns(entries |> async.Return)
                         .Create()
 
                 // act
@@ -85,12 +88,16 @@ let all =
                 let expectedContent = "blah blah blah blather blither"
 
                 let repo =
-                    Mock<IRepository>().Setup(fun x -> <@ x.GetBlogEntryAsync slug @>)
-                        .Returns(Some entry |> async.Return).Create()
+                    Mock<IRepository>()
+                        .Setup(fun x -> <@ x.GetSingle slug @>)
+                        .Returns(Some entry |> async.Return)
+                        .Create()
 
                 let file =
-                    Mock<IBlogContentStore>().Setup(fun f -> <@ f.GetBlogEntryContentAsync slug @>)
-                        .Returns(expectedContent |> Some |> async.Return).Create()
+                    Mock<IBlogContentStore>()
+                        .Setup(fun f -> <@ f.GetBlogEntryContentAsync slug @>)
+                        .Returns(expectedContent |> Some |> async.Return)
+                        .Create()
 
                 // act
                 let result =
@@ -110,12 +117,16 @@ let all =
                 let slug = "some-slug"
 
                 let repo =
-                    Mock<IRepository>().Setup(fun x -> <@ x.GetBlogEntryAsync slug @>).Returns(None |> async.Return)
+                    Mock<IRepository>()
+                        .Setup(fun x -> <@ x.GetSingle slug @>)
+                        .Returns(None |> async.Return)
                         .Create()
 
                 let file =
-                    Mock<IBlogContentStore>().Setup(fun f -> <@ f.GetBlogEntryContentAsync slug @>)
-                        .Returns("blah" |> Some |> async.Return).Create()
+                    Mock<IBlogContentStore>()
+                        .Setup(fun f -> <@ f.GetBlogEntryContentAsync slug @>)
+                        .Returns("blah" |> Some |> async.Return)
+                        .Create()
 
                 // act
                 let result =
@@ -131,12 +142,16 @@ let all =
                 let slug = "some-slug"
 
                 let repo =
-                    Mock<IRepository>().Setup(fun x -> <@ x.GetBlogEntryAsync slug @>)
-                        .Returns("blah" |> BlogEntry.create |> Some |> async.Return).Create()
+                    Mock<IRepository>()
+                        .Setup(fun x -> <@ x.GetSingle slug @>)
+                        .Returns("blah" |> BlogEntry.create |> Some |> async.Return)
+                        .Create()
 
                 let file =
-                    Mock<IBlogContentStore>().Setup(fun f -> <@ f.GetBlogEntryContentAsync slug @>)
-                        .Returns(None |> async.Return).Create()
+                    Mock<IBlogContentStore>()
+                        .Setup(fun f -> <@ f.GetBlogEntryContentAsync slug @>)
+                        .Returns(None |> async.Return)
+                        .Create()
 
                 // act
                 let result =
@@ -166,10 +181,12 @@ let all =
                     |> BlogEntry.create
                     |> BlogEntry.setTags "blah,talk,hippo,eat,nope"
 
-                let entries = [lowest; highest; middle]
+                let entries = [ lowest; highest; middle ]
 
                 let repo =
-                    Mock<IRepository>().Setup(fun r -> <@ r.GetBlogEntriesAsync() @>).Returns(entries |> async.Return)
+                    Mock<IRepository>()
+                        .Setup(fun r -> <@ r.GetAll() @>)
+                        .Returns(entries |> async.Return)
                         .Create()
 
                 // act
@@ -181,4 +198,77 @@ let all =
                 Expect.equal result.[0] highest "Highest should be first."
                 Expect.equal result.[1] middle "Middle should be second."
                 Expect.equal result.[2] lowest "Lowest should be last."
+
+            testCase "BlogApi.updateViewCount: returns None without matching entry"
+            <| fun _ ->
+                // arrange
+                let slug = "not-here"
+
+                let repo =
+                    Mock<IRepository>()
+                        .Setup(fun r -> <@ r.GetSingle slug @>)
+                        .Returns(None |> async.Return)
+                        .Create()
+
+                // act
+                let result =
+                    BlogApi.updateViewCount repo slug
+                    |> Async.RunSynchronously
+
+                // assert
+                Expect.isNone result ""
+
+            testCase "BlogApi.updateViewCount: returns None if update fails"
+            <| fun _ ->
+                // arrange
+                let entry = BlogEntry.create "Hello world!"
+
+                let repo =
+                    Mock<IRepository>()
+                        .Setup(fun r -> <@ r.GetSingle entry.Slug @>)
+                        .Returns(entry |> Some |> async.Return)
+                        .Setup(fun r ->
+                            <@ r.Update
+                                { entry with
+                                    ViewCount = entry.ViewCount + 1
+                                } @>)
+                        .Returns(None |> async.Return)
+                        .Create()
+
+                // act
+                let result =
+                    BlogApi.updateViewCount repo entry.Slug
+                    |> Async.RunSynchronously
+
+                // assert
+                Expect.isNone result ""
+
+            testCase "BlogApi.updateViewCount: returns Some updatedCount"
+            <| fun _ ->
+                // arrange
+                let entry = BlogEntry.create "Hello world!"
+
+                let updated =
+                    { entry with
+                        ViewCount = entry.ViewCount + 1
+                    }
+
+                let repo =
+                    Mock<IRepository>()
+                        .Setup(fun r -> <@ r.GetSingle entry.Slug @>)
+                        .Returns(entry |> Some |> async.Return)
+                        .Setup(fun r -> <@ r.Update updated @>)
+                        .Returns(updated |> Some |> async.Return)
+                        .Create()
+
+                // act
+                let result =
+                    BlogApi.updateViewCount repo entry.Slug
+                    |> Async.RunSynchronously
+
+                // assert
+                match result with
+                | None -> failtest "Result should be Some value."
+                | Some r -> Expect.equal r updated.ViewCount ""
+
         ]

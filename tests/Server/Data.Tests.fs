@@ -13,12 +13,14 @@ type EmptyContext() =
         member this.GetByValue<'a, 'b> _ _ (_: 'a) =
             Seq.empty<'b> |> async.Return
 
+        member this.Update _ _ _ _ = 0 |> async.Return
+
 let all =
     testList
         "Data Tests"
         [
 
-            testCase "BlogRepository.GetBlogEntriesAsync: returns all entries in context."
+            testCase "BlogRepository.GetAll: returns all entries in context."
             <| fun _ ->
                 // arrange
                 let entries =
@@ -30,7 +32,7 @@ let all =
 
                 let context =
                     Mock<IContext>()
-                        .Setup(fun r -> <@ r.GetTable "blogentries" @>)
+                        .Setup(fun r -> <@ r.GetTable Tables.BlogEntries.name @>)
                         .Returns(entries |> Seq.ofList |> async.Return)
                         .Create()
 
@@ -38,13 +40,13 @@ let all =
 
                 // act
                 let result =
-                    target.GetBlogEntriesAsync()
+                    target.GetAll()
                     |> Async.RunSynchronously
 
                 // assert
                 Expect.equal result entries ""
 
-            testCase "BlogRepository.GetBlogEntryAsync: returns None when no results match"
+            testCase "BlogRepository.GetSingle: returns None when no results match"
             <| fun _ ->
                 // arrange
                 let slug = "blah-blah"
@@ -55,13 +57,13 @@ let all =
 
                 // act
                 let result =
-                    target.GetBlogEntryAsync slug
+                    target.GetSingle slug
                     |> Async.RunSynchronously
 
                 // assert
                 Expect.isNone result ""
 
-            testCase "BlogRepository.GetBlogEntryAsync: returns Some if more than one result"
+            testCase "BlogRepository.GetSingle: returns Some if more than one result"
             <| fun _ ->
                 // arrange
                 let expected = BlogEntry.create "one"
@@ -73,7 +75,7 @@ let all =
 
                 let context =
                     Mock<IContext>()
-                        .Setup(fun r -> <@ r.GetByValue "blogentries" "Slug" expected.Slug @>)
+                        .Setup(fun r -> <@ r.GetByValue Tables.BlogEntries.name Tables.BlogEntries.id expected.Slug @>)
                         .Returns(entries |> Seq.ofList |> async.Return)
                         .Create()
 
@@ -81,12 +83,50 @@ let all =
 
                 // act
                 let result =
-                    target.GetBlogEntryAsync expected.Slug
+                    target.GetSingle expected.Slug
                     |> Async.RunSynchronously
 
                 // assert
                 match result with
                 | None -> failtest "Should return Some result."
                 | Some r -> Expect.equal r expected ""
+
+            testCase "BlogRepository.Update: returns None if slug not found"
+            <| fun _ ->
+                // arrange
+                let context = EmptyContext()
+
+                let target: IRepository = upcast BlogRepository(context)
+
+                // act
+                let result =
+                    target.Update (BlogEntry.create "I Don't Exist")
+                    |> Async.RunSynchronously
+
+                // assert
+                Expect.isNone result ""
+
+            testCase "BlogRepository.Update: returns updated result when present"
+            <| fun _ ->
+                // arrange
+                let expected = BlogEntry.create "one"
+
+                let context =
+                    Mock<IContext>()
+                        .Setup(fun r -> <@ r.Update Tables.BlogEntries.name Tables.BlogEntries.id expected.Slug expected @>)
+                        .Returns(1 |> async.Return)
+                        .Create()
+
+                let target: IRepository = upcast BlogRepository(context)
+
+                // act
+                let result =
+                    target.Update expected
+                    |> Async.RunSynchronously
+
+                // assert
+                match result with
+                | None -> failtest "Should return Some result."
+                | Some e -> Expect.equal e expected ""
 
         ]
