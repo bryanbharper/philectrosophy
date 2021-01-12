@@ -19,10 +19,7 @@ type Url =
 
 module Url =
     let toString (url: Url) =
-        let (case, _) =
-            FSharpValue.GetUnionFields(url, typeof<Url>)
-
-        case.Name
+        url.asString
 
     let fromString (s: string) =
         let caseInfo =

@@ -55,7 +55,7 @@ let render (entry: BlogEntry) =
                 prop.classes [ Style.SecretAnchor ]
 
                 entry.Slug
-                |> sprintf "%s/%s" (Url.Blog.asString.ToLower())
+                |> sprintf "%s/%s" Url.Blog.asString
                 |> prop.href
 
                 prop.children media
