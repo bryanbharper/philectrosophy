@@ -92,6 +92,13 @@
   text-decoration: line-through;
 }
 
+.secret-anchor {
+  color: #4a4a4a;
+}
+.secret-anchor:hover {
+  color: #4a4a4a;
+}
+
 .dark-bg {
   background-color: #292c2f;
 }

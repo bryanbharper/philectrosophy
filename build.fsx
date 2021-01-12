@@ -232,8 +232,8 @@ open Fake.Core.TargetOperators
 "Bundle"
 ==> "Sandbox"
 
-"Test"
-==> "Bundle"
+"Bundle"
+==> "Test"
 ==> "Deploy"
 
 Target.runOrDefault "List"

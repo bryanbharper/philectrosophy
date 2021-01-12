@@ -7,7 +7,7 @@ open Elmish
 open Fable.Remoting.Client
 open Feliz
 open Feliz.Bulma
-open Feliz.Router
+open Elmish.Navigation
 open Shared
 
 let blogApi =
@@ -38,7 +38,7 @@ let init (slug: string): State * Cmd<Msg> =
 
 let update (msg: Msg) (state: State): State * Cmd<Msg> =
     match msg with
-    | ApiError _ -> state, Url.UnexpectedError.asString |> Cmd.navigate
+    | ApiError _ -> state, Url.UnexpectedError.asString |> Navigation.newUrl
     | CountUpdated None -> state, Cmd.none
     | CountUpdated (Some newCount) ->
         let newState =
@@ -55,7 +55,7 @@ let update (msg: Msg) (state: State): State * Cmd<Msg> =
                 { state with Entry = entry |> Resolved }
 
         newState, Cmd.none
-    | GotEntry None -> state, Url.NotFound.asString |> Cmd.navigate
+    | GotEntry None -> state, Url.NotFound.asString |> Navigation.newUrl
     | GotEntry (Some (metadata, content)) ->
         let entry =
             {

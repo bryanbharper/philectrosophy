@@ -3,7 +3,8 @@
 open Client.Styles
 open Client.Urls
 open Feliz
-open Feliz.Router
+//open Feliz.Router
+open Elmish.Navigation
 open Feliz.Bulma
 open Shared
 
@@ -46,11 +47,19 @@ let render (entry: BlogEntry) =
 
     Html.div [
         prop.classes [
-            Style.Clickable
             Bulma.Mb6
         ]
-        prop.onClick (fun _ ->
-            (Url.Blog.asString.ToLower(), entry.Slug)
-            |> Router.navigate)
-        prop.children media
+
+        prop.children [
+            Html.a [
+                prop.classes [ Style.SecretAnchor ]
+
+                entry.Slug
+                |> sprintf "%s/%s" (Url.Blog.asString.ToLower())
+                |> prop.href
+
+                prop.children media
+            ]
+        ]
+
     ]

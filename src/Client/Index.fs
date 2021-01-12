@@ -6,7 +6,8 @@ open Client.Urls
 open Elmish
 open Shared
 open Feliz
-open Feliz.Router
+open Elmish.Navigation
+
 
 (*******************************************
 *        TYPES
@@ -39,17 +40,12 @@ type Msg =
 (*******************************************
 *        HELPERS
 *******************************************)
-let onUrlChanged state dispatch url =
-    match Url.parseFeliz url with
-    | url when state.CurrentUrl = url -> ()
-    | url -> url |> Msg.UrlChanged |> dispatch
-
 let initFromUrl url =
     let pageInit (state, cmd) pageMapper msgMapper =
         {
             CurrentUrl = url
             CurrentPage = pageMapper state
-            Navbar = Navbar.init ()
+            Navbar = url |> Some |> Navbar.init
         },
         Cmd.map msgMapper cmd
 
@@ -62,24 +58,31 @@ let initFromUrl url =
         {
             CurrentUrl = url
             CurrentPage = Page.UnexpectedError
-            Navbar = Navbar.init ()
+            Navbar = url |> Some |> Navbar.init
         },
         Cmd.none
     | Url.NotFound ->
         {
             CurrentUrl = url
             CurrentPage = Page.NotFound
-            Navbar = Navbar.init ()
+            Navbar = url |> Some |> Navbar.init
         },
         Cmd.none
 
 (*******************************************
 *        INIT & UPDATE
 *******************************************)
-let init (): State * Cmd<Msg> =
-    Router.currentUrl ()
-    |> Url.parseFeliz
-    |> initFromUrl
+let init (url: Option<Url>): State * Cmd<Msg> =
+    match url with
+    | Some url -> initFromUrl url
+    | None ->
+        let state =
+            {
+                CurrentUrl = Url.UnexpectedError
+                CurrentPage = Page.UnexpectedError
+                Navbar = Navbar.init None
+            }
+        state, Navigation.newUrl "unexpected-error"
 
 let update (msg: Msg) (state: State): State * Cmd<Msg> =
     let updater pageMsg pageState pageUpdater msgMapper pageMapper =
@@ -122,9 +125,6 @@ let render (state: State) (dispatch: Msg -> unit): ReactElement =
     Html.div [
         prop.children [
             Navbar.render state.Navbar (Msg.Navbar >> dispatch)
-            React.router [
-                router.onUrlChanged (onUrlChanged state dispatch)
-                router.children activePage
-            ]
+            activePage
         ]
     ]

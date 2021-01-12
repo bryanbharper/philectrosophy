@@ -4,7 +4,7 @@ open Client.Styles
 open Client.Urls
 open Feliz
 open Feliz.Bulma
-open Feliz.Router
+//open Feliz.Router
 
 type State =
     {
@@ -16,13 +16,18 @@ type Msg =
     | BurgerClicked
     | UrlChanged of Url
 
-let init (): State =
-    let url = Router.currentUrl () |> Url.parseFeliz
-
-    {
-        BurgerExpanded = false
-        ActivePage = url
-    }
+let init (url: Option<Url>): State =
+    match url with
+    | None ->
+        {
+            ActivePage = Url.Blog
+            BurgerExpanded = false
+        }
+    | Some url ->
+        {
+            BurgerExpanded = false
+            ActivePage = url
+        }
 
 let update (msg: Msg) (state: State): State =
     match msg with
@@ -37,8 +42,7 @@ let navLink (url: Url) isActive =
         prop.classes [
             if isActive then Bulma.IsActive
         ]
-        url.asString.ToLower()
-        |> Router.format
+        url.asString
         |> prop.href
         url.asString.ToLower() |> prop.text
     ]
@@ -48,8 +52,7 @@ let navLinkIcon (url: Url) isActive icon =
         prop.classes [
             if isActive then Bulma.IsActive
         ]
-        url.asString.ToLower()
-        |> Router.format
+        url.asString
         |> prop.href
         prop.children [
             Bulma.icon [
@@ -71,7 +74,7 @@ let render (state: State) (dispatch: Msg -> unit): ReactElement =
         prop.children [
             Bulma.navbarBrand.div [
                 Bulma.navbarItem.a [
-                    prop.href "#"
+                    prop.href ""
                     prop.children [
                         Html.img [ prop.src "phi.png" ]
                     ]

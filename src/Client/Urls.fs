@@ -8,14 +8,14 @@ type Url =
     | About
     | Blog
     | BlogEntry of slug: string
-    | Search
     | NotFound
+    | Search
     | UnexpectedError
     member this.asString =
         let (case, _) =
             FSharpValue.GetUnionFields(this, typeof<Url>)
 
-        case.Name
+        case.Name.ToLower()
 
 module Url =
     let toString (url: Url) =
