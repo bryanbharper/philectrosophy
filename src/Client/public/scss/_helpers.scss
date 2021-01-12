@@ -9,3 +9,10 @@
 .is-strike-through {
     text-decoration: line-through;
 }
+
+.secret-anchor {
+    color: #4a4a4a;
+    &:hover {
+        color: #4a4a4a;
+    }
+}

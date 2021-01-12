@@ -46,11 +46,19 @@ let render (entry: BlogEntry) =
 
     Html.div [
         prop.classes [
-            Style.Clickable
             Bulma.Mb6
         ]
-        prop.onClick (fun _ ->
-            (Url.Blog.asString.ToLower(), entry.Slug)
-            |> Router.navigate)
-        prop.children media
+
+        prop.children [
+            Html.a [
+                prop.classes [ Style.SecretAnchor ]
+
+                (Url.Blog.asString, entry.Slug)
+                |> Router.format
+                |> prop.href
+
+                prop.children media
+            ]
+        ]
+
     ]

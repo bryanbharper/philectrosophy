@@ -18,12 +18,10 @@ let all =
 
                 let testParams =
                     [
-                        (Url.About, "About")
-                        (Url.Blog, "Blog")
-                        (Url.BlogEntry slug, "BlogEntry")
-                        (Url.Search, "Search")
-                        (Url.NotFound, "NotFound")
-                        (Url.UnexpectedError, "UnexpectedError")
+                        (Url.About, "about")
+                        (Url.Blog, "blog")
+                        (Url.Search, "search")
+                        (Url.NotFound, "notfound")
                     ]
 
                 for url, expected in testParams do

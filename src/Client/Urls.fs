@@ -15,14 +15,11 @@ type Url =
         let (case, _) =
             FSharpValue.GetUnionFields(this, typeof<Url>)
 
-        case.Name
+        case.Name.ToLower()
 
 module Url =
     let toString (url: Url) =
-        let (case, _) =
-            FSharpValue.GetUnionFields(url, typeof<Url>)
-
-        case.Name
+        url.asString
 
     let fromString (s: string) =
         let caseInfo =
