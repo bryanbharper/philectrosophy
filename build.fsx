@@ -117,6 +117,7 @@ Target.create "Sandbox"
             name (appName + "-sbx")
             app_insights_off
             zip_deploy "deploy"
+            setting "ASPNETCORE_ENVIRONMENT" "Sandbox"
         }
 
     let deployment =
