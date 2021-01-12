@@ -1,17 +1,12 @@
 module Client.Index
 
+(*******************************************
+*               TYPES
+*******************************************)
+open Client.Urls
 open Client.Components
 open Client.Pages
-open Client.Urls
-open Elmish
-open Shared
-open Feliz
-open Elmish.Navigation
 
-
-(*******************************************
-*        TYPES
-*******************************************)
 [<RequireQualifiedAccess>]
 type Page =
     | About of About.State
@@ -23,7 +18,6 @@ type Page =
 
 type State =
     {
-        CurrentUrl: Url
         CurrentPage: Page
         Navbar: Navbar.State
     }
@@ -35,15 +29,16 @@ type Msg =
     | BlogEntry of BlogEntry.Msg
     | Navbar of Navbar.Msg
     | Search of Search.Msg
-    | UrlChanged of Url
 
 (*******************************************
-*        HELPERS
+*               INIT
 *******************************************)
+open Elmish.Navigation
+open Elmish
+
 let initFromUrl url =
     let pageInit (state, cmd) pageMapper msgMapper =
         {
-            CurrentUrl = url
             CurrentPage = pageMapper state
             Navbar = url |> Some |> Navbar.init
         },
@@ -56,34 +51,31 @@ let initFromUrl url =
     | Url.Search -> pageInit (Search.init ()) Page.Search Msg.Search
     | Url.UnexpectedError ->
         {
-            CurrentUrl = url
             CurrentPage = Page.UnexpectedError
             Navbar = url |> Some |> Navbar.init
         },
         Cmd.none
     | Url.NotFound ->
         {
-            CurrentUrl = url
             CurrentPage = Page.NotFound
             Navbar = url |> Some |> Navbar.init
         },
         Cmd.none
 
-(*******************************************
-*        INIT & UPDATE
-*******************************************)
 let init (url: Option<Url>): State * Cmd<Msg> =
     match url with
     | Some url -> initFromUrl url
     | None ->
         let state =
             {
-                CurrentUrl = Url.UnexpectedError
                 CurrentPage = Page.UnexpectedError
                 Navbar = Navbar.init None
             }
         state, Navigation.newUrl "unexpected-error"
 
+(*******************************************
+*               UPDATE
+*******************************************)
 let update (msg: Msg) (state: State): State * Cmd<Msg> =
     let updater pageMsg pageState pageUpdater msgMapper pageMapper =
         let newState, newCmd = pageUpdater pageMsg pageState
@@ -99,7 +91,6 @@ let update (msg: Msg) (state: State): State * Cmd<Msg> =
     | Msg.Blog msg', Page.Blog state' -> updater msg' state' Blog.update Msg.Blog Page.Blog
     | Msg.BlogEntry msg', Page.BlogEntry state' -> updater msg' state' BlogEntry.update Msg.BlogEntry Page.BlogEntry
     | Msg.Search msg', Page.Search state' -> updater msg' state' Search.update Msg.Search Page.Search
-    | Msg.UrlChanged nextUrl, _ -> initFromUrl nextUrl
     | Msg.Navbar msg', _ ->
         { state with
             Navbar = Navbar.update msg' state.Navbar
@@ -108,9 +99,9 @@ let update (msg: Msg) (state: State): State * Cmd<Msg> =
     | _ -> state, Cmd.none
 
 (*******************************************
-*        RENDER
+*               RENDER
 *******************************************)
-open Fable.React
+open Feliz
 
 let render (state: State) (dispatch: Msg -> unit): ReactElement =
     let activePage =
