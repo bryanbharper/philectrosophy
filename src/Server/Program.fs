@@ -5,6 +5,8 @@ open Data
 open Fable.Remoting.Server
 open Fable.Remoting.Giraffe
 open File
+open Giraffe.Core
+open Giraffe.ResponseWriters
 open Giraffe.SerilogExtensions
 open Microsoft.Extensions.DependencyInjection
 open Saturn
@@ -19,14 +21,19 @@ let configureServices (services : IServiceCollection) =
         .AddSingleton<IFileAccess, PublicFileStore>()
         .AddSingleton<IBlogContentStore, BlogContentStore>()
 
-let webApp =
+let restApi =
     Remoting.createApi()
     |> Remoting.withRouteBuilder Route.builder
     |> Remoting.fromReader BlogApi.blogApiReader
     |> Remoting.withErrorHandler Error.handler
     |> Remoting.buildHttpHandler
 
-let webAppWithLogging = SerilogAdapter.Enable(webApp)
+let fallback = router {
+    not_found_handler (setStatusCode 200 >=> htmlFile "public/index.html")
+}
+
+let api: HttpHandler = choose [ restApi; fallback ]
+let apiWithLogging = SerilogAdapter.Enable(api)
 
 OptionTypes.register ()
 
@@ -40,7 +47,7 @@ Log.Logger <-
 let app =
     application {
         url "http://0.0.0.0:8085"
-        use_router webAppWithLogging
+        use_router apiWithLogging
         service_config configureServices
         memory_cache
         use_static "public"

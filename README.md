@@ -1,5 +1,19 @@
 # Philectrosophy
 
+## Running for Development
+```
+dotnet fake build -t run
+```
+
+
+## Running in Production Mode
+First bundle the app:
+```
+dotnet fake build -t bundle
+```
+
+Then run `<project-root>/deploy/Server.exe`. In your browser open http://localhost:8085/.
+
 ## Cli Tools
 
 ### FAKE
