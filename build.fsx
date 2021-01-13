@@ -19,17 +19,26 @@ type Config = JsonProvider<"src/Server/appsettings.Development.json">
 
 // Constants
 let appName = "philectrosophy"
-let blogImagePath =
-    Path.getFullName "./src/Server/public/blog.posts/img"
-let clientPublicDir = Path.getFullName "./src/Client/public"
-let config = Config.GetSample()
+
+let sourcePath =
+    Path.getFullName "./src"
+let clientPath = Path.combine sourcePath "Client"
+let serverPath = Path.combine sourcePath "Server"
+let sharedPath = Path.combine sourcePath "Shared"
+
 let deployDir = "deploy"
 let deployPath =  sprintf "./%s" deployDir |> Path.getFullName
-let serverTestsPath = Path.getFullName "./tests/Server"
-let serverPath = Path.getFullName "./src/Server"
-let sharedPath = Path.getFullName "./src/Shared"
-let sharedTestsPath = Path.getFullName "./tests/Shared"
+let deployPublicPath = Path.combine deployPath "public"
 
+let blogImagePath =
+    Path.combine serverPath "public/blog.posts/img"
+let clientPublicPath = Path.combine clientPath "public"
+
+let testPath = Path.getFullName "./tests"
+let serverTestsPath = Path.combine testPath "Server"
+let sharedTestsPath = Path.combine testPath "Shared"
+
+let config = Config.GetSample()
 
 // Helpers
 let buildRawCmd cmd args workingDir =
@@ -55,7 +64,7 @@ let execRaw cmd args workingDir =
 
 let sass input output =
     let args = sprintf "%s %s" input output
-    execRawHandled "sass" args "src\Client\public"
+    execRawHandled "sass" args clientPublicPath
 
 let dotnet cmd workingDir =
     let result =
@@ -78,7 +87,7 @@ Target.create "Clean"
 Target.create "BlogImages"
 <| fun _ ->
     "Moving blog images to client." |> printSection
-    Shell.copyDir (Path.combine clientPublicDir "img") blogImagePath (fun _ -> true)
+    Shell.copyDir (Path.combine clientPublicPath "img") blogImagePath (fun _ -> true)
 
 Target.create "BundleStyles"
 <| fun _ ->
@@ -116,7 +125,7 @@ Target.create "Sandbox"
         webApp {
             name (appName + "-sbx")
             app_insights_off
-            zip_deploy "deploy"
+            zip_deploy deployDir
             setting "ASPNETCORE_ENVIRONMENT" "Sandbox"
         }
 
@@ -139,7 +148,7 @@ Target.create "Deploy"
             name appName
             sku WebApp.Sku.D1
             app_insights_off
-            zip_deploy "deploy"
+            zip_deploy deployDir
         }
 
     let deployment =

@@ -22,6 +22,9 @@ let toLower (str: string) = str.ToLower()
 
 let isNullOrWhiteSpace s = String.IsNullOrWhiteSpace(s)
 
+let suffix (suffix': string) str =
+    str + suffix'
+
 let slugify =
     toLower
     >> trim
