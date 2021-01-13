@@ -35,6 +35,7 @@
     "dependencies": {
         "bulma": "^0.9.1",
         "bulma-popover": "^1.0.3",
+        "disqus-react": "^1.0.10",
         "fable-splitter": "^2.2.1",
         "mocha": "^8.2.1",
         "react": "^17.0.1",

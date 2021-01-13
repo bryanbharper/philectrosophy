@@ -149,4 +149,6 @@ let render (state: State) (dispatch: Msg -> unit): ReactElement =
         | Resolved entry ->
             header entry.Metadata
             Markdown.render entry.Content
+            Html.hr []
+            Disqus.render entry.Metadata.Slug entry.Metadata.Title
     ]
