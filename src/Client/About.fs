@@ -245,9 +245,9 @@ let engineering =
 
     let projects =
         [
-            "Digital Clock Design", "#/blog/build-a-digital-clock"
-            "555 Timer IC", "#/blog/the-555-timer-ic"
-            "Terminal Talk", "#/blog/terminal-talk"
+            "Digital Clock Design", "/blog/build-a-digital-clock"
+            "555 Timer IC", "/blog/the-555-timer-ic"
+            "Terminal Talk", "/blog/terminal-talk"
         ]
 
     [
@@ -269,9 +269,9 @@ let philosophy =
 
     let projects =
         [
-            "Gunky Atoms", "#/blog/gunky-atoms"
-            "Identity of Indiscernibles", "#/blog/the-identity-of-indiscernibles"
-            "On Plantinga's E.A.A.N", "#/blog/on-the-evolutionary-argument-against-naturalism"
+            "Gunky Atoms", "/blog/gunky-atoms"
+            "Identity of Indiscernibles", "/blog/the-identity-of-indiscernibles"
+            "On Plantinga's E.A.A.N", "/blog/on-the-evolutionary-argument-against-naturalism"
         ]
 
     [
