@@ -222,7 +222,10 @@ let interestsAndProjects (interests: string list) (projects: (string * string) l
             |> List.map (fun (label, href) ->
                 Html.li [
                     Html.a [
-                        prop.classes [ Bulma.HasTextWhite; Style.IsUnderlined ]
+                        prop.classes [
+                            Bulma.HasTextWhite
+                            Style.IsUnderlined
+                        ]
                         prop.href href
                         prop.text label
                     ]

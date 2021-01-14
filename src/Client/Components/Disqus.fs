@@ -4,7 +4,6 @@ open Fable.Core
 open Fable.Core.JsInterop
 open Fable.React.Helpers
 open Fable.React.Props
-open Shared
 
 type DisqusConfig =
     {
@@ -19,16 +18,11 @@ type DisqusProps =
     interface IHTMLProp
 
 let inline render slug title =
-    let slug' =
-        slug
-        |> String.replace "-" "_"
-        |> String.suffix "_0"
-
     let props = [
                 Shortname "philectrosophy"
                 Config {
-                    url = sprintf "http://philectrosophy.com/blog/%s" slug
-                    identifier = slug'
+                    url = "http://philectrosophy.com/blog/" + slug
+                    identifier = slug
                     title = title
                 }
             ]

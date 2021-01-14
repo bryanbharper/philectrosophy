@@ -4,7 +4,6 @@ open Fable.Core
 open Fable.Core.JsInterop
 open Fable.React.Props
 open Fable.React.Helpers
-open Feliz
 
 type MarkedOptions = { sanitize: bool; smartypants: bool }
 

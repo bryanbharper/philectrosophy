@@ -2,7 +2,6 @@
 
 open Microsoft.FSharp.Reflection
 
-
 [<RequireQualifiedAccess>]
 type Url =
     | About
@@ -12,14 +11,18 @@ type Url =
     | Search
     | UnexpectedError
     member this.asString =
+        let this' =
+            match this with
+            | BlogEntry _ -> Blog
+            | _ -> this
+
         let (case, _) =
-            FSharpValue.GetUnionFields(this, typeof<Url>)
+            FSharpValue.GetUnionFields(this', typeof<Url>)
 
         case.Name.ToLower()
 
 module Url =
-    let toString (url: Url) =
-        url.asString
+    let toString (url: Url) = url.asString
 
     let fromString (s: string) =
         let caseInfo =
@@ -29,18 +32,8 @@ module Url =
         match caseInfo with
         | Some case ->
             match case.GetFields() with
-            | [||] ->
-                FSharpValue.MakeUnion(case, [||]) :?> Url |> Some
+            | [||] -> FSharpValue.MakeUnion(case, [||]) :?> Url |> Some
             | _ ->
-                FSharpValue.MakeUnion(case,  [| "" |> box |] ) :?> Url |> Some
+                FSharpValue.MakeUnion(case, [| "" |> box |]) :?> Url
+                |> Some
         | _ -> None
-
-    let parseFeliz url =
-        match url with
-        | [] -> Url.Blog
-        | [ _: string; slug: string ] -> Url.BlogEntry slug
-        | [ page: string ] ->
-            match fromString page with
-            | Some url -> url
-            | None -> Url.NotFound
-        | _ -> Url.NotFound

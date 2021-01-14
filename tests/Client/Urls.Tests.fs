@@ -1,10 +1,7 @@
 ﻿module Client.Tests.Urls
 
-open Client
 open Client.Urls
 open Fable.Mocha
-
-module Target = Index
 
 let all =
     testList
@@ -20,6 +17,7 @@ let all =
                     [
                         (Url.About, "about")
                         (Url.Blog, "blog")
+                        (Url.BlogEntry slug, "blog")
                         (Url.Search, "search")
                         (Url.NotFound, "notfound")
                     ]
@@ -29,10 +27,28 @@ let all =
                     let result = Url.toString url
 
                     // assert
-                    Expect.equal
-                        result
-                        expected
-                        (sprintf "%A should become %s, but got %A instead." url expected result)
+                    Expect.equal result expected ""
+
+            testCase "Urls.asString: returns string version of Url"
+            <| fun _ ->
+                // arrange
+                let slug = "some-slug"
+
+                let testParams =
+                    [
+                        (Url.About, "about")
+                        (Url.Blog, "blog")
+                        (Url.BlogEntry slug, "blog")
+                        (Url.Search, "search")
+                        (Url.NotFound, "notfound")
+                    ]
+
+                for url, expected in testParams do
+                    // act
+                    let result = url.asString
+
+                    // assert
+                    Expect.equal result expected ""
 
             testCase "Urls.fromString: converts valid string to Url"
             <| fun _ ->
@@ -54,10 +70,7 @@ let all =
                     // assert
                     match result with
                     | Some result ->
-                        Expect.equal
-                            result
-                            expected
-                            (sprintf "%s should become %A, but got %A instead." asString expected result)
+                        Expect.equal result expected ""
                     | _ -> failwith (sprintf "%A should have been %A" result expected)
 
             testCase "Urls.fromString: is case insensitive"
@@ -80,36 +93,7 @@ let all =
                     // assert
                     match result with
                     | Some result ->
-                        Expect.equal
-                            result
-                            expected
-                            (sprintf "%s should become %A, but got %A instead." asString expected result)
+                        Expect.equal result expected ""
                     | _ -> failwith (sprintf "%A should have been %A" result expected)
 
-            testCase "Url.parseFeliz maps to the correct page"
-            <| fun _ ->
-                // arrange
-                let slug = "some-slug"
-
-                let testParams =
-                    [
-                        ([ "about" ], Url.About)
-                        ([], Url.Blog)
-                        ([ "blog" ], Url.Blog)
-                        ([ "blog"; slug ], Url.BlogEntry "some-slug")
-                        ([ "notfound" ], Url.NotFound)
-                        ([ "Notfound" ], Url.NotFound)
-                        ([ "notFound" ], Url.NotFound)
-                        ([ "search" ], Url.Search)
-                        ([ "tac-o-cat" ], Url.NotFound)
-                        ([ "UnexpectedError" ], Url.UnexpectedError)
-                        ([ "unexpectedError" ], Url.UnexpectedError)
-                    ]
-
-                for url, page in testParams do
-                    // act
-                    let result = Url.parseFeliz url
-
-                    // assert
-                    Expect.equal result page (sprintf "%A should parse to %A, but got %A instead." url page result)
         ]

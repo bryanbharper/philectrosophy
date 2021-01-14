@@ -1,7 +1,6 @@
 ﻿module Client.Pages.Blog
 
 open Client.Components
-open Client.Styles
 open Client.Urls
 open Elmish
 open Fable.Remoting.Client

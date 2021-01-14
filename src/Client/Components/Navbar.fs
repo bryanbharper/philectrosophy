@@ -4,7 +4,6 @@ open Client.Styles
 open Client.Urls
 open Feliz
 open Feliz.Bulma
-//open Feliz.Router
 
 type State =
     {
@@ -42,32 +41,24 @@ let navLink (url: Url) isActive =
         prop.classes [
             if isActive then Bulma.IsActive
         ]
-        url.asString
-        |> prop.href
-        url.asString.ToLower() |> prop.text
+        url |> Url.toString |> prop.href
+        url |> Url.toString |> prop.text
     ]
 
-let navLinkIcon (url: Url) isActive icon =
+let navLinkIcon (url: Url) isActive fontAwesomeIconName =
     Bulma.navbarItem.a [
         prop.classes [
             if isActive then Bulma.IsActive
         ]
-        url.asString
-        |> prop.href
+        url |> Url.toString |> prop.href
         prop.children [
             Bulma.icon [
-                Html.i [ prop.classes [ FA.Fas; icon ] ]
+                Html.i [ prop.classes [ FA.Fas; fontAwesomeIconName ] ]
             ]
         ]
     ]
 
 let render (state: State) (dispatch: Msg -> unit): ReactElement =
-    let matchBlog url =
-        match url with
-        | Url.Blog
-        | Url.BlogEntry _ -> true
-        | _ -> false
-
     Bulma.navbar [
         navbar.isFixedTop
         prop.classes [ Bulma.IsWhite ]
@@ -95,7 +86,7 @@ let render (state: State) (dispatch: Msg -> unit): ReactElement =
                 if state.BurgerExpanded then navbarMenu.isActive
                 prop.children [
                     Bulma.navbarEnd.div [
-                        navLink Url.Blog (state.ActivePage |> matchBlog)
+                        navLink Url.Blog (state.ActivePage = Url.Blog)
                         navLink Url.About (state.ActivePage = Url.About)
                         navLinkIcon Url.Search (state.ActivePage = Url.Search) FA.FaSearch
                     ]

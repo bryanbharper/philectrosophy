@@ -10,7 +10,6 @@ let all =
 #endif
             BlogEntry.all
             Blog.all
-            Index.all
             Urls.all
         ]
 

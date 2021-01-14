@@ -1,13 +1,11 @@
 ﻿module Client.Pages.Search
 
-open Client
 open Client.Components
 open Elmish
 open Fable.Remoting.Client
 open Feliz
 open Feliz.Bulma
 open Shared
-open Styles
 
 let blogApi =
     Remoting.createApi ()
