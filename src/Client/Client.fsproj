@@ -14,6 +14,7 @@
         <Content Include="public\scss\_theme.scss" />
         <Content Include="public\scss\_progress-bar.scss" />
         <Content Include="public\styles.css" />
+        <Content Include="public\SiteMap.txt" />
         <None Include="index.html" />
         <None Include="paket.references" />
         <Compile Include="Styles.fs" />
