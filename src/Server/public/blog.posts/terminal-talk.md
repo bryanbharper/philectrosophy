@@ -7,9 +7,9 @@
 
 This fall I took a class in computer networking. A semester project was required. I knew that over Winter break I'd be building a server with a friend, so I decided it would be fun to develop a client-server application that we could host on our server. The end product is *TerminalTalk*.
 
-*TerminalTalk* is a terminal based chat-room. Nothing too fancy, but it was loads of fun to make! It was written in Python. Below you can find some screen shots of the application complete with nerdy philosophy jokes. Additionally, I've included the report I submitted for my computer networking class along with the API for the application. You can find the source code for *TerminalTalk* [here][1].
+*TerminalTalk* is a terminal based chat-room. Nothing too fancy, but it was loads of fun to make! It was written in Python. Below you can find some screenshots of the application complete with nerdy philosophy jokes. Additionally, I've included the report I submitted for my computer networking class along with the API for the application. You can find the source code for *TerminalTalk* [here][1].
 
-*Note: The IP addresses included in the source code are all behind a NAT and so the application will not be useable to you as is. If you want to try the application, you'll have to host it on your machine and adjust the IPs accordingly.*
+*Note: The IP addresses included in the source code are all behind a NAT and so the application will not be usable to you as is. If you want to try the application, you'll have to host it on your machine and adjust the IPs accordingly.*
 
 ### Demo
 Below is an example with two users having a conversation.

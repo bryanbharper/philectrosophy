@@ -40,9 +40,9 @@ Generally, a sequential circuit requires the use of *flip-flops*. For our design
 
 ![t-flip-flop-diagrams-and-table](img/t-flip-flop-diagrams-and-table-horizontal.gif)
 
-The T flip-flop's logic circuit, block diagram, and excitation table are shown above. When the *T* input of the T flip-flop is '1' (true or high), the current state of the flip flop, *Q*, toggles to its logical opposite on each clock pulse. If the *T* input is '0' (false or low) the state of the flip-flop is unchanged. Lastly, if the *Preset* or *Reset* inputs are '1', the state will asynchronously (i.e., instantly, irrespective of *clk*) become '1' or '0' respectively.
+The T flip-flop's logic circuit, block diagram, and excitation table are shown above. When the *T* input of the T flip-flop is '1' (true or high), the current state of the flip-flop, *Q*, toggles to its logical opposite on each clock pulse. If the *T* input is '0' (false or low) the state of the flip-flop is unchanged. Lastly, if the *Preset* or *Reset* inputs are '1', the state will asynchronously (i.e., instantly, irrespective of *clk*) become '1' or '0' respectively.
 
-As always in digital electronics, we'll be doing our counting in binary. For the 0-9 counter, the largest number we will need to represent is 9&#x2081;&#x2080;, which in binary is four bits, 1001&#x2082;. Each bit will be expressed by the output, *Q*, of a flip flop. So we'll need four flip-flops.
+As always in digital electronics, we'll be doing our counting in binary. For the 0-9 counter, the largest number we will need to represent is 9&#x2081;&#x2080;, which in binary is four bits, 1001&#x2082;. Each bit will be expressed by the output, *Q*, of a flip-flop. So we'll need four flip-flops.
 
 Let's enumerate the flip-flop inputs and outputs for ease of communication. We'll denote the output of the flip-flop representing the least significant bit as *Q&#x2080;* and its corresponding input as *T&#x2080;*. The next input-output pair will be *Q&#x2081;* and *T&#x2081;*, and so on. Thus, if we want to represent the number 5&#x2081;&#x2080; (i.e.,  0101&#x2082;), then the output of each flip-flop should be *Q&#x2083; = 0*,  *Q&#x2082; = 1*,  *Q&#x2081; = 0*, and  *Q&#x2080; = 1*.
 
@@ -57,7 +57,7 @@ Now we need to construct an excitation table for our 0-9 counter circuit. We can
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[MATH]Q_{k}(t) = Q_{k}(t+1) \; \rightarrow\;  T_k = 0[/MATH]
 
 
-* The Clk Out values are determined merely by recalling that we want the circuit to send out a clock signal whenever it has flipped from its highest to lowest numeric value. So we'll fill those out in the table accordingly.
+* The Clk Out values are determined merely by recalling that we want the circuit to send out a clock signal whenever it has flipped from its highest numeric value to its lowest. So we'll fill those out in the table accordingly.
 
 * Finally, the 'x's denote ["don't care" conditions](https://en.wikipedia.org/wiki/Don%27t-care_term); if our circuit has been properly designed, the inputs with the "don't care" conditions will never occur, so we can safely assume that a given 'x' is either a '1' or '0', whichever simplifies our function most.
 
@@ -126,10 +126,10 @@ All that is left to do is assemble the circuit (below).
 ![async-complete-0-9-counter-circuit](img/async-complete-0-9-counter-circuit.gif)
 
 It's clear that when it comes to counting circuits, because of the correspondence between when bits flip and when clk-signals must occur, employing an asynchronous design yields a more compact circuit. Thus, for all subsequent counters we will only go over asynchronous designs.
-> *Note: the output clock signal is not visible in the circuit above as it only occurs for a fraction of a second. I though about editing the gif to make it visible, but I'm too lazy, so you'll have to just use your imagination.*
+> *Note: the output clock signal is not visible in the circuit above as it only occurs for a fraction of a second. I thought about editing the gif to make it visible, but I'm too lazy, so you'll have to just use your imagination.*
 
 ## The 0-5 Counter:
-The procedure here is exactly like before. The only notable difference is that in order to represent our largest number 5&#x2081;&#x2080; we only need 3 bits 101&#x2082;  and thus only 3 flip flops.
+The procedure here is exactly like before. The only notable difference is that in order to represent our largest number 5&#x2081;&#x2080; we only need 3 bits 101&#x2082;  and thus only 3 flip-flops.
 
 ![async-complete-0-5-counter-circuit](img/async-complete-0-5-counter-circuit.gif)
 
@@ -168,7 +168,7 @@ In order to fill out the truth table, it helps have on hand which segments need 
 
 [MATH]\begin{align*} 9_{10} &= ABCDFG \\ 8_{10} &= ABCDEFG \\ 7_{10} &= ABC \\ 6_{10} &= ACDEFG \\ 5_{10} &= ACDFG \\ 4_{10} &= BCFG \\ 3_{10} &= ABCDG \\ 2_{10} &= ABDEG \\ 1_{10} &= BC \\ 0_{10} &= ABCDF \end{align*}[/MATH]
 
-Each input to the decoder, I&#x2083;, I&#x2082;, I&#x2081;, and I&#x2080;, corresponds to the outputs of the counter, Q&#x2083;, Q&#x2082; etc..
+Each input to the decoder, I&#x2083;, I&#x2082;, I&#x2081;, and I&#x2080;, corresponds to the outputs of the counter, Q&#x2083;, Q&#x2082; etc...
 
 Utilizing K-Map minimization again we derive the following output equations:
 

@@ -12,7 +12,7 @@ More formally, gunk is stuff that possesses no atoms. The term 'atom' here does 
 
 We think of things as made of parts. A house has bricks as parts, a car has wheels as parts, etc.. In the study of [mereology](https://en.wikipedia.org/wiki/Mereology) the notion of 'part-hood' is made precise. Formally, where '[IMATH]P[/IMATH]' stands for 'is a part of':
 
-[MATH]\begin{matrix} \forall_x \forall_y \left[\left(P_{xy} \, \& \, P_{yz} \right ) \rightarrow P_{xz} \right ] & \text{part-hood is transistive} & (2.1) \\ \\ \forall_x \forall_y \left[\left(P_{xy} \, \& \, P_{yx} \right ) \rightarrow x = y \right ] & \text{part-hood is antisymetric} & (2.2) \\ \\ \forall_x \left[ P_{xx} \right ] & \text{part-hood is reflexive} & (2.3) \end{matrix}[/MATH]
+[MATH]\begin{matrix} \forall_x \forall_y \left[\left(P_{xy} \, \& \, P_{yz} \right ) \rightarrow P_{xz} \right ] & \text{part-hood is transitive} & (2.1) \\ \\ \forall_x \forall_y \left[\left(P_{xy} \, \& \, P_{yx} \right ) \rightarrow x = y \right ] & \text{part-hood is antisymmetric} & (2.2) \\ \\ \forall_x \left[ P_{xx} \right ] & \text{part-hood is reflexive} & (2.3) \end{matrix}[/MATH]
 
 Careful note of 2.3 should be taken. It states that everything is a part of itself, and this is often contrary to the ordinary usage of the term 'part'. However, mereologists, perhaps taking a page from set theory, have found utility in defining 'part-hood' more broadly, such that a thing may be considered as a part of itself. Of course, in some contexts it will be useful to distinguish an object from its nonidentical parts. Thus, we introduce the notion of a 'proper-part', denoted as '[IMATH]PP[/IMATH]':
 
@@ -26,7 +26,7 @@ Now we can define a mereological atom 'A':
 
 [MATH]\begin{matrix} \forall_x \left[ A_x \leftrightarrow \lnot \exists_y \left[ PP_{yx} \right ] \right ] & (2.5) \end{matrix}[/MATH]
 
-That is, something is a mereological atom if no thing is a proper part of it. It would be tempting to define an atom as something with no parts, but as 'part' is given special technical usage in mereology, every atom will have exactly one
+That is, something is a mereological atom if nothing is a proper part of it. It would be tempting to define an atom as something with no parts, but as 'part' is given special technical usage in mereology, every atom will have exactly one
 part (i.e., itself).
 
 So what is gunk? Simply put, an object is made up of gunk if it has no mereological atoms as parts. Formally:
@@ -54,8 +54,7 @@ If you're not into metaphysics (*do you even mind-body, bro?*) the phrase *compo
 Now, the compositional nihilist will say something like this:
 > "...*strictly speaking*, there are no such things, just as, strictly speaking, the sun does not rise in the morning. We find it useful to speak of the sun rising, and are not alarmed when we are reminded that this is strictly speaking false, for there is a true proposition we could assert, but don’t bother to. Rather than saying 'The sun is rising', I could say 'The earth is now rotating relative to the sun in such a way that there is coming to exist an unobstructed straight path between the sun and my present vantage point.' How unromantic! And how inconvenient as well—small wonder that we speak falsely without batting an eye.
 
-> What are the complicated truths that we do not bother to assert, uttering instead falsehoods like 'there are some tables'? Complicated assertions about the smallest parts of the 'tables'. Rather than claim that there are many fundamental
-particles here in my 'room' next to my 'chair', which particles behave so as to prevent my 'computer', 'keys', and 'briefcase' from falling to the 'floor', instead I say simply 'There’s a table in my room'."[POP]Sider, Theodore, van Inwagen and the Possibility of Gunk. Analysis 53, 1993: 285-9[/POP]
+> What are the complicated truths that we do not bother to assert, uttering instead falsehoods like 'there are some tables'? Complicated assertions about the smallest parts of the 'tables'. Rather than claim that there are many fundamental particles here in my 'room' next to my 'chair', which particles behave so as to prevent my 'computer', 'keys', and 'briefcase' from falling to the 'floor', instead I say simply 'There’s a table in my room'."[POP]Sider, Theodore, van Inwagen and the Possibility of Gunk. Analysis 53, 1993: 285-9[/POP]
 
 Let's make the idea a little more formal. Let's imagine a world that contains just two atoms, [IMATH]a_0[/IMATH] and [IMATH]a_1[/IMATH], stuck together in such a way that ordinarily we would say they compose an object. Now, if composition is possible, then the set of objects in this world is something like:
 
@@ -86,7 +85,7 @@ Let's give structure to this argument:
 
 (3.5) &nbsp; Compositional nihilism is false. [from 1 & 4, modus tollens]
 
-Premises (3.2) and (3.3) are just definitional. (3.4) and (3.5) are logically entailed by what's preceded. So the only premise available for objection is (3.1). Premise (3.1) emerges from the intuition that when we picture a gunky world, we can imagine stuff in in it, e.g., gunk shaped spheres and cubes. It should also be noted that premise (3.1) depends on gunk being metaphysically possible in the first place. So far, however, we've seen no reason to question this.
+Premises (3.2) and (3.3) are just definitional. (3.4) and (3.5) are logically entailed by what's preceded. So the only premise available for objection is (3.1). Premise (3.1) emerges from the intuition that when we picture a gunky world, we can imagine stuff in it, e.g., gunk shaped spheres and cubes. It should also be noted that premise (3.1) depends on gunk being metaphysically possible in the first place. So far, however, we've seen no reason to question this.
 
 ### 4 &nbsp; Response
 <p class="subtitle is-4">4.1 &nbsp; Are Gunk Worlds Empty?</p>
@@ -115,7 +114,7 @@ Suppose that composition is possible is possible in a gunky world. A gunky Nerdi
 
 Now, recall the definition of a proper part (2.4).[POP][MATH]\begin{matrix} \forall_x \forall_y \left[PP_{xy} \leftrightarrow \left( P_{xy} \; \& \; x \neq y \right ) \right ] & (2.4) \end{matrix}[/MATH][/POP] If [IMATH]x[/IMATH] is a proper part of [IMATH]y[/IMATH], then [IMATH]x[/IMATH] and [IMATH]y[/IMATH] cannot be identical. It follows from this that in a Nerdicon world there would be no proper parts, since each universe would have itself as a part.[POP]And for every part: remember that part-hood is transitive. So take, for example some tree in a universe in a Nerdicon World. It will divide into a universe that has it as a part, and similarly is part of a universe that is a part of the tree.[/POP]
 
-Next, recall the definition of a mereological atom (2.5).[POP][MATH]\begin{matrix} \forall_x \left[ A_x \leftrightarrow \lnot \exists_y \left[ PP_{yx} \right ] \right ] & (2.5) \end{matrix}[/MATH][/POP] An object [IMATH]x[/IMATH] is an mereological atom iff there is no thing [IMATH]y[/IMATH] that is a proper part of it --- i.e., a mereological atom is a part with no proper-parts. But if there are no proper parts in a Nerdicon world, then by definition *each universe is a mereological atom*!
+Next, recall the definition of a mereological atom (2.5).[POP][MATH]\begin{matrix} \forall_x \left[ A_x \leftrightarrow \lnot \exists_y \left[ PP_{yx} \right ] \right ] & (2.5) \end{matrix}[/MATH][/POP] An object [IMATH]x[/IMATH] is an mereological atom iff there is nothing [IMATH]y[/IMATH] that is a proper part of it --- i.e., a mereological atom is a part with no proper-parts. But if there are no proper parts in a Nerdicon world, then by definition *each universe is a mereological atom*!
 
 So, gunky composition fills a gunky world with atoms. But, of course, this is a contradiction. A gunky world is, definitionally, a world without atoms. So, reductio ad absurdum, we are forced to reject the assumption that gunky composition is possible.
 
