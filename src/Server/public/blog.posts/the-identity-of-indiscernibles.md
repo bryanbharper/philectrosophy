@@ -22,7 +22,7 @@ The reason for this controversy has to do with apparent counter-examples. Candid
 
 If this is a genuine possibility, then (1.3) must be false.
 
-There are additional candidate counter examples, but I can't possibly go through them all. However, is far as I can tell they are essentially the same, with only superficial differences. So, in my defense of (1.3) I will refer to just two of these counter examples --- one from Black[POP] Black, Max, 2012, "The Identity of Indiscernibles"[/POP] and another from Adams[POP]Adams, R.M., 1979 "Primitive Thisness and Primitive Identity". Journal of Philosophy, 76: 5-26.[/POP].
+There are additional candidate counter examples, but I can't possibly go through them all. However, as far as I can tell they are essentially the same, with only superficial differences. So, in my defense of (1.3) I will refer to just two of these counter examples --- one from Black[POP] Black, Max, 2012, "The Identity of Indiscernibles"[/POP] and another from Adams[POP]Adams, R.M., 1979 "Primitive Thisness and Primitive Identity". Journal of Philosophy, 76: 5-26.[/POP].
 
 ### 2. &nbsp; Response
 
