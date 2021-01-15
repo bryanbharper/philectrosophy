@@ -50,8 +50,7 @@ A second objection: Let's consider again the first sentence of Black's descripti
 Does this not outright beg the question? In essence, Black has said:
 > Imagine two things. Now imagine they are property identical. Aha, two things that are property-identical! Identity of indiscernibles is false, Q.E.D!
 
-He stipulates at the outset that there are *two* things, and then asserts that they are property-identical. Hacking
-raises the same object:
+He stipulates at the outset that there are *two* things, and then asserts that they are property-identical. Hacking raises the same objection:
 > "In arguing that in a certain possible world there exist two distinct but indistinguishable objects, bland assertion that there are two such objects is not enough. There must be argument."[POP]Hacking, I., 1975, The Identity of Indiscernibles, Journal of Philosophy, 72 (9): 249-256.[/POP]
 
 A class of variations on Black's example is illustrated by Adams.[POP]Adams, R.M., 1979 "Primitive Thisness and Primitive Identity". Journal of Philosophy, 76: 5-26.[/POP] Like Black, Adams imagines two property identical spheres, but at some time [IMATH]t_0[/IMATH] one spontaneously has a scratch on its surface. With one sphere now having a scratch, the spheres are no longer property identical, and via (1.2), they are distinct. If (1.3) is true, then we went from having one object to miraculously having two! But creation ex nihilo is clearly absurd, so (1.3) must be rejected.
