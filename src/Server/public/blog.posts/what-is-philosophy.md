@@ -1,4 +1,6 @@
-﻿## Intro
+﻿# An Opinionated View of Philosophy
+
+## Intro
 
 In this post, I'm going to put forward a definition of philosophy.
 
