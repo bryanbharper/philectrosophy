@@ -16,7 +16,7 @@ let pageParser : Parser<Url->Url, Url> =
     [
       map Url.About (s Url.About.asString)
       map Url.Blog (s Url.Blog.asString)
-      map Url.Blog (s "")
+      map Url.Blog top
       map Url.BlogEntry (s Url.Blog.asString </> str)
       map Url.NotFound (s Url.NotFound.asString)
       map Url.Search (s Url.Search.asString)
