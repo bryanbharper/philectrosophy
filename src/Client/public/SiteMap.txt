@@ -5,3 +5,4 @@ http://www.philectrosophy.com/blog/terminal-talk
 http://www.philectrosophy.com/blog/omega
 http://www.philectrosophy.com/blog/build-a-digital-clock
 http://www.philectrosophy.com/blog/on-the-evolutionary-argument-against-naturalism
+http://www.philectrosophy.com/blog/path-routing-with-the-safe-stack
