@@ -56,7 +56,7 @@ let render (state: State) (dispatch: Msg -> unit) =
         router.onUrlChanged (Urls.parseFeliz >> UrlChanged >> dispatch)
 
         router.children [
-            navbar dispatch
+            Navbar.render Msg.UrlChanged dispatch
             getActivePage dispatch state.CurrentPage
         ]
     ]
@@ -84,8 +84,6 @@ Bulma.navbarItem.a [
 
 Note that we pass the stringified Url to `Router.format` before passing it to `prop.href`. This will transform "about" into "#/about", for example.
 
-> *Aside: the `dispatch` function is no longer needed, so it can be removed. This optionally enables the navbar to be extracted into a separate module for re-usability.*
-
 In `Pages/Blog.fs` modify `renderEntry` to the same end:
 ```fsharp
 let renderEntry entry: ReactElement =
@@ -100,9 +98,7 @@ let renderEntry entry: ReactElement =
 
 In this case `Router.format` takes a list of the URL segments. This will produce something like "#/blog/my-slug".
 
-> Again, note that `dispatch` can be removed.
-
-We're ready to test it otu. Run the following command:
+We're ready to test it out. Run the following command:
 
 ```sh
 dotnet fake build -t run
@@ -200,13 +196,11 @@ Bulma.navbarItem.a [
 ]
 ```
 
-> Without the need for `dispatch`, the navbar can be extracted into its own module if desired.
-
 We also need to make the appropriate change to `renderEntry` in `Blog.fs`:
 
 ```fsharp
 let (</>) a b = sprintf "%s/%s" a b
-let renderEntry dispatch entry: ReactElement =
+let renderEntry entry: ReactElement =
     Html.a [
         Url.Blog.asString </> entry.Slug |> prop.href
         entry.Title |> prop.text
