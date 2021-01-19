@@ -14,7 +14,7 @@ We think of things as made of parts. A house has bricks as parts, a car has whee
 
 [MATH]\begin{matrix} \forall_x \forall_y \left[\left(P_{xy} \, \& \, P_{yz} \right ) \rightarrow P_{xz} \right ] & \text{part-hood is transitive} & (2.1) \\ \\ \forall_x \forall_y \left[\left(P_{xy} \, \& \, P_{yx} \right ) \rightarrow x = y \right ] & \text{part-hood is antisymmetric} & (2.2) \\ \\ \forall_x \left[ P_{xx} \right ] & \text{part-hood is reflexive} & (2.3) \end{matrix}[/MATH]
 
-Careful note of 2.3 should be taken. It states that everything is a part of itself, and this is often contrary to the ordinary usage of the term 'part'. However, mereologists, perhaps taking a page from set theory, have found utility in defining 'part-hood' more broadly, such that a thing may be considered as a part of itself. Of course, in some contexts it will be useful to distinguish an object from its nonidentical parts. Thus, we introduce the notion of a 'proper-part', denoted as '[IMATH]PP[/IMATH]':
+Careful note of (2.3) should be taken. It states that everything is a part of itself, and this is often contrary to the ordinary usage of the term 'part'. However, mereologists, perhaps taking a page from set theory, have found utility in defining 'part-hood' more broadly, such that a thing may be considered as a part of itself. Of course, in some contexts it will be useful to distinguish an object from its nonidentical parts. Thus, we introduce the notion of a 'proper-part', denoted as '[IMATH]PP[/IMATH]':
 
 [MATH]\begin{matrix} \forall_x \forall_y \left[PP_{xy} \leftrightarrow \left( P_{xy} \; \& \; x \neq y \right ) \right ] & (2.4) \end{matrix}[/MATH]
 
