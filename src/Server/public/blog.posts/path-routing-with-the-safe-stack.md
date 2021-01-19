@@ -112,7 +112,7 @@ This is great. It has many advantages over the previous application.
 - Each page has its own URL that can be shared or visited directly.
 - We can use the browser's *Back* button to retrace our steps.
 
-However, not all is well in the world. The `#` prefixing all of our Urls is more troublesome than it might seem. Search engines like Google won't index pages that being with a `#`. Additionally, some embedded apps like [Disqus](https://disqus.com/) aren't `#` compatible. Lastly, hashes are a bit unseemly, in my opinion at least. In general, the use of hash routing is regarded as an out of date practice.
+However, not all is well in the world. The `#` prefixing all of our Urls is more troublesome than it might seem. Search engines like Google won't index pages that begin with a `#`. Additionally, some embedded apps like [Disqus](https://disqus.com/) aren't `#` compatible. Lastly, hashes are a bit unseemly, in my opinion at least. In general, the use of hash routing is regarded as an out of date practice.
 
 The source code for the changes above can be found on the [feliz-hash](https://github.com/brharper-clgx/safe-stack-path-routing/tree/feliz-hash) branch of the repo.
 
