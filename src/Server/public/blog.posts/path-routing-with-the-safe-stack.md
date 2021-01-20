@@ -10,7 +10,7 @@ This post will go over how to implement *path* routing in a [SAFE stack][safe] a
 > *If you already have routing implemented but are struggling to get *path* routing to work with your back-end, skip ahead to section __"Configuring the Server"__ below.*
 
 ### The problem
-Below is a basic web app built with the [SAFE stack][safe]. The source for this exampel can be found [here][source]. I recommend cloning the repo and following along. *Be sure to follow the steps in the [README.md](https://github.com/brharper-clgx/safe-stack-path-routing/blob/feliz-hash/README.md) to get the app up and running.*
+Below is a basic web app built with the [SAFE stack][safe]. The source for this example can be found [here][source]. I recommend cloning the repo and following along. *Be sure to follow the steps in the [README.md](https://github.com/brharper-clgx/safe-stack-path-routing/blob/feliz-hash/README.md) to get the app up and running.*
 
 ![no-routing-demo](img/no-routing-demo.gif)
 
@@ -82,7 +82,7 @@ Bulma.navbarItem.a [
 ]
 ```
 
-Note that we pass the stringified Url to `Router.format` before passing it to `prop.href`. This will transform "about" into "#/about", for example.
+Note that we pass the stringified Url to `Router.format` before passing it to `prop.href`. This ensures that what we pass a hash based route to `href`. For example, it would transform "about" into "#/about".
 
 In `Pages/Blog.fs` modify `renderEntry` to the same end:
 ```fsharp
@@ -112,7 +112,7 @@ This is great. It has many advantages over the previous application.
 - Each page has its own URL that can be shared or visited directly.
 - We can use the browser's *Back* button to retrace our steps.
 
-However, not all is well in the world. The `#` prefixing all of our Urls is more troublesome than it might seem. Search engines like Google won't index pages that begin with a `#`. Additionally, some embedded apps like [Disqus](https://disqus.com/) aren't `#` compatible. Lastly, hashes are a bit unseemly, in my opinion at least. In general, the use of hash routing is regarded as an out of date practice.
+However, not all is well in the world. The `#` prefixing all of our Urls is more troublesome than it might seem. Many external tools such as Google's search or [Disqus](https://disqus.com/) won't index pages that begin with a hash. Beyond that, you have to admit that hashes are a bit unseemly. Wouldn't it be nice to have a clean route without any funky symbols? In general, the use of hash routing is regarded as an out of date practice.
 
 The source code for the changes above can be found on the [feliz-hash](https://github.com/brharper-clgx/safe-stack-path-routing/tree/feliz-hash) branch of the repo.
 
@@ -121,9 +121,9 @@ The source code for the changes above can be found on the [feliz-hash](https://g
 
 > *The finished code for the following section can be found on the [path-routing](https://github.com/brharper-clgx/safe-stack-path-routing/tree/path-routing) branch of the [repo][source].*
 
-So we want to implement *path* routing, which is the same as above but simply without the `#` sign.
+So we want to implement *path* routing, which is the same as has routing except we omit the `#` sign.
 
-Using `Feliz.Router`, it's a pretty straight-forward transition. See the [documentation][feliz-router] under the "Using Path routes without hash sign" section.[POP]![feliz-hash-to-path](img/feliz-hash-to-path.PNG)[/POP]
+Using `Feliz.Router`, it's a pretty straight-forward transition. See the [documentation][feliz-router] under the __"Using Path routes without hash sign"__ section.[POP]![feliz-hash-to-path](img/feliz-hash-to-path.PNG)[/POP]
 
 However, I'm going to switch to a different routing module, [Elmish Navigation][elm-nav]. The primary reason for the switch is that [Elmish Navigation][elm-nav] has its own `update` function for handling routing events, whereas `Feliz.Router` integrated with your existing functions. I prefer the loose coupling, but both modules have pros and cons. Either will work, so you'll have to decide what you prefer.
 
@@ -178,7 +178,7 @@ Program.mkProgram Index.init Index.update Index.render
 
 ```
 
-As before, we need to modify all of our navigation links / buttons to use routes, only this time we don't need to worry about formatting the path with a route.
+As before, we need to modify all of our navigation links / buttons to use routes, only this time we don't need to worry about formatting the route with a hash.
 
 Modifications to the navbar:
 ```fsharp
@@ -213,7 +213,7 @@ In theory, everything should be working now. However, if we run the app we're in
 
 ![path-routing-webpack-broken](img/path-routing-webpack-broken.gif)
 
-Here's what's happening: we have a [SPA](https://en.wikipedia.org/wiki/Single-page_application) in which all content is rendered from a single `index.html` file. However, when we append a *path* to [localhost:8080](http://localhost:8080/) we are asking the server for a resource at that location. But there isn't one. What we need to do is tell our server to direct this request back to our `index.html` file.
+Here's what's happening: we have a [SPA](https://en.wikipedia.org/wiki/Single-page_application) in which all content is rendered from a single `index.html` file. However, when we append a *path* to [localhost:8080](http://localhost:8080/) we are asking the server for a resource at that location. But there isn't one. So, we need to tell our server to redirect this request back to the `index.html` file. I'll show you how in the next section.
 
 ### Configuring the Server
 > *The finished code for the following section can be found on the [path-routing](https://github.com/brharper-clgx/safe-stack-path-routing/tree/path-routing) branch of the [repo][source].*
@@ -243,12 +243,12 @@ Run the application again and everything should be working.
 #### Production Server
 In production, the front-end is generally served by the back-end server instead of using *webpack*. Let's check if path routing will work in our production environment with the following steps.
 
-First run:
+First, bundle the app with:
 ```sh
 dotnet fake build -t bundle
 ```
 
-Then open the `deploy` directory created by the previous command, and run `Server.exe`. Now use your browser to navigate to [localhost:8085](http://localhost:8085/). The problem we saw before has re-emerged:
+Next, open the `deploy` directory created by the previous command, and run `Server.exe`. Finally, use your browser to navigate to [localhost:8085](http://localhost:8085/). Try navigating to different pages; you'll see the problem we saw before has re-emerged:
 
 ![path-routing-prod-broken](img/path-routing-prod-broken.gif)
 
@@ -283,3 +283,7 @@ run app
 ```
 
 Now bundle and run the app again. Visit [localhost:8085](http://localhost:8085/) and everything should finally be working as intended.
+
+### Conclusion
+
+That's it! Comment below with any questions.
