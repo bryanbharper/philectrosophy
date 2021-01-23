@@ -1,5 +1,6 @@
 ﻿module Client.Pages.BlogEntry
 
+
 open Client.Components
 open Client.Styles
 open Client.Urls
@@ -32,9 +33,29 @@ type Msg =
     | CountUpdated of int option
     | GotEntry of Option<BlogEntry * string>
     | IgnorableError of exn
+    | MetaTagsUpdated of unit
 
 let init (slug: string): State * Cmd<Msg> =
     { Slug = slug; Entry = InProgress }, Cmd.OfAsync.either blogApi.GetEntry slug GotEntry ApiError
+
+open Browser
+
+let setMetaTags entry =
+    document
+        .querySelector("meta[property=\"og:title\"]")
+        .setAttribute("content", entry.Title)
+
+    document
+        .querySelector("meta[property=\"og:description\"]")
+        .setAttribute("content", entry.Synopsis)
+
+    document
+        .querySelector("meta[property=\"og:image\"]")
+        .setAttribute("content", entry.ThumbNailUrl)
+
+    document
+        .querySelector("meta[property=\"og:url\"]")
+        .setAttribute("content", "http://www.philectrosophy.com/blog/" + entry.Slug)
 
 let update (msg: Msg) (state: State): State * Cmd<Msg> =
     match msg with
@@ -64,7 +85,11 @@ let update (msg: Msg) (state: State): State * Cmd<Msg> =
             }
 
         { state with Entry = Resolved entry },
-        Cmd.OfAsync.either blogApi.UpdateViewCount state.Slug CountUpdated IgnorableError
+        Cmd.batch [
+            Cmd.OfFunc.either setMetaTags entry.Metadata MetaTagsUpdated IgnorableError
+            Cmd.OfAsync.either blogApi.UpdateViewCount state.Slug CountUpdated IgnorableError
+        ]
+    | MetaTagsUpdated _ -> state, Cmd.none
     | IgnorableError _ -> state, Cmd.none
 
 let dateHeader metadata =
