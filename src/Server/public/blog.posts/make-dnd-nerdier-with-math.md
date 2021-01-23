@@ -52,7 +52,7 @@ When rolling with advantage or disadvantage, there are two independent dice roll
 
 Let's call this the *disadvantaged-success* function, [IMATH]s_d[/IMATH], and substitute in [IMATH]s_f[/IMATH]:
 
-> [MATH]s_d(t,m) = (21 + m - t )^2 \left( \frac{1}{20} \right)^2 = \frac{1}{400} (21-t)^2 [/MATH]
+> [MATH]s_d(t,m) = (21 + m - t )^2 \left( \frac{1}{20} \right)^2 = \frac{1}{400} (21 + m - t)^2 [/MATH]
 
 #### Advantage
 
