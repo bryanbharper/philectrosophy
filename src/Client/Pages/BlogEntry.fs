@@ -51,7 +51,7 @@ let setMetaTags entry =
 
     document
         .querySelector("meta[property=\"og:image\"]")
-        .setAttribute("content", entry.ThumbNailUrl)
+        .setAttribute("content", "http://www.philectrosophy.com/" + entry.ThumbNailUrl)
 
     document
         .querySelector("meta[property=\"og:url\"]")
