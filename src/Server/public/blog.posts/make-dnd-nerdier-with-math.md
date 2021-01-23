@@ -114,7 +114,9 @@ To answer this question, we need to find the [expected value](https://en.wikiped
 
 [MATH]E[X]=\sum_{i=1}^{k} x_{i} \, p_{i}[/MATH]
 
-Where [IMATH]x_i[/IMATH] represents the value of each possible outcome, and [IMATH]p_i[/IMATH] is the probability of that outcome. In our case, there are only two outcomes, success and failure, and in the case of failure the value of the outcome is zero. Let [IMATH]A[/IMATH] denote the outcome of an attack roll. For a regular attack roll the expected value, then, is:
+Where [IMATH]x_i[/IMATH] represents the value of each possible outcome, and [IMATH]p_i[/IMATH] is the probability of that outcome. In our case, there are only two outcomes, success and failure, and in the case of failure the value of the outcome is zero.
+
+Denote the average damage from a weapon as [IMATH]g[/IMATH] and the outcome of an attack roll as  [IMATH]A[/IMATH]. For a regular attack roll the expected value, then, is:
 
 [MATH]\begin{align*} E[A] &= g \, P(S) + 0 \cdot  P( \bar S) \\ &= g \, P(S) \end{align*}[/MATH]
 
