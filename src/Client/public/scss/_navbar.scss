@@ -1,0 +1,15 @@
+﻿@import "variables";
+
+
+.logo {
+
+    .logo-text {
+        transition: 0.4s;
+        color: $logo-purple;
+        opacity: 0;
+    }
+
+    &:hover .logo-text {
+        opacity: 1;
+    }
+}

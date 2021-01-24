@@ -5,14 +5,14 @@
         <DefineConstants>FABLE_COMPILER</DefineConstants>
     </PropertyGroup>
     <ItemGroup>
-        <Content Include="public\favicon.png" />
         <Content Include="public\phi.png" />
+        <Content Include="public\scss\_navbar.scss" />
         <Content Include="public\scss\_variables.scss" />
-        <Content Include="public\styles.scss" />
         <Content Include="public\scss\_markdown.scss" />
         <Content Include="public\scss\_helpers.scss" />
         <Content Include="public\scss\_theme.scss" />
         <Content Include="public\scss\_progress-bar.scss" />
+        <Content Include="public\styles.scss" />
         <Content Include="public\styles.css" />
         <Content Include="public\SiteMap.txt" />
         <Content Include="public\img\the-paradox-of-phenomenal-judgements.PNG" />

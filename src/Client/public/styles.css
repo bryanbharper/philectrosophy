@@ -152,6 +152,15 @@
   margin-bottom: 1rem;
 }
 
+.logo .logo-text {
+  transition: 0.4s;
+  color: #4d336d;
+  opacity: 0;
+}
+.logo:hover .logo-text {
+  opacity: 1;
+}
+
 /*! bulma.io v0.9.1 | MIT License | github.com/jgthms/bulma */
 /* Bulma Utilities */
 @keyframes spinAround {

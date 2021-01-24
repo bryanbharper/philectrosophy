@@ -1,7 +1,8 @@
-﻿@use "scss/markdown";
+﻿@use "scss/variables";
+@use "scss/markdown";
 @use "scss/helpers";
 @use "scss/theme";
 @use "scss/progress-bar";
-@use "scss/variables";
+@use "scss/navbar";
 @use "../../../node_modules/bulma/bulma";
 @use "../../../node_modules/bulma-popover/css/bulma-popover.css";

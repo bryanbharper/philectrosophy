@@ -65,9 +65,14 @@ let render (state: State) (dispatch: Msg -> unit): ReactElement =
         prop.children [
             Bulma.navbarBrand.div [
                 Bulma.navbarItem.a [
+                    prop.classes [ Style.Logo ]
                     prop.href ""
                     prop.children [
                         Html.img [ prop.src "phi.png" ]
+                        Html.p [
+                            prop.classes [ Style.LogoText; Bulma.IsSize5; Bulma.Px1 ]
+                            prop.innerHtml "&#295;i&#8467;&epsilon;c&tau;&#8477;&sigma;&#8747;&theta;&rho;&#295;&gamma;"
+                        ]
                     ]
                 ]
                 Bulma.navbarBurger [
