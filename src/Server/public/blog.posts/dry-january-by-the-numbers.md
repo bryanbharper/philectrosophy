@@ -44,7 +44,7 @@ Again, while I wouldn't have expected this before January, I'm not surprised aft
 
 But this month was different. Instead of winding down, I found myself with energy to spare. So, I would continue to work on things (this blog, work, house stuff, etc.) much later than I normally would. When 9pm rolled around, I was still wired and had no desire to go to bed. Eventually, I'd force myself to get in bed, but my mind would still be whirring.
 
-II was getting to bed later and having a harder time falling asleep. That said, once I did fall asleep, I would sleep through the night without interruption. I suspect that with some time to adjust I could retrain my body to wind down on its own.
+I was getting to bed later and having a harder time falling asleep. That said, once I did fall asleep, I would sleep through the night without interruption. I suspect that with some time to adjust I could retrain my body to wind down on its own.
 
 While teetotalling wasn't a magic sleep bullet, I don't think we can definitively conclude that it wouldn't be beneficial, if properly implemented.
 
