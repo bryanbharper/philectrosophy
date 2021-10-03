@@ -18,6 +18,7 @@ let pageParser : Parser<Url->Url, Url> =
       map Url.Blog (s Url.Blog.asString)
       map Url.Blog top
       map Url.BlogEntry (s Url.Blog.asString </> str)
+      map Url.Music (s Url.Music.asString)
       map Url.NotFound (s Url.NotFound.asString)
       map Url.Search (s Url.Search.asString)
       map Url.UnexpectedError (s Url.UnexpectedError.asString)

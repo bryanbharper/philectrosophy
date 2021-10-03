@@ -19,44 +19,44 @@ type State =
     }
 
 type Msg =
-    | Emptied
-    | ResultReceived of BlogEntry list
-    | Submit
-    | SetQuery of string
-    | ApiError of exn
+    | ServerReturnedBlogEntries of BlogEntry list
+    | ServerReturnedError of exn
+    | UserChangedInput of string
+    | UserClearedSearch
+    | UserClickedSubmit
 
 let init (): State * Cmd<Msg> =
     { Query = None; Results = Idle }, Cmd.none
 
 let update (msg: Msg) (state: State): State * Cmd<Msg> =
     match msg with
-    | Emptied ->
-        { state with Results = Idle }, Cmd.none
-    | ResultReceived entries ->
+    | ServerReturnedError _ -> { state with Results = Resolved [] }, Cmd.none
+    | ServerReturnedBlogEntries entries ->
         { state with
             Results = Resolved entries
         },
         Cmd.none
-    | Submit ->
-        match state.Query with
-        | None -> state, Cmd.none
-        | Some query ->
-            { state with Results = InProgress },
-            Cmd.OfAsync.either blogApi.GetSearchResults query ResultReceived ApiError
-    | SetQuery query ->
+    | UserChangedInput query ->
         match query with
         | "" ->
             { state with Results = Idle; Query = None }, Cmd.none
         | _ ->
             { state with Query = Some query }, Cmd.none
-    | ApiError err -> { state with Results = Resolved [] }, Cmd.none
+    | UserClearedSearch ->
+        { state with Results = Idle }, Cmd.none
+    | UserClickedSubmit ->
+        match state.Query with
+        | None -> state, Cmd.none
+        | Some query ->
+            { state with Results = InProgress },
+            Cmd.OfAsync.either blogApi.GetSearchResults query ServerReturnedBlogEntries ServerReturnedError
 
 let input dispatch =
     Bulma.input.search [
         input.isRounded
-        prop.onChange (SetQuery >> dispatch)
-        prop.onKeyDown (fun ke -> if ke.key = "Enter" then dispatch Submit)
-        prop.onEmptied (fun _ -> dispatch Emptied)
+        prop.onChange (UserChangedInput >> dispatch)
+        prop.onKeyDown (fun ke -> if ke.key = "Enter" then dispatch UserClickedSubmit)
+        prop.onEmptied (fun _ -> dispatch UserClearedSearch)
     ]
 
 let render (state: State) (dispatch: Msg -> unit): ReactElement =

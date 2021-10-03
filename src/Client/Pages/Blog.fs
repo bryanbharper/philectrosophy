@@ -17,16 +17,16 @@ let blogApi =
 type State = { Entries: Deferred<BlogEntry list> }
 
 type Msg =
-    | GotEntries of BlogEntry list
-    | ApiError of exn
+    | ServerReturnedEntries of BlogEntry list
+    | ServerReturnedError of exn
 
 let init (): State * Cmd<Msg> =
-    { Entries = InProgress }, Cmd.OfAsync.either blogApi.GetEntries () GotEntries ApiError
+    { Entries = InProgress }, Cmd.OfAsync.either blogApi.GetEntries () ServerReturnedEntries ServerReturnedError
 
 let update (msg: Msg) (state: State): State * Cmd<Msg> =
     match msg with
-    | GotEntries result -> { state with Entries = Resolved result }, Cmd.none
-    | ApiError _ -> state, Url.UnexpectedError.asString |> Cmd.navigate
+    | ServerReturnedEntries result -> { state with Entries = Resolved result }, Cmd.none
+    | ServerReturnedError _ -> state, Url.UnexpectedError.asString |> Cmd.navigate
 
 let render (state: State) (dispatch: Msg -> unit) =
     let entries =

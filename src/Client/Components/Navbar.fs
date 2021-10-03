@@ -12,7 +12,7 @@ type State =
     }
 
 type Msg =
-    | BurgerClicked
+    | UserClickedBurger
     | UrlChanged of Url
 
 let init (url: Option<Url>): State =
@@ -30,7 +30,7 @@ let init (url: Option<Url>): State =
 
 let update (msg: Msg) (state: State): State =
     match msg with
-    | BurgerClicked ->
+    | UserClickedBurger ->
         { state with
             BurgerExpanded = not state.BurgerExpanded
         }
@@ -77,7 +77,7 @@ let render (state: State) (dispatch: Msg -> unit): ReactElement =
                 ]
                 Bulma.navbarBurger [
                     if state.BurgerExpanded then navbarBurger.isActive
-                    prop.onClick (fun _ -> Msg.BurgerClicked |> dispatch)
+                    prop.onClick (fun _ -> Msg.UserClickedBurger |> dispatch)
                     prop.children [
                         Html.span []
                         Html.span []

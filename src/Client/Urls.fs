@@ -7,6 +7,7 @@ type Url =
     | About
     | Blog
     | BlogEntry of slug: string
+    | Music
     | NotFound
     | Search
     | UnexpectedError

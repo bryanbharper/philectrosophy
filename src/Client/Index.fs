@@ -12,6 +12,7 @@ type Page =
     | About of About.State
     | Blog of Blog.State
     | BlogEntry of BlogEntry.State
+    | Music of Music.State
     | Search of Search.State
     | NotFound
     | UnexpectedError
@@ -26,6 +27,7 @@ type State =
 type Msg =
     | About of About.Msg
     | Blog of Blog.Msg
+    | Music of Music.Msg
     | BlogEntry of BlogEntry.Msg
     | Navbar of Navbar.Msg
     | Search of Search.Msg
@@ -48,6 +50,7 @@ let initFromUrl url =
     | Url.About -> pageInit (About.init ()) Page.About Msg.About
     | Url.Blog -> pageInit (Blog.init ()) Page.Blog Msg.Blog
     | Url.BlogEntry slug -> pageInit (BlogEntry.init slug) Page.BlogEntry Msg.BlogEntry
+    | Url.Music -> pageInit (Music.init ()) Page.Music Msg.Music
     | Url.Search -> pageInit (Search.init ()) Page.Search Msg.Search
     | Url.UnexpectedError ->
         {
@@ -90,6 +93,7 @@ let update (msg: Msg) (state: State): State * Cmd<Msg> =
     | Msg.About msg', Page.About state' -> updater msg' state' About.update Msg.About Page.About
     | Msg.Blog msg', Page.Blog state' -> updater msg' state' Blog.update Msg.Blog Page.Blog
     | Msg.BlogEntry msg', Page.BlogEntry state' -> updater msg' state' BlogEntry.update Msg.BlogEntry Page.BlogEntry
+    | Msg.Music msg', Page.Music state' -> updater msg' state' Music.update Msg.Music Page.Music
     | Msg.Search msg', Page.Search state' -> updater msg' state' Search.update Msg.Search Page.Search
     | Msg.Navbar msg', _ ->
         { state with
@@ -109,6 +113,7 @@ let render (state: State) (dispatch: Msg -> unit): ReactElement =
         | Page.About state -> About.render state (Msg.About >> dispatch)
         | Page.Blog state -> Blog.render state (Msg.Blog >> dispatch)
         | Page.BlogEntry state -> BlogEntry.render state (Msg.BlogEntry >> dispatch)
+        | Page.Music state -> Music.render state (Msg.Music >> dispatch)
         | Page.Search state -> Search.render state (Msg.Search >> dispatch)
         | Page.UnexpectedError -> UnexpectedError.render
         | Page.NotFound -> NotFound.render

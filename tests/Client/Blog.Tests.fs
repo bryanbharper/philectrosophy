@@ -20,7 +20,7 @@ let all =
             <| fun _ ->
                 // arrange
                 let entries = []
-                let msg = entries |> Msg.GotEntries
+                let msg = entries |> Msg.ServerReturnedEntries
                 let state = { Entries = InProgress }
 
                 // act
@@ -35,7 +35,7 @@ let all =
             testCase "Blog.update - ApiError doesn't change state"
             <| fun _ ->
                 // arrange
-                let msg = Exception() |> Msg.ApiError
+                let msg = Exception() |> Msg.ServerReturnedError
                 let state = { Entries = InProgress }
 
                 // act

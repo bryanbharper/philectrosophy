@@ -29,14 +29,13 @@ type State =
     }
 
 type Msg =
-    | ApiError of exn
-    | CountUpdated of int option
-    | GotEntry of Option<BlogEntry * string>
-    | IgnorableError of exn
+    | ServerReturnedError of exn
+    | ServerUpdatedViewCount of int option
+    | ServerReturnedEntry of Option<BlogEntry * string>
     | MetaTagsUpdated of unit
 
 let init (slug: string): State * Cmd<Msg> =
-    { Slug = slug; Entry = InProgress }, Cmd.OfAsync.either blogApi.GetEntry slug GotEntry ApiError
+    { Slug = slug; Entry = InProgress }, Cmd.OfAsync.either blogApi.GetEntry slug ServerReturnedEntry ServerReturnedError
 
 open Browser
 
@@ -59,9 +58,9 @@ let setMetaTags entry =
 
 let update (msg: Msg) (state: State): State * Cmd<Msg> =
     match msg with
-    | ApiError _ -> state, Url.UnexpectedError.asString |> Navigation.newUrl
-    | CountUpdated None -> state, Cmd.none
-    | CountUpdated (Some newCount) ->
+    | ServerReturnedError _ -> state, Url.UnexpectedError.asString |> Navigation.newUrl
+    | ServerUpdatedViewCount None -> state, Cmd.none
+    | ServerUpdatedViewCount (Some newCount) ->
         let newState =
             match state.Entry with
             | Idle -> state
@@ -76,8 +75,8 @@ let update (msg: Msg) (state: State): State * Cmd<Msg> =
                 { state with Entry = entry |> Resolved }
 
         newState, Cmd.none
-    | GotEntry None -> state, Url.NotFound.asString |> Navigation.newUrl
-    | GotEntry (Some (metadata, content)) ->
+    | ServerReturnedEntry None -> state, Url.NotFound.asString |> Navigation.newUrl
+    | ServerReturnedEntry (Some (metadata, content)) ->
         let entry =
             {
                 Metadata = metadata
@@ -86,11 +85,10 @@ let update (msg: Msg) (state: State): State * Cmd<Msg> =
 
         { state with Entry = Resolved entry },
         Cmd.batch [
-            Cmd.OfFunc.either setMetaTags entry.Metadata MetaTagsUpdated IgnorableError
-            Cmd.OfAsync.either blogApi.UpdateViewCount state.Slug CountUpdated IgnorableError
+            Cmd.OfFunc.perform setMetaTags entry.Metadata MetaTagsUpdated
+            Cmd.OfAsync.perform blogApi.UpdateViewCount state.Slug ServerUpdatedViewCount
         ]
     | MetaTagsUpdated _ -> state, Cmd.none
-    | IgnorableError _ -> state, Cmd.none
 
 let dateHeader metadata =
     let updatedMsg =
