@@ -21,6 +21,7 @@
         <None Include="paket.references" />
         <Compile Include="Styles.fs" />
         <Compile Include="Urls.fs" />
+        <Compile Include="Extensions.fs" />
         <Compile Include="Components\Navbar.fs" />
         <Compile Include="Components\Spinner.fs" />
         <Compile Include="Components\MediaObject.fs" />
@@ -36,7 +37,9 @@
         <Compile Include="Pages\Blog.fs" />
         <Compile Include="Pages\BlogEntry.fs" />
         <Compile Include="Pages\Search.fs" />
-        <Compile Include="Pages\Music.fs" />
+        <Compile Include="Pages\Music\Types.fs" />
+        <Compile Include="Pages\Music\Component.fs" />
+        <Compile Include="Pages\Music\View.fs" />
         <Compile Include="Index.fs" />
         <Compile Include="App.fs" />
     </ItemGroup>
