@@ -6,6 +6,7 @@ version: 5.241.2
 nuget Dapper.FSharp
 nuget Expecto.FsCheck
 nuget Fable.Remoting.Giraffe
+nuget Fable.SimpleHttp
 nuget Feliz
 nuget Feliz.Bulma
 nuget Feliz.Bulma.Popover

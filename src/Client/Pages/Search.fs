@@ -1,11 +1,14 @@
 ﻿module Client.Pages.Search
 
-open Client.Components
 open Elmish
 open Fable.Remoting.Client
 open Feliz
 open Feliz.Bulma
+
 open Shared
+
+open Client.Apis
+open Client.Components
 
 let blogApi =
     Remoting.createApi ()
@@ -49,7 +52,7 @@ let update (msg: Msg) (state: State): State * Cmd<Msg> =
         | None -> state, Cmd.none
         | Some query ->
             { state with Results = InProgress },
-            Cmd.OfAsync.either blogApi.GetSearchResults query ServerReturnedBlogEntries ServerReturnedError
+            Cmd.OfAsync.either GoogleSearchApi.search query ServerReturnedBlogEntries ServerReturnedError
 
 let input dispatch =
     Bulma.input.search [
@@ -80,5 +83,4 @@ let render (state: State) (dispatch: Msg -> unit): ReactElement =
             ]
             results
         ]
-
     ]

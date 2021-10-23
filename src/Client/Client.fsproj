@@ -22,6 +22,8 @@
         <Compile Include="Styles.fs" />
         <Compile Include="Urls.fs" />
         <Compile Include="Extensions.fs" />
+        <Compile Include="Apis\Http.fs" />
+        <Compile Include="Apis\GoogleSearchApi.fs" />
         <Compile Include="Components\Navbar.fs" />
         <Compile Include="Components\Spinner.fs" />
         <Compile Include="Components\MediaObject.fs" />
