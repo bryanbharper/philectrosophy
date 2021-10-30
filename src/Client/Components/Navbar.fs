@@ -82,6 +82,7 @@ let render (state: State) (dispatch: Msg -> unit): ReactElement =
                         Html.span []
                         Html.span []
                         Html.span []
+                        Html.span []
                     ]
 
                 ]
@@ -93,6 +94,7 @@ let render (state: State) (dispatch: Msg -> unit): ReactElement =
                     Bulma.navbarEnd.div [
                         navLink Url.Blog (state.ActivePage = Url.Blog)
                         navLink Url.About (state.ActivePage = Url.About)
+                        navLinkIcon Url.Music (state.ActivePage = Url.Music) FA.FaMusic
                         navLinkIcon Url.Search (state.ActivePage = Url.Search) FA.FaSearch
                     ]
                 ]
