@@ -11,13 +11,13 @@ module SongApi =
 
     let updateListenCount (repo: ISongRepository) slug =
         async {
-            let! entryOp = repo.GetSingle slug
+            let! songOption = repo.GetSingle slug
 
             return!
-                entryOp
+                songOption
                 |> Option.map (fun e -> repo.Update { e with PlayCount = e.PlayCount + 1 })
                 |> Option.sequenceAsync
-                |> Async.map (Option.flatten >> Option.map (fun e -> e.PlayCount))
+                |> Async.map (Option.flatten)
         }
 
     let songApiReader =

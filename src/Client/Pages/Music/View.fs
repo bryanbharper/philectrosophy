@@ -6,7 +6,6 @@ open Feliz
 open Feliz.Bulma
 open Client.Styles
 open Client.Components.AudioPlayer
-open Feliz.Bulma
 open Shared
 
 let shuffleBtn dispatch state =
@@ -50,6 +49,11 @@ let playlistTable dispatch playlist (current: Song) =
                     prop.text coverText
                     prop.classes [ Bulma.HasTextGrey ]
                 ]
+                Html.td [
+                    prop.classes [ Bulma.HasTextGrey  ]
+                    track.PlayCount
+                    |> prop.text
+                ]
             ]
             prop.onClick (fun _ -> track |> Msg.UserClickedTrack |> dispatch)
         ]
@@ -62,6 +66,9 @@ let playlistTable dispatch playlist (current: Song) =
                     Html.th "#"
                     Html.th "Title"
                     Html.th ""
+                    Html.th [
+                        prop.innerHtml "&sung;"
+                    ]
                 ]
             ]
             Html.tbody [
@@ -92,10 +99,15 @@ let render (state: State) (dispatch: Msg -> unit) =
             Html.br []
             shuffleBtn dispatch state
 
-            match state.Songs, state.CurrentSong with
-            | Idle, _ -> Html.none
-            | InProgress, _ -> Spinner.render
-            | Resolved songs, Some current ->
+            match state.Playlist with
+            | Idle -> Html.none
+            | InProgress -> Spinner.render
+            | Resolved songs ->
+                let current =
+                    match state.CurrentTrack with
+                    | None -> songs |> List.head
+                    | Some song -> song
+
                 Html.div [
                     playlistTable dispatch songs current
 
@@ -107,21 +119,8 @@ let render (state: State) (dispatch: Msg -> unit) =
                         player.onClickNext (fun () -> Msg.UserClickedNext |> dispatch)
                         player.onClickPrevious (fun () -> Msg.UserClickedPrevious |> dispatch)
                         player.onEnded (fun _ -> Msg.TrackEnded |> dispatch)
-                    ]
-                ]
-            | Resolved songs, None ->
-                Html.div [
-                    let current' = songs |> List.head
-                    playlistTable dispatch songs current'
-
-                    AudioPlayer.render [
-                        player.src current'.Path
-                        player.autoPlay true
-                        player.autoPlayAfterSrcChange true
-                        player.showSkipControls true
-                        player.onClickNext (fun () -> Msg.UserClickedNext |> dispatch)
-                        player.onClickPrevious (fun () -> Msg.UserClickedPrevious |> dispatch)
-                        player.onEnded (fun _ -> Msg.TrackEnded |> dispatch)
+                        player.onPlay (fun _ -> Msg.UserClickedPlay |> dispatch)
+                        player.onPause (fun _ -> Msg.UserClickedPause |> dispatch)
                     ]
                 ]
 

@@ -12,6 +12,7 @@ type player =
     static member inline onClickNext (value: unit -> unit) = Interop.mkAttr "onClickNext" value
     static member inline onClickPrevious (value: unit -> unit) = Interop.mkAttr "onClickPrevious" value
     static member inline onPlay (value: unit -> unit) = Interop.mkAttr "onPlay" value
+    static member inline onListen (value: unit -> unit) = Interop.mkAttr "onListen" value
     static member inline onPause (value: unit -> unit) = Interop.mkAttr "onPause" value
     static member inline onEnded (value: unit -> unit) = Interop.mkAttr "onEnded" value
     static member inline showDownloadProgress (value: bool) = Interop.mkAttr "showDownloadProgress" value

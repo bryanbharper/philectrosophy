@@ -2,18 +2,27 @@
 
 open Shared
 
+type PlayerState =
+    | Paused
+    | Playing
+    | Stopped
+
 type State =
     {
-        CurrentSong: Song option
+        CurrentTrack: Song option
+        PlayerState: PlayerState
         Shuffle: bool
-        Songs: Deferred<Song list>
+        Playlist: Deferred<Song list>
     }
 
 type Msg =
     | ServerReturnedError of exn
-    | ServerReturnedSongs of Song list
+    | ServerReturnedTracks of Song list
+    | ServerUpdatedTrackPlayCount of Song option
     | TrackEnded
     | UserClickedNext
+    | UserClickedPause
+    | UserClickedPlay
     | UserClickedPrevious
     | UserClickedShuffleBtn
     | UserClickedTrack of Song

@@ -11,7 +11,7 @@ type IBlogApi =
 type ISongApi =
     {
         GetSongs: unit -> Async<Song list>
-        UpdateListenCount: string -> Async<int option>
+        UpdateListenCount: string -> Async<Song option>
     }
 
 module Route =
