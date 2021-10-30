@@ -6,6 +6,7 @@ open Feliz
 open Feliz.Bulma
 open Client.Styles
 open Client.Components.AudioPlayer
+open Feliz.Bulma
 open Shared
 
 let shuffleBtn dispatch state =
@@ -41,6 +42,14 @@ let playlistTable dispatch playlist (current: Song) =
                     track.Title
                     |> prop.text
                 ]
+                Html.td [
+                    let coverText =
+                        match track.CoverOf with
+                        | None -> ""
+                        | Some coverBand -> coverBand |> sprintf "by %s"
+                    prop.text coverText
+                    prop.classes [ Bulma.HasTextGrey ]
+                ]
             ]
             prop.onClick (fun _ -> track |> Msg.UserClickedTrack |> dispatch)
         ]
@@ -52,6 +61,7 @@ let playlistTable dispatch playlist (current: Song) =
                 Html.tr [
                     Html.th "#"
                     Html.th "Title"
+                    Html.th ""
                 ]
             ]
             Html.tbody [
