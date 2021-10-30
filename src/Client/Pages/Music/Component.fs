@@ -64,8 +64,6 @@ let update (msg: Msg) (state: State) =
             | None -> playlist |> List.find (fun t -> t.Placement = 0)
             | Some slug -> playlist |> findBySlug slug
 
-        current.Slug |> updatePath
-
         { state with
             Playlist =
                 playlist
@@ -73,7 +71,7 @@ let update (msg: Msg) (state: State) =
                 |> Resolved
             CurrentTrack = Some current
         },
-        Cmd.none
+        Cmd.OfFunc.perform updatePath current.Slug PathUpdated
     | ServerUpdatedTrackPlayCount (Some serverTrack) ->
         let newState =
             match state.Playlist with
@@ -101,13 +99,11 @@ let update (msg: Msg) (state: State) =
                 else
                     getNextTrack playlist current
 
-            nextTrack.Slug |> updatePath
-
             { state with
                 CurrentTrack = Some nextTrack
                 PlayerState = Playing
             },
-            Cmd.none
+            Cmd.OfFunc.perform updatePath nextTrack.Slug PathUpdated
         | _ -> state, Cmd.none
     | UserClickedPause -> { state with PlayerState = Paused }, Cmd.none
     | UserClickedPlay ->
@@ -124,13 +120,11 @@ let update (msg: Msg) (state: State) =
         match state.Playlist, state.CurrentTrack with
         | Resolved playlist, Some currentTrack ->
             let prevTrack = getPrevTrack playlist currentTrack
-            prevTrack.Slug |> updatePath
-
             { state with
                 CurrentTrack = Some prevTrack
                 PlayerState = Playing
             },
-            Cmd.none
+            Cmd.OfFunc.perform updatePath prevTrack.Slug PathUpdated
 
         | _ -> state, Cmd.none
     | UserClickedShuffleBtn ->
@@ -139,11 +133,9 @@ let update (msg: Msg) (state: State) =
         },
         Cmd.none
     | UserClickedTrack track ->
-        track.Slug |> updatePath
-
         { state with
             CurrentTrack = Some track
             PlayerState = Playing
         },
-        Cmd.none
+        Cmd.OfFunc.perform updatePath track.Slug PathUpdated
     | _ -> state, Cmd.none

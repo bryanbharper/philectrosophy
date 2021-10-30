@@ -16,6 +16,7 @@ type State =
     }
 
 type Msg =
+    | PathUpdated of unit
     | ServerReturnedError of exn
     | ServerReturnedTracks of Song list
     | ServerUpdatedTrackPlayCount of Song option
