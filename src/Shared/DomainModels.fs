@@ -18,7 +18,6 @@ type BlogEntry =
     }
 
 module BlogEntry =
-
     let create title =
         {
             Author = "Bryan B. Harper"
@@ -41,3 +40,13 @@ module BlogEntry =
     let setTags tags entry = { entry with Tags = tags }
     let setThumbNail url entry = { entry with ThumbNailUrl = url }
     let setUpdatedOn dateOption entry = { entry with UpdatedOn = dateOption }
+
+type Song =
+    {
+        Slug: string
+        Title: string
+        Placement: int
+        Path: string
+        CoverOf: string option
+        PlayCount: int
+    }

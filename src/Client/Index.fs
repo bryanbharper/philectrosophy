@@ -51,6 +51,7 @@ let initFromUrl url =
     | Url.Blog -> pageInit (Blog.init ()) Page.Blog Msg.Blog
     | Url.BlogEntry slug -> pageInit (BlogEntry.init slug) Page.BlogEntry Msg.BlogEntry
     | Url.Music -> pageInit (Music.Component.init ()) Page.Music Msg.Music
+    | Url.Track _ -> pageInit (Music.Component.init ()) Page.Music Msg.Music
     | Url.Search -> pageInit (Search.init ()) Page.Search Msg.Search
     | Url.UnexpectedError ->
         {

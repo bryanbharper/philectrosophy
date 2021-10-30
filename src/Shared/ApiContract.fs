@@ -8,5 +8,11 @@ type IBlogApi =
         UpdateViewCount: string -> Async<int option>
     }
 
+type ISongApi =
+    {
+        GetSongs: unit -> Async<Song list>
+        UpdateListenCount: string -> Async<int option>
+    }
+
 module Route =
     let builder typeName methodName = sprintf "/api/%s/%s" typeName methodName

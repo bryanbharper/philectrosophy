@@ -39,7 +39,7 @@ let init (slug: string): State * Cmd<Msg> =
 
 open Browser
 
-let setMetaTags entry =
+let setMetaTags (entry: BlogEntry) =
     document
         .querySelector("meta[property=\"og:title\"]")
         .setAttribute("content", entry.Title)
@@ -131,7 +131,7 @@ let viewCount count =
         ]
     ]
 
-let header metadata =
+let header (metadata: BlogEntry) =
     [
         Bulma.title.h2 [
             prop.text metadata.Title

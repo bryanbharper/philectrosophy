@@ -8,6 +8,7 @@ type Url =
     | Blog
     | BlogEntry of slug: string
     | Music
+    | Track of slug: string
     | NotFound
     | Search
     | UnexpectedError
@@ -15,6 +16,7 @@ type Url =
         let this' =
             match this with
             | BlogEntry _ -> Blog
+            | Track _ -> Music
             | _ -> this
 
         let (case, _) =

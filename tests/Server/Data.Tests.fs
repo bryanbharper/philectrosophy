@@ -36,7 +36,7 @@ let all =
                         .Returns(entries |> Seq.ofList |> async.Return)
                         .Create()
 
-                let target: IRepository = upcast BlogRepository(context)
+                let target: IBlogRepository = upcast BlogRepository(context)
 
                 // act
                 let result =
@@ -53,7 +53,7 @@ let all =
 
                 let context = EmptyContext()
 
-                let target: IRepository = upcast BlogRepository(context)
+                let target: IBlogRepository = upcast BlogRepository(context)
 
                 // act
                 let result =
@@ -79,7 +79,7 @@ let all =
                         .Returns(entries |> Seq.ofList |> async.Return)
                         .Create()
 
-                let target: IRepository = upcast BlogRepository(context)
+                let target: IBlogRepository = upcast BlogRepository(context)
 
                 // act
                 let result =
@@ -96,7 +96,7 @@ let all =
                 // arrange
                 let context = EmptyContext()
 
-                let target: IRepository = upcast BlogRepository(context)
+                let target: IBlogRepository = upcast BlogRepository(context)
 
                 // act
                 let result =
@@ -117,7 +117,7 @@ let all =
                         .Returns(1 |> async.Return)
                         .Create()
 
-                let target: IRepository = upcast BlogRepository(context)
+                let target: IBlogRepository = upcast BlogRepository(context)
 
                 // act
                 let result =

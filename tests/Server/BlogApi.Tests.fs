@@ -2,12 +2,14 @@
 
 open System
 open Fable.Mocha
-open Server
-open Server.Data
-open Server.File
 open Expecto
 open Foq
+
 open Shared
+
+open Server.Data
+open Server.File
+open Server.Api
 
 let all =
     testList
@@ -32,7 +34,7 @@ let all =
                 let entries = [ middle; latest; earliest ]
 
                 let repo =
-                    Mock<IRepository>()
+                    Mock<IBlogRepository>()
                         .Setup(fun r -> <@ r.GetAll() @>)
                         .Returns(entries |> async.Return)
                         .Create()
@@ -66,7 +68,7 @@ let all =
                 let entries = [ draft; published ]
 
                 let repo =
-                    Mock<IRepository>()
+                    Mock<IBlogRepository>()
                         .Setup(fun r -> <@ r.GetAll() @>)
                         .Returns(entries |> async.Return)
                         .Create()
@@ -88,7 +90,7 @@ let all =
                 let expectedContent = "blah blah blah blather blither"
 
                 let repo =
-                    Mock<IRepository>()
+                    Mock<IBlogRepository>()
                         .Setup(fun x -> <@ x.GetSingle slug @>)
                         .Returns(Some entry |> async.Return)
                         .Create()
@@ -117,7 +119,7 @@ let all =
                 let slug = "some-slug"
 
                 let repo =
-                    Mock<IRepository>()
+                    Mock<IBlogRepository>()
                         .Setup(fun x -> <@ x.GetSingle slug @>)
                         .Returns(None |> async.Return)
                         .Create()
@@ -142,7 +144,7 @@ let all =
                 let slug = "some-slug"
 
                 let repo =
-                    Mock<IRepository>()
+                    Mock<IBlogRepository>()
                         .Setup(fun x -> <@ x.GetSingle slug @>)
                         .Returns("blah" |> BlogEntry.create |> Some |> async.Return)
                         .Create()
@@ -184,7 +186,7 @@ let all =
                 let entries = [ lowest; highest; middle ]
 
                 let repo =
-                    Mock<IRepository>()
+                    Mock<IBlogRepository>()
                         .Setup(fun r -> <@ r.GetAll() @>)
                         .Returns(entries |> async.Return)
                         .Create()
@@ -205,7 +207,7 @@ let all =
                 let slug = "not-here"
 
                 let repo =
-                    Mock<IRepository>()
+                    Mock<IBlogRepository>()
                         .Setup(fun r -> <@ r.GetSingle slug @>)
                         .Returns(None |> async.Return)
                         .Create()
@@ -224,7 +226,7 @@ let all =
                 let entry = BlogEntry.create "Hello world!"
 
                 let repo =
-                    Mock<IRepository>()
+                    Mock<IBlogRepository>()
                         .Setup(fun r -> <@ r.GetSingle entry.Slug @>)
                         .Returns(entry |> Some |> async.Return)
                         .Setup(fun r ->
@@ -254,7 +256,7 @@ let all =
                     }
 
                 let repo =
-                    Mock<IRepository>()
+                    Mock<IBlogRepository>()
                         .Setup(fun r -> <@ r.GetSingle entry.Slug @>)
                         .Returns(entry |> Some |> async.Return)
                         .Setup(fun r -> <@ r.Update updated @>)

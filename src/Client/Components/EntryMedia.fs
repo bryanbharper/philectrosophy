@@ -6,7 +6,7 @@ open Feliz
 open Feliz.Bulma
 open Shared
 
-let private title entry = Bulma.title.h4 [ prop.text entry.Title ]
+let private title (entry: BlogEntry) = Bulma.title.h4 [ prop.text entry.Title ]
 
 let private updatedMsg entry =
     match entry.UpdatedOn with
@@ -38,7 +38,7 @@ let private subTitle entry =
 
 let private synopsis entry = Html.p entry.Synopsis
 
-let private media entry =
+let private media (entry: BlogEntry) =
     [
         title entry
         subTitle entry

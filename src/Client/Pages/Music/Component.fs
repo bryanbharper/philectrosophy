@@ -1,56 +1,102 @@
 ﻿module Client.Pages.Music.Component
 
-open System
+open Client
+open Fable.Remoting.Client
 open Elmish
-open Client.Pages.Music.Types
+open Feliz.Router
+
+open Shared
+
+open Client.Urls
 open Client.Extensions
+open Client.Pages.Music.Types
 
-let playlist =
-    [
-        { Title = "The Cannonball"; Src = "songs/TheCannonball.mp3" }
-        { Title = "Head Drama"; Src = "songs/HeadDrama.mp3" }
-        { Title = "Between Shifts"; Src = "songs/Between Shifts.mp3" }
-        { Title = "Philanthropic Nuclear Masterpiece"; Src = "songs/PhilanthropicNuclearMasterpiece.mp3" }
-        { Title = "Orphan"; Src = "songs/Orphan.mp3" }
-        { Title = "L'Inconnue De La Sein"; Src = "songs/L'Inconnue De La Sein.mp3" }
-    ]
+let (-%) n m =
+    match n % m with
+    | i when i >= 0 -> i
+    | i -> abs m + i
 
-let playlistLength = List.length playlist
-
-let getIndex track =
-    playlist
-    |> List.findIndex (fun t -> t.Title = track.Title)
-
-let nextTrack track =
+let getNextTrack (playlist: Song list) current =
     let nextIndex =
-        track
-        |> getIndex
-        |> (+)1
+        current.Placement + 1 -% (List.length playlist)
 
-    playlist.[nextIndex % playlistLength]
+    playlist.[nextIndex]
 
-let previousTrack track =
-    let nextIndex =
-        track
-        |> getIndex
-        |> (-)1
+let getPrevTrack (playlist: Song list) current =
+    let prevIndex =
+        current.Placement - 1 -% (List.length playlist)
 
-    playlist.[nextIndex % playlistLength]
+    playlist.[prevIndex]
+
+let findBySlug slug songs =
+    songs |> List.find (fun s -> s.Slug = slug)
+
+let updatePath slug =
+    slug |> sprintf "music/%s" |> Interop.setPath
+
+let songApi =
+    Remoting.createApi ()
+    |> Remoting.withRouteBuilder Route.builder
+    |> Remoting.buildProxy<ISongApi>
 
 ////////// INIT ///////////
-let init() =
-    { CurrentTrack = playlist |> List.head; Shuffle = false }, Cmd.none
+let init () =
+    {
+        CurrentSong = None
+        Shuffle = false
+        Songs = Deferred.InProgress
+    },
+    Cmd.OfAsync.either songApi.GetSongs () ServerReturnedSongs ServerReturnedError
 
 ////////// UPDATE ///////////
 let update (msg: Msg) (state: State) =
+    let currentSlug =
+        match Router.currentPath() with
+        | [ _; slug ] -> Some slug
+        | _ -> None
+
     match msg with
+    | ServerReturnedError _ -> state, Url.UnexpectedError.asString |> Cmd.navigatePath
+    | ServerReturnedSongs songs ->
+        let current =
+            match currentSlug with
+            | None -> songs |> List.find (fun s -> s.Placement = 0)
+            | Some slug -> songs |> findBySlug slug
+
+        current.Slug |> updatePath
+
+        { state with
+            Songs = songs |> List.sortBy (fun s -> s.Placement) |> Resolved
+            CurrentSong = Some current
+        },
+        Cmd.none
     | TrackEnded
     | UserClickedNext ->
-        if state.Shuffle
-        then { state with CurrentTrack = playlist |> List.rand}, Cmd.none
-        else { state with CurrentTrack = state.CurrentTrack |> nextTrack }, Cmd.none
+        match state.Songs, state.CurrentSong with
+        | Resolved songs, Some song ->
+            let nextSong =
+                if state.Shuffle
+                then List.rand songs
+                else getNextTrack songs song
+
+            nextSong.Slug |> updatePath
+
+            { state with
+                CurrentSong = Some nextSong
+            }, Cmd.none
+        | _ -> state, Cmd.none
     | UserClickedPrevious ->
-        { state with CurrentTrack = state.CurrentTrack |> previousTrack }, Cmd.none
+        match state.Songs, state.CurrentSong with
+        | Resolved songs, Some song ->
+            let prevTrack = getPrevTrack songs song
+            prevTrack.Slug |> updatePath
+
+            { state with
+                CurrentSong = Some prevTrack
+            }, Cmd.none
+
+        | _ -> state, Cmd.none
     | UserClickedShuffleBtn -> { state with Shuffle = not state.Shuffle }, Cmd.none
-    | UserClickedTrack  track ->
-        { state with CurrentTrack = track }, Cmd.none
+    | UserClickedTrack track ->
+        track.Slug |> updatePath
+        { state with CurrentSong = Some track; }, Cmd.none

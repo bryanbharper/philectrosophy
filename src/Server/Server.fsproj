@@ -10,8 +10,12 @@
     <Compile Include="Config.fs" />
     <Compile Include="File.fs" />
     <Compile Include="Rank.fs" />
-    <Compile Include="Data.fs" />
-    <Compile Include="BlogApi.fs" />
+    <Compile Include="Data\Tables.fs" />
+    <Compile Include="Data\Context.fs" />
+    <Compile Include="Data\BlogRepository.fs" />
+    <Compile Include="Data\SongRepository.fs" />
+    <Compile Include="Api\BlogApi.fs" />
+    <Compile Include="Api\SongApi.fs" />
     <Compile Include="Error.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>

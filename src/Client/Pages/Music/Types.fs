@@ -1,12 +1,19 @@
 ﻿module Client.Pages.Music.Types
 
-type Track = { Title: string; Src: string }
+open Shared
 
-type State = { CurrentTrack: Track; Shuffle: bool }
+type State =
+    {
+        CurrentSong: Song option
+        Shuffle: bool
+        Songs: Deferred<Song list>
+    }
 
 type Msg =
+    | ServerReturnedError of exn
+    | ServerReturnedSongs of Song list
     | TrackEnded
     | UserClickedNext
     | UserClickedPrevious
     | UserClickedShuffleBtn
-    | UserClickedTrack of Track
+    | UserClickedTrack of Song

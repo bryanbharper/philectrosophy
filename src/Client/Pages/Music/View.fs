@@ -1,10 +1,12 @@
 ﻿module Client.Pages.Music.View
 
+open Client.Components
 open Client.Pages.Music.Types
 open Feliz
 open Feliz.Bulma
 open Client.Styles
 open Client.Components.AudioPlayer
+open Shared
 
 let shuffleBtn dispatch state =
     Html.button [
@@ -22,7 +24,7 @@ let shuffleBtn dispatch state =
         ]
     ]
 
-let playlistTable dispatch (current: Track) =
+let playlistTable dispatch playlist (current: Song) =
     let trackRow track =
         Html.tr [
             prop.classes [
@@ -31,7 +33,7 @@ let playlistTable dispatch (current: Track) =
             ]
             prop.children [
                 Html.td [
-                    Component.getIndex track
+                    track.Placement
                     |> (+)1
                     |> prop.text
                 ]
@@ -53,7 +55,7 @@ let playlistTable dispatch (current: Track) =
                 ]
             ]
             Html.tbody [
-                Component.playlist
+                playlist
                 |> List.map trackRow
                 |> prop.children
             ]
@@ -80,16 +82,39 @@ let render (state: State) (dispatch: Msg -> unit) =
             Html.br []
             shuffleBtn dispatch state
 
-            playlistTable dispatch state.CurrentTrack
+            match state.Songs, state.CurrentSong with
+            | Idle, _ -> Html.none
+            | InProgress, _ -> Spinner.render
+            | Resolved songs, Some current ->
+                Html.div [
+                    playlistTable dispatch songs current
 
-            AudioPlayer.render [
-                    player.src state.CurrentTrack.Src
-                    player.autoPlay true
-                    player.autoPlayAfterSrcChange true
-                    player.showSkipControls true
-                    player.onClickNext (fun () -> Msg.UserClickedNext |> dispatch)
-                    player.onClickPrevious (fun () -> Msg.UserClickedPrevious |> dispatch)
-                    player.onEnded (fun _ -> Msg.TrackEnded |> dispatch)
+                    AudioPlayer.render [
+                        player.src current.Path
+                        player.autoPlay true
+                        player.autoPlayAfterSrcChange true
+                        player.showSkipControls true
+                        player.onClickNext (fun () -> Msg.UserClickedNext |> dispatch)
+                        player.onClickPrevious (fun () -> Msg.UserClickedPrevious |> dispatch)
+                        player.onEnded (fun _ -> Msg.TrackEnded |> dispatch)
+                    ]
                 ]
+            | Resolved songs, None ->
+                Html.div [
+                    let current' = songs |> List.head
+                    playlistTable dispatch songs current'
+
+                    AudioPlayer.render [
+                        player.src current'.Path
+                        player.autoPlay true
+                        player.autoPlayAfterSrcChange true
+                        player.showSkipControls true
+                        player.onClickNext (fun () -> Msg.UserClickedNext |> dispatch)
+                        player.onClickPrevious (fun () -> Msg.UserClickedPrevious |> dispatch)
+                        player.onEnded (fun _ -> Msg.TrackEnded |> dispatch)
+                    ]
+                ]
+
+
         ]
     ]
