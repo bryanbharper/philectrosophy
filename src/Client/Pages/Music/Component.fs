@@ -1,12 +1,13 @@
 ﻿module Client.Pages.Music.Component
 
-open Client
+open Elmish.Navigation
 open Fable.Remoting.Client
 open Elmish
 open Feliz.Router
 
 open Shared
 
+open Client
 open Client.Urls
 open Client.Extensions
 open Client.Pages.Music.Types
@@ -57,7 +58,13 @@ let update (msg: Msg) (state: State) =
         | _ -> None
 
     match msg with
-    | ServerReturnedError _ -> state, Url.UnexpectedError.asString |> Cmd.navigatePath
+    | ServerReturnedError _ ->
+        { state with
+            CurrentTrack = None
+            PlayerState = Stopped
+            Playlist = Idle
+        },
+        Url.UnexpectedError.asString |> Navigation.newUrl
     | ServerReturnedTracks playlist ->
         let current =
             match currentSlug with
@@ -120,6 +127,7 @@ let update (msg: Msg) (state: State) =
         match state.Playlist, state.CurrentTrack with
         | Resolved playlist, Some currentTrack ->
             let prevTrack = getPrevTrack playlist currentTrack
+
             { state with
                 CurrentTrack = Some prevTrack
                 PlayerState = Playing

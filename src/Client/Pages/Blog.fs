@@ -3,6 +3,7 @@
 open Client.Components
 open Client.Urls
 open Elmish
+open Elmish.Navigation
 open Fable.Remoting.Client
 open Feliz
 open Feliz.Bulma
@@ -26,7 +27,7 @@ let init (): State * Cmd<Msg> =
 let update (msg: Msg) (state: State): State * Cmd<Msg> =
     match msg with
     | ServerReturnedEntries result -> { state with Entries = Resolved result }, Cmd.none
-    | ServerReturnedError _ -> state, Url.UnexpectedError.asString |> Cmd.navigatePath
+    | ServerReturnedError _ -> state, Url.UnexpectedError.asString |> Navigation.newUrl
 
 let render (state: State) (dispatch: Msg -> unit) =
     let entries =
