@@ -18,10 +18,11 @@ let (-%) n m =
     | i -> abs m + i
 
 let getNextTrack (playlist: Song list) current =
-    let nextIndex =
+    let nextPlacement =
         current.Placement + 1 -% (List.length playlist)
 
-    playlist.[nextIndex]
+    playlist
+    |> List.find (fun t -> t.Placement = nextPlacement)
 
 let getPrevTrack (playlist: Song list) current =
     let prevIndex =
