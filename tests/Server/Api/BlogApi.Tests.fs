@@ -1,4 +1,4 @@
-﻿module Server.Tests.BlogApi
+﻿module Server.Tests.Api.BlogApi
 
 open System
 open Fable.Mocha
@@ -13,10 +13,9 @@ open Server.Api
 
 let all =
     testList
-        "BlogApi Tests"
+        "BlogApi"
         [
-
-            testCase "BlogApi.getEntriesAsync: returns entries ordered by created date."
+            testCase "getEntriesAsync: returns entries ordered by created date."
             <| fun _ ->
                 // arrange
                 let earliest =
@@ -51,7 +50,7 @@ let all =
                      |> List.sortByDescending (fun e -> e.CreatedOn))
                     "Results are ordered by CreatedOn"
 
-            testCase "BlogApi.getEntriesAsync: returns published entries only."
+            testCase "getEntriesAsync: returns published entries only."
             <| fun _ ->
                 // arrange
                 let published =
@@ -82,7 +81,7 @@ let all =
                 Expect.hasCountOf result 1u (fun _ -> true) "Only one entry was published."
                 Expect.equal result.[0] published "Only entry is published."
 
-            testCase "BlogApi.getEntryAsync: returns metadata from repo and content from file store."
+            testCase "getEntryAsync: returns metadata from repo and content from file store."
             <| fun _ ->
                 // arrange
                 let slug = "some-slug"
@@ -113,7 +112,7 @@ let all =
                     Expect.equal metadata entry "Metadata should be from repo."
                     Expect.equal content expectedContent "Content should be from file store."
 
-            testCase "BlogApi.getEntryAsync: returns None when metadata not found."
+            testCase "getEntryAsync: returns None when metadata not found."
             <| fun _ ->
                 // arrange
                 let slug = "some-slug"
@@ -138,7 +137,7 @@ let all =
                 // assert
                 Expect.isNone result "Result should be None."
 
-            testCase "BlogApi.getEntryAsync: returns None when content not found."
+            testCase "getEntryAsync: returns None when content not found."
             <| fun _ ->
                 // arrange
                 let slug = "some-slug"
@@ -163,7 +162,7 @@ let all =
                 // assert
                 Expect.isNone result "Result should be None."
 
-            testCase "BlogApi.getSearchResults: correctly ranks entires"
+            testCase "getSearchResults: correctly ranks entires"
             <| fun _ ->
                 // arrange
                 let query = "hippo talk duck walk book eat cheese"
@@ -201,7 +200,7 @@ let all =
                 Expect.equal result.[1] middle "Middle should be second."
                 Expect.equal result.[2] lowest "Lowest should be last."
 
-            testCase "BlogApi.updateViewCount: returns None without matching entry"
+            testCase "updateViewCount: returns None without matching entry"
             <| fun _ ->
                 // arrange
                 let slug = "not-here"
@@ -220,7 +219,7 @@ let all =
                 // assert
                 Expect.isNone result ""
 
-            testCase "BlogApi.updateViewCount: returns None if update fails"
+            testCase "updateViewCount: returns None if update fails"
             <| fun _ ->
                 // arrange
                 let entry = BlogEntry.create "Hello world!"
@@ -245,7 +244,7 @@ let all =
                 // assert
                 Expect.isNone result ""
 
-            testCase "BlogApi.updateViewCount: returns Some updatedCount"
+            testCase "updateViewCount: returns Some updatedCount"
             <| fun _ ->
                 // arrange
                 let entry = BlogEntry.create "Hello world!"

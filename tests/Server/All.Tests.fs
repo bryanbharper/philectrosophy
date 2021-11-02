@@ -3,10 +3,12 @@ module Server.Tests.All
 open Expecto
 
 let all =
-    testList "All"
+    testList "Server Tests"
         [
-            Data.all
-            BlogApi.all
+            Data.BlogRepository.all
+            Data.SongRepository.all
+            Api.BlogApi.all
+            Api.SongApi.all
             File.all
             Markdown.all
             Rank.all

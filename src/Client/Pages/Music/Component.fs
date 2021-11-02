@@ -6,16 +6,12 @@ open Elmish
 open Feliz.Router
 
 open Shared
+open Shared.Math.Operators
 
 open Client
 open Client.Urls
 open Client.Extensions
 open Client.Pages.Music.Types
-
-let (-%) n m =
-    match n % m with
-    | i when i >= 0 -> i
-    | i -> abs m + i
 
 let getNextTrack (playlist: Song list) current =
     let nextPlacement =
@@ -25,10 +21,11 @@ let getNextTrack (playlist: Song list) current =
     |> List.find (fun t -> t.Placement = nextPlacement)
 
 let getPrevTrack (playlist: Song list) current =
-    let prevIndex =
+    let prevPlacement =
         current.Placement - 1 -% (List.length playlist)
 
-    playlist.[prevIndex]
+    playlist
+    |> List.find (fun t -> t.Placement = prevPlacement)
 
 let findBySlug slug playlist =
     playlist |> List.find (fun t -> t.Slug = slug)
@@ -36,7 +33,7 @@ let findBySlug slug playlist =
 let updatePath slug =
     slug |> sprintf "music/%s" |> Interop.setPath
 
-let songApi =
+let private songApi =
     Remoting.createApi ()
     |> Remoting.withRouteBuilder Route.builder
     |> Remoting.buildProxy<ISongApi>

@@ -50,3 +50,14 @@ type Song =
         CoverOf: string option
         PlayCount: int
     }
+
+module Song =
+    let create title =
+        {
+           Slug = sprintf "slug-%s" title
+           Title = title
+           Placement = 0
+           Path = sprintf "songs/%s.mp3" title
+           CoverOf = None
+           PlayCount = 0
+        }

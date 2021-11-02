@@ -7,6 +7,7 @@
     <Compile Include="Blog.Tests.fs" />
     <Compile Include="BlogEntry.Tests.fs" />
     <Compile Include="Urls.Tests.fs" />
+    <Compile Include="Music.Tests.fs" />
     <Compile Include="All.Tests.fs" />
   </ItemGroup>
   <ItemGroup>

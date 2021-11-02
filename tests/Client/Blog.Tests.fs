@@ -6,9 +6,9 @@ open Fable.Mocha
 open Shared
 
 let all =
-    testList "All"
+    testList "Blog.Component"
         [
-            testCase "Blog.init sets State.Entries to InProgress"
+            testCase "init sets State.Entries to InProgress"
             <| fun _ ->
                 // act
                 let result = init () |> fst
@@ -16,7 +16,7 @@ let all =
                 // assert
                 Expect.equal result.Entries Deferred.InProgress "Result should be InProgress."
 
-            testCase "Blog.update - Resolves result from Msg.GotEntries to State.Entries"
+            testCase "update - Resolves result from Msg.GotEntries to State.Entries"
             <| fun _ ->
                 // arrange
                 let entries = []
@@ -32,7 +32,7 @@ let all =
                     Expect.equal entries' entries "result.Entries is Resolved."
                 | _ -> failwith "result.Entries was not Resolved."
 
-            testCase "Blog.update - ApiError doesn't change state"
+            testCase "update - ApiError doesn't change state"
             <| fun _ ->
                 // arrange
                 let msg = Exception() |> Msg.ServerReturnedError

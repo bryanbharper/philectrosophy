@@ -9,6 +9,7 @@
     <Compile Include="String.Tests.fs" />
     <Compile Include="Tuple.Tests.fs" />
     <Compile Include="Option.Tests.fs" />
+    <Compile Include="Math.Tests.fs" />
     <Compile Include="All.Tests.fs" />
   </ItemGroup>
   <ItemGroup>

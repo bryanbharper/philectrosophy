@@ -44,7 +44,7 @@ let properties = testList "String Property Tests" [
 
 ]
 #endif
-let all = testList "String" [
+let all = testList "Async" [
 
 #if !FABLE_COMPILER
     properties

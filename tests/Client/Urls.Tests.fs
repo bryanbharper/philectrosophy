@@ -5,10 +5,10 @@ open Fable.Mocha
 
 let all =
     testList
-        "All"
+        "Urls"
         [
 
-            testCase "Urls.toString: returns string version of Url"
+            testCase "toString: returns string version of Url"
             <| fun _ ->
                 // arrange
                 let slug = "some-slug"
@@ -29,7 +29,7 @@ let all =
                     // assert
                     Expect.equal result expected ""
 
-            testCase "Urls.asString: returns string version of Url"
+            testCase "asString: returns string version of Url"
             <| fun _ ->
                 // arrange
                 let slug = "some-slug"
@@ -50,7 +50,7 @@ let all =
                     // assert
                     Expect.equal result expected ""
 
-            testCase "Urls.fromString: converts valid string to Url"
+            testCase "fromString: converts valid string to Url"
             <| fun _ ->
                 // arrange
                 let testParams =
@@ -73,7 +73,7 @@ let all =
                         Expect.equal result expected ""
                     | _ -> failwith (sprintf "%A should have been %A" result expected)
 
-            testCase "Urls.fromString: is case insensitive"
+            testCase "fromString: is case insensitive"
             <| fun _ ->
                 // arrange
                 let testParams =

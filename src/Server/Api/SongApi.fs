@@ -17,7 +17,7 @@ module SongApi =
                 songOption
                 |> Option.map (fun e -> repo.Update { e with PlayCount = e.PlayCount + 1 })
                 |> Option.sequenceAsync
-                |> Async.map (Option.flatten)
+                |> Async.map Option.flatten
         }
 
     let songApiReader =

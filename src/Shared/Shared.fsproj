@@ -12,5 +12,6 @@
     <Compile Include="ApiContract.fs" />
     <Compile Include="Tuple.fs" />
     <Compile Include="Option.fs" />
+    <Compile Include="Math.fs" />
   </ItemGroup>
 </Project>

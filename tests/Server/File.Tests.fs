@@ -9,7 +9,7 @@ open Foq
 
 let all =
     testList
-        "File Tests"
+        "File"
         [
             testCase "PublicFileStore.ReadFileAsync: returns Async<None> when not found."
             <| fun _ ->

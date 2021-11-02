@@ -6,10 +6,10 @@ open Shared
 
 let all =
     testList
-        "Rank Tests"
+        "Rank"
         [
 
-            testCase "Rank.processQuery: transforms query into list of words"
+            testCase "processQuery: transforms query into list of words"
             <| fun _ ->
                 // arrange
                 let input = "   Lorem ipsum dolor Sit !amet, {} $ malis doctus tractatos duo   ei."
@@ -21,7 +21,7 @@ let all =
                 // assert
                 Expect.equal result expected ""
 
-            testCase "Rank.processTags: splits tag string into list"
+            testCase "processTags: splits tag string into list"
             <| fun _ ->
                 // arrange
                 let input = "555,timer,ic,chip,integrated,electronics"
@@ -33,7 +33,7 @@ let all =
                 // assert
                 Expect.equal result expected ""
 
-            testCase "Rank.count: counts overlap of two lists"
+            testCase "count: counts overlap of two lists"
             <| fun _ ->
                 // arrange
                 let matchingTerms = [ "dog"; "cat"; "beaver" ]
@@ -46,7 +46,7 @@ let all =
                 // assert
                 Expect.equal result (List.length matchingTerms) ""
 
-            testCase "Rank.entries: excludes zeros"
+            testCase "entries: excludes zeros"
             <| fun _ ->
                 // arrange
                 let query = "hippo talk duck walk book eat cheese"
@@ -68,7 +68,7 @@ let all =
                 // assert
                 Expect.isEmpty result ""
 
-            testCase "Rank.entries: returns in correct order"
+            testCase "entries: returns in correct order"
             <| fun _ ->
                 // arrange
                 let query = "hippo talk duck walk book eat cheese"

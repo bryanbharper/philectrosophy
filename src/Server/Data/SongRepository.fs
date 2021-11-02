@@ -5,13 +5,13 @@ open Shared
 type ISongRepository =
     abstract GetAll: unit -> Async<Song list>
     abstract GetSingle: slug:string -> Async<Song option>
-    abstract Update: newEntry:Song -> Async<Song option>
+    abstract Update: newSong:Song -> Async<Song option>
 
 type SongRepository(context: IContext) =
-    let getEntries =
+    let getSongs =
         fun () -> context.GetTable<Song> Tables.Songs.name
 
-    let getEntry (slug: string): Async<Song option> =
+    let getSong (slug: string): Async<Song option> =
         slug
         |> context.GetByValue Tables.Songs.name Tables.Songs.id
         |> Async.map (fun r -> if (Seq.length r) > 0 then r |> Seq.head |> Some else None)
@@ -20,9 +20,9 @@ type SongRepository(context: IContext) =
         context.Update Tables.Songs.name Tables.Songs.id
 
     interface ISongRepository with
-        member this.GetAll() = getEntries () |> Async.map List.ofSeq
+        member this.GetAll() = getSongs () |> Async.map List.ofSeq
 
-        member this.GetSingle slug = getEntry slug
+        member this.GetSingle slug = getSong slug
 
         member this.Update entry =
             async {

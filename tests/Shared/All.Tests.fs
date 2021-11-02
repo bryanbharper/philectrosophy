@@ -34,11 +34,12 @@ let route =
         Expect.equal result (sprintf "/api/%s/%s" typeName method) "Should be '/api/type/method.'"
 
 
-let all = testList "Shared" [
+let all = testList "Shared Tests" [
     String.all
     DomainModels.all
     Async.all
     Date.all
+    Math.all
     route
 
 #if !FABLE_COMPILER

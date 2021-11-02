@@ -8,8 +8,10 @@
         <Compile Include="Markdown.Tests.fs" />
         <Compile Include="Rank.Tests.fs" />
         <Compile Include="File.Tests.fs" />
-        <Compile Include="Data.Tests.fs" />
-        <Compile Include="BlogApi.Tests.fs" />
+        <Compile Include="Data\BlogRepository.Tests.fs" />
+        <Compile Include="Data\SongRepository.Tests.fs" />
+        <Compile Include="Api\BlogApi.Tests.fs" />
+        <Compile Include="Api\SongApi.Tests.fs" />
         <Compile Include="All.Tests.fs" />
         <Content Include="test-files\test.txt" />
     </ItemGroup>

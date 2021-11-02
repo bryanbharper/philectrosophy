@@ -4,9 +4,9 @@ open Client.Pages
 open Fable.Mocha
 
 let all =
-    testList "All"
+    testList "BlogEntry.Component"
         [
-            testCase "BlogEntry.init adds slug to state"
+            testCase "init adds slug to state"
             <| fun _ ->
                 // arrange
                 let slug = "hello-there"
@@ -16,4 +16,5 @@ let all =
 
                 // assert
                 Expect.equal result.Slug slug "Slugs should be equal."
+
         ]

@@ -1,4 +1,4 @@
-﻿module Server.Tests.Data
+﻿module Server.Tests.Data.BlogRepository
 
 open Server.Data
 open Expecto
@@ -17,10 +17,10 @@ type EmptyContext() =
 
 let all =
     testList
-        "Data Tests"
+        "Blog Repository"
         [
 
-            testCase "BlogRepository.GetAll: returns all entries in context."
+            testCase "GetAll: returns all entries in context."
             <| fun _ ->
                 // arrange
                 let entries =
@@ -46,7 +46,7 @@ let all =
                 // assert
                 Expect.equal result entries ""
 
-            testCase "BlogRepository.GetSingle: returns None when no results match"
+            testCase "GetSingle: returns None when no results match"
             <| fun _ ->
                 // arrange
                 let slug = "blah-blah"
@@ -63,7 +63,7 @@ let all =
                 // assert
                 Expect.isNone result ""
 
-            testCase "BlogRepository.GetSingle: returns Some if more than one result"
+            testCase "GetSingle: returns Some if more than one result"
             <| fun _ ->
                 // arrange
                 let expected = BlogEntry.create "one"
@@ -91,7 +91,7 @@ let all =
                 | None -> failtest "Should return Some result."
                 | Some r -> Expect.equal r expected ""
 
-            testCase "BlogRepository.Update: returns None if slug not found"
+            testCase "Update: returns None if slug not found"
             <| fun _ ->
                 // arrange
                 let context = EmptyContext()
@@ -106,7 +106,7 @@ let all =
                 // assert
                 Expect.isNone result ""
 
-            testCase "BlogRepository.Update: returns updated result when present"
+            testCase "Update: returns updated result when present"
             <| fun _ ->
                 // arrange
                 let expected = BlogEntry.create "one"

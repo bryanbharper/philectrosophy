@@ -6,9 +6,9 @@ open Server
 open Expecto
 open Shared
 
-let properties = testList "String Property Tests" [
+let properties = testList "Markdown (Property)" [
 
-    testProperty "Markdown.image: wraps provided url in Markdown image syntax."
+    testProperty "image: wraps provided url in Markdown image syntax."
     <| fun url ->
         // act
         let result = Markdown.image url
@@ -16,7 +16,7 @@ let properties = testList "String Property Tests" [
         // assert
         result = (sprintf "![equation](%s)" url)
 
-    testProperty "Markdown.Latex.encodedImage: encodes, prefixes, and wraps in markdown image syntax"
+    testProperty "Latex.encodedImage: encodes, prefixes, and wraps in markdown image syntax"
     <| fun (NonNull url) prefix ->
         // act
         let result = Markdown.Latex.encodedImage prefix url
@@ -24,7 +24,7 @@ let properties = testList "String Property Tests" [
         // assert
         result = (sprintf "![equation](%s%s)" prefix (String.urlEncode url))
 
-    testProperty "Markdown.Latex.mathImage: prefixes CodeCogs URL"
+    testProperty "Latex.mathImage: prefixes CodeCogs URL"
     <| fun (NonNull url) ->
         // act
         let result = Markdown.Latex.displayMathImage url
@@ -32,7 +32,7 @@ let properties = testList "String Property Tests" [
         // assert
         result = (sprintf "![equation](%s%s)" Markdown.codeCogsUrl (String.urlEncode url))
 
-    testProperty "Markdown.Latex.inlineMathImage: prefixes CodeCogs URL with inline prefix"
+    testProperty "Latex.inlineMathImage: prefixes CodeCogs URL with inline prefix"
     <| fun (NonNull url) ->
         // act
         let result = Markdown.Latex.inlineMathImage url
@@ -44,12 +44,12 @@ let properties = testList "String Property Tests" [
 
 let all =
     testList
-        "Markdown Tests"
+        "Markdown"
         [
 
             properties
 
-            testCase "Markdown.convert: converts all instances of pattern using converter"
+            testCase "convert: converts all instances of pattern using converter"
             <| fun _ ->
                 // arrange
                 let patternText = "dogs are cool"
@@ -65,7 +65,7 @@ let all =
                 // assert
                 Expect.equal result (inputPattern (String.slugify pattern)) ""
 
-            testCase "Markdown.Latex.convertDisplayMath: replaces string of only [MATH]"
+            testCase "Latex.convertDisplayMath: replaces string of only [MATH]"
             <| fun _ ->
                 // arrange
                 let expression =
@@ -82,7 +82,7 @@ let all =
                 // assert
                 Expect.equal result expected ""
 
-            testCase "Markdown.Latex.convertDisplayMath: replaces multiples [MATH] tags."
+            testCase "Latex.convertDisplayMath: replaces multiples [MATH] tags."
             <| fun _ ->
                 // arrange
                 let expression1 =
@@ -107,7 +107,7 @@ let all =
                 // assert
                 Expect.equal result expected ""
 
-            testCase "Markdown.Latex.convertDisplayMath: ignores [IMATH] tags."
+            testCase "Latex.convertDisplayMath: ignores [IMATH] tags."
             <| fun _ ->
                 // arrange
                 let expression1 =
@@ -138,7 +138,7 @@ let all =
                 // assert
                 Expect.equal result expected ""
 
-            testCase "Markdown.Latex.convertInlineMath: replaces string of only [IMATH]"
+            testCase "Latex.convertInlineMath: replaces string of only [IMATH]"
             <| fun _ ->
                 // arrange
                 let expression = @"X^2 \frac{1}{2} IMATH [] \overline{taco}"
@@ -157,7 +157,7 @@ let all =
                 // assert
                 Expect.equal result expected ""
 
-            testCase "Markdown.Latex.convertInlineMath: replaces multiples [IMATH] tags."
+            testCase "Latex.convertInlineMath: replaces multiples [IMATH] tags."
             <| fun _ ->
                 // arrange
                 let expression1 =
@@ -186,7 +186,7 @@ let all =
                 // assert
                 Expect.equal result expected ""
 
-            testCase "Markdown.Latex.convertInlineMath: ignores [MATH] tags."
+            testCase "Latex.convertInlineMath: ignores [MATH] tags."
             <| fun _ ->
                 // arrange
                 let expression1 =
@@ -215,7 +215,7 @@ let all =
                 // assert
                 Expect.equal result expected ""
 
-            testCase "Markdown.Latex.convertMath: replaces both inline and display math tags."
+            testCase "Latex.convertMath: replaces both inline and display math tags."
             <| fun _ ->
                 // arrange
                 let expression1 =
@@ -244,7 +244,7 @@ let all =
                 // assert
                 Expect.equal result expected ""
 
-            testCase "Markdown.Bulma.wrapInPopover: puts input inside popover"
+            testCase "Bulma.wrapInPopover: puts input inside popover"
             <| fun _ ->
                 // arrange
                 let input =
@@ -260,7 +260,7 @@ let all =
                 // assert
                 Expect.equal result expected ""
 
-            testCase "Markdown.Bulma.convertPopovers: replaces string of only [POP]"
+            testCase "Bulma.convertPopovers: replaces string of only [POP]"
             <| fun _ ->
                 // arrange
                 let expression =
