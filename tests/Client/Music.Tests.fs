@@ -1,6 +1,5 @@
 ﻿module Client.Tests.Music
 
-open Client.Pages
 open Client.Pages.Music
 open Fable.Mocha
 
