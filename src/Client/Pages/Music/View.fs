@@ -43,7 +43,7 @@ let playlistTable dispatch playlist (current: Song) =
                 ]
                 Html.td [
                     let coverText =
-                        match track.CoverOf with
+                        match track.Note with
                         | None -> ""
                         | Some coverBand -> coverBand |> sprintf "by %s"
                     prop.text coverText

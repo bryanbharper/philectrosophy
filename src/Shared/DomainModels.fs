@@ -47,7 +47,7 @@ type Song =
         Title: string
         Placement: int
         Path: string
-        CoverOf: string option
+        Note: string option
         PlayCount: int
     }
 
@@ -58,6 +58,6 @@ module Song =
            Title = title
            Placement = 0
            Path = sprintf "songs/%s.mp3" title
-           CoverOf = None
+           Note = None
            PlayCount = 0
         }
