@@ -42,11 +42,11 @@ let playlistTable dispatch playlist (current: Song) =
                     |> prop.text
                 ]
                 Html.td [
-                    let coverText =
+                    let noteText =
                         match track.Note with
                         | None -> ""
-                        | Some coverBand -> coverBand |> sprintf "by %s"
-                    prop.text coverText
+                        | Some text -> text |> sprintf "%s"
+                    prop.text noteText
                     prop.classes [ Bulma.HasTextGrey ]
                 ]
                 Html.td [
