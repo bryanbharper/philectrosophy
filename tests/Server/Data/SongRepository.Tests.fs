@@ -24,14 +24,15 @@ let all =
         "Song Repository"
         [
 
-            testCase "GetAll: returns all songs in context."
+            testCase "GetAll: returns all published songs in context."
             <| fun _ ->
                 // arrange
                 let songs =
                     [
-                        Song.create "one"
-                        Song.create "two"
-                        Song.create "three"
+                        { Song.create "one" with IsPublished = true }
+                        { Song.create "two" with IsPublished = true }
+                        { Song.create "three" with IsPublished = false }
+                        { Song.create "three" with IsPublished = true }
                     ]
 
                 let context =
@@ -47,8 +48,12 @@ let all =
                     target.GetAll()
                     |> Async.RunSynchronously
 
+                // arrange assert
+                let expected =
+                    songs
+                    |> List.filter (fun s -> s.IsPublished)
                 // assert
-                Expect.equal result songs ""
+                Expect.equal result expected ""
 
             testCase "GetSingle: returns None when no results match"
             <| fun _ ->

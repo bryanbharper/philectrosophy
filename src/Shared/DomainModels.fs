@@ -49,6 +49,7 @@ type Song =
         Path: string
         Note: string option
         PlayCount: int
+        IsPublished: bool
     }
 
 module Song =
@@ -60,4 +61,5 @@ module Song =
            Path = sprintf "songs/%s.mp3" title
            Note = None
            PlayCount = 0
+           IsPublished = false
         }

@@ -20,7 +20,10 @@ type SongRepository(context: IContext) =
         context.Update Tables.Songs.name Tables.Songs.id
 
     interface ISongRepository with
-        member this.GetAll() = getSongs () |> Async.map List.ofSeq
+        member this.GetAll() =
+            getSongs ()
+            |> Async.map (Seq.filter (fun s -> s.IsPublished))
+            |> Async.map List.ofSeq
 
         member this.GetSingle slug = getSong slug
 
