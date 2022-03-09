@@ -11,6 +11,9 @@ let ofChars (chars: seq<char>) =
 
 let split (delimiter: char) (str: string) = str.Split delimiter
 
+let join (separator: char) (input: string seq) =
+    String.Join(separator, input)
+
 let replace (oldVal: string) (newVal: string) (str: string) = str.Replace(oldVal, newVal)
 
 let strip (stripChars: string) (str: string): string =

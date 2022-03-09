@@ -162,25 +162,24 @@ let all =
                 // assert
                 Expect.isNone result "Result should be None."
 
-            testCase "getSearchResults: correctly ranks entires"
+            testCase "getSearchResults: correctly ranks entries"
             <| fun _ ->
                 // arrange
-                let query = "hippo talk duck walk book eat cheese"
+                let loMatch = "alPha bRavo charLie"
+                let midMatch = loMatch + "dElta echO foXtrot"
+                let hiMatch = midMatch + "Golf hoTel inDia"
 
                 let lowest =
-                    "Lowest Entry"
-                    |> BlogEntry.create
-                    |> BlogEntry.setTags "hippo,not,above"
+                    BlogEntry.empty
+                    |> BlogEntry.setTitle loMatch
 
                 let middle =
-                    "Middle Entry"
-                    |> BlogEntry.create
-                    |> BlogEntry.setTags "nope,hippo,blah,duck,nada"
+                    BlogEntry.empty
+                    |> BlogEntry.setTags (midMatch |> String.split ' ' |> String.join ',')
 
                 let highest =
-                    "Highest Entry"
-                    |> BlogEntry.create
-                    |> BlogEntry.setTags "blah,talk,hippo,eat,nope"
+                    BlogEntry.empty
+                    |> BlogEntry.setSynopsis hiMatch
 
                 let entries = [ lowest; highest; middle ]
 
@@ -192,13 +191,13 @@ let all =
 
                 // act
                 let result =
-                    BlogApi.getSearchResults repo query
+                    BlogApi.getSearchResults repo hiMatch
                     |> Async.RunSynchronously
 
                 // assert
-                Expect.equal result.[0] highest "Highest should be first."
-                Expect.equal result.[1] middle "Middle should be second."
-                Expect.equal result.[2] lowest "Lowest should be last."
+                Expect.equal result.[0] highest "Highest should be first"
+                Expect.equal result.[1] middle "Middle should be second"
+                Expect.equal result.[2] lowest "Lowest should be last"
 
             testCase "updateViewCount: returns None without matching entry"
             <| fun _ ->

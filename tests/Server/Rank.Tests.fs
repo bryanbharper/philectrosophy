@@ -8,43 +8,41 @@ let all =
     testList
         "Rank"
         [
-
-            testCase "processQuery: transforms query into list of words"
+            testCase "cleanText: strips unwanted characters"
             <| fun _ ->
                 // arrange
-                let input = "   Lorem ipsum dolor Sit !amet, {} $ malis doctus tractatos duo   ei."
-                let expected = ["lorem"; "ipsum"; "dolor"; "sit"; "amet"; "malis"; "doctus"; "tractatos"; "duo"; "ei"]
+                let charsToRemove = "!\"$%&'()*+,./:;?@[\]^_`{|}~"
+                let expected = "i should remain"
+                let input = charsToRemove + expected + charsToRemove
 
                 // act
-                let result = Rank.prepareQuery input
+                let result = Rank.cleanText charsToRemove input
 
                 // assert
-                Expect.equal result expected ""
+                Expect.equal result expected "Failed to remove specified characters from input"
 
-            testCase "processTags: splits tag string into list"
+            testCase "cleanText: lowercase input"
             <| fun _ ->
                 // arrange
-                let input = "555,timer,ic,chip,integrated,electronics"
-                let expected = ["555"; "timer"; "ic"; "chip"; "integrated"; "electronics" ]
+                let input = "tHiS iS a TeSt"
 
                 // act
-                let result = Rank.prepareTags input
+                let result = Rank.cleanText "" input
 
                 // assert
-                Expect.equal result expected ""
+                Expect.equal result (input |> String.toLower) "Failed to lowercase input"
 
-            testCase "count: counts overlap of two lists"
+            testCase "cleanText: trim spaces"
             <| fun _ ->
                 // arrange
-                let matchingTerms = [ "dog"; "cat"; "beaver" ]
-                let queryTerms = matchingTerms @ [ "squash"; "tomato" ]
-                let tags = [ "kale"; "ham" ] @ matchingTerms
+                let input = "  this is a test       "
 
                 // act
-                let result = Rank.score queryTerms tags
+                let result = Rank.cleanText "" input
 
                 // assert
-                Expect.equal result (List.length matchingTerms) ""
+                Expect.equal result (input |> String.trim) "Failed to trim spaces from input"
+
 
             testCase "entries: excludes zeros"
             <| fun _ ->
@@ -68,31 +66,31 @@ let all =
                 // assert
                 Expect.isEmpty result ""
 
-            testCase "entries: returns in correct order"
+            testCase "entries: correctly ranks entries"
             <| fun _ ->
                 // arrange
-                let query = "hippo talk duck walk book eat cheese"
+                let loMatch = "alPha (bRavo) charLie."
+                let midMatch = loMatch + " dElta echO [foXtrot]"
+                let hiMatch = midMatch + " Golf! hoTel inDia?"
 
                 let lowest =
-                    "Lowest Entry"
-                    |> BlogEntry.create
-                    |> BlogEntry.setTags "hippo,not,above"
+                    BlogEntry.empty
+                    |> BlogEntry.setTitle loMatch
 
                 let middle =
-                    "Middle Entry"
-                    |> BlogEntry.create
-                    |> BlogEntry.setTags "nope,hippo,blah,duck,nada"
+                    BlogEntry.empty
+                    |> BlogEntry.setTags (midMatch |> String.split ' ' |> String.join ',')
 
                 let highest =
-                    "Highest Entry"
-                    |> BlogEntry.create
-                    |> BlogEntry.setTags "blah,talk,hippo,eat,nope"
+                    BlogEntry.empty
+                    |> BlogEntry.setSynopsis hiMatch
 
                 // act
-                let result = Rank.entries query [lowest; highest; middle]
+                let result = Rank.entries hiMatch [lowest; highest; middle]
 
                 // assert
-                Expect.equal result.[0] highest "Highest should be first."
-                Expect.equal result.[1] middle "Middle should be second."
-                Expect.equal result.[2] lowest "Lowest should be last."
+                Expect.equal result.[0] highest "Highest should be first"
+                Expect.equal result.[1] middle "Middle should be second"
+                Expect.equal result.[2] lowest "Lowest should be last"
+
         ]

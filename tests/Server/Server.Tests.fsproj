@@ -20,4 +20,10 @@
         <ProjectReference Include="..\Shared\Shared.Tests.fsproj" />
     </ItemGroup>
     <Import Project="..\..\.paket\Paket.Restore.targets" />
+
+    <ItemGroup>
+        <Content Include="test-files\*.*">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
 </Project>

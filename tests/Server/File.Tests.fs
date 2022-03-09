@@ -11,7 +11,7 @@ let all =
     testList
         "File"
         [
-            testCase "PublicFileStore.ReadFileAsync: returns Async<None> when not found."
+            testCase "PublicFileStore.ReadFileAsync: returns Async<None> when not found"
             <| fun _ ->
                 // arrange
                 let target = PublicFileStore() :> IFileAccess
@@ -23,7 +23,7 @@ let all =
                     |> Async.RunSynchronously
 
                 // assert
-                Expect.isNone result "Returns none when file not found."
+                Expect.isNone result "Returns none when file not found"
 
             testCase "PublicFileStore.ReadFileAsync: returns content from file."
             <| fun _ ->
@@ -35,12 +35,12 @@ let all =
 
                 // act
                 let result =
-                    "test-files/test.txt"
+                   "test-files/test.txt"
                     |> target.ReadFileAsync
                     |> Async.RunSynchronously
 
                 // assert
-                Expect.equal result (Some expected) "Result is Some content."
+                Expect.equal result (Some expected) "Result is Some content"
 
             testCase "BlogContentStore.GetBlogEntryContentAsync: returns result from FileStore"
             <| fun _ ->

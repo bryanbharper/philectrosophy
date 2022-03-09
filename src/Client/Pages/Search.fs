@@ -7,7 +7,6 @@ open Feliz.Bulma
 
 open Shared
 
-open Client.Apis
 open Client.Components
 
 let blogApi =
@@ -52,7 +51,7 @@ let update (msg: Msg) (state: State): State * Cmd<Msg> =
         | None -> state, Cmd.none
         | Some query ->
             { state with Results = InProgress },
-            Cmd.OfAsync.either GoogleSearchApi.search query ServerReturnedBlogEntries ServerReturnedError
+            Cmd.OfAsync.either blogApi.GetSearchResults query ServerReturnedBlogEntries ServerReturnedError
 
 let input dispatch =
     Bulma.input.search [

@@ -2,30 +2,54 @@
 
 open Shared
 
-let prepareQuery =
-    String.toLower
-    >> String.trim
-    >> String.strip "!\"#$%&'()*+,./:;?@[\]^_`{|}~"
-    >> String.split ' '
-    >> List.ofArray
-    >> List.filter (fun s -> not <| String.isNullOrWhiteSpace s)
+let cleanText charsToRemove input =
+    input
+    |> String.toLower
+    |> String.trim
+    |> String.strip charsToRemove
 
-let prepareTags = String.split ',' >> List.ofArray
+let textToKeywords delimiter input =
+    input
+    |> String.split delimiter
+    |> Seq.filter (fun s -> not <| String.isNullOrWhiteSpace s)
 
-let score queryTerms tags =
-    let folder score el =
-        if List.contains el tags then score + 1 else score
+let getInputTerms searchQuery =
+    searchQuery
+    |> cleanText "!\"'()*,./:;?[\]^_`{|}~"
+    |> textToKeywords ' '
 
-    queryTerms
-    |> List.fold folder 0
+let getTargetTerms (entry: BlogEntry) =
+    let tags =
+        entry.Tags
+        |> cleanText "!\"'()*./:;?[\]^_`{|}~"
+        |> textToKeywords ','
 
-let entries query entries =
-    let searchTerms = prepareQuery query
+    let otherText =
+        entry.Title + entry.Synopsis
+        |> cleanText "!\"'()*,./:;?[\]^_`{|}~"
+        |> textToKeywords ' '
 
+    tags |> Seq.append otherText
+
+let scoreTerms inputTerms targetTerms =
+    let folder score inputTerm =
+        if targetTerms |> Seq.contains inputTerm
+        then score + 1
+        else score
+
+    inputTerms
+    |> Seq.fold folder 0
+
+let scoreEntry searchQuery (entry: BlogEntry) =
+    let targetTerms = getTargetTerms entry
+    let searchTerms = getInputTerms searchQuery
+
+    let result = scoreTerms searchTerms targetTerms, entry
+    result
+
+let entries searchQuery entries =
     entries
-    |> List.map (fun e ->
-        let tags = prepareTags e.Tags
-        score searchTerms tags, e)
+    |> List.map (scoreEntry searchQuery)
     |> List.sortByDescending fst
     |> List.filter (fun (score, _) -> score > 0)
     |> List.map snd

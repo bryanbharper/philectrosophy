@@ -18,6 +18,21 @@ type BlogEntry =
     }
 
 module BlogEntry =
+    let empty =
+        {
+            Author = ""
+            CreatedOn = DateTime.UtcNow
+            IsPublished = false
+            Slug = ""
+            Synopsis = ""
+            Tags = ""
+            ThumbNailUrl = ""
+            Title = ""
+            Subtitle = "" |> Some
+            UpdatedOn = None
+            ViewCount = 0
+        }
+
     let create title =
         {
             Author = "Bryan B. Harper"
@@ -35,6 +50,7 @@ module BlogEntry =
 
     let setCreatedOn date entry = { entry with CreatedOn = date }
     let setIsPublished isPublished entry = { entry with IsPublished = isPublished }
+    let setTitle title entry = { entry with Title = title }
     let setSubtitle subTitle entry = { entry with Subtitle = subTitle }
     let setSynopsis synopsis entry = { entry with Synopsis = synopsis }
     let setTags tags entry = { entry with Tags = tags }
