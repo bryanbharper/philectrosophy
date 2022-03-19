@@ -1,4 +1,4 @@
-﻿module Shared.String
+﻿module Shared.Extensions.String
 
 open System
 

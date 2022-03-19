@@ -4,10 +4,10 @@
 open Expecto
 open Foq
 
-open Server.Data.SongRepository
-open Shared
+open Shared.Dtos
 
 open Server.Data
+open Server.Data.SongRepository
 
 type EmptyContext() =
     interface IContext with

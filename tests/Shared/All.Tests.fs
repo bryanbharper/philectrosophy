@@ -7,6 +7,7 @@ open Expecto
 #endif
 
 open Shared
+open Shared.Contracts
 
 #if !FABLE_COMPILER
 let routeProperty =
@@ -36,7 +37,7 @@ let route =
 
 let all = testList "Shared Tests" [
     String.all
-    DomainModels.all
+    Dtos.all
     Async.all
     Date.all
     Math.all

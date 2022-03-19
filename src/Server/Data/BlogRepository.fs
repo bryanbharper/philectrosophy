@@ -1,6 +1,7 @@
 ﻿namespace Server.Data
 
-open Shared
+open Shared.Extensions
+open Shared.Dtos
 
 type IBlogRepository =
     abstract GetAll: unit -> Async<BlogEntry list>

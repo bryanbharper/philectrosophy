@@ -1,6 +1,7 @@
 ﻿module Server.Rank
 
-open Shared
+open Shared.Extensions
+open Shared.Dtos
 
 let cleanText charsToRemove input =
     input

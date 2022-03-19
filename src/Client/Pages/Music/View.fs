@@ -1,12 +1,15 @@
 ﻿module Client.Pages.Music.View
 
-open Client.Components
-open Client.Pages.Music.Types
 open Feliz
 open Feliz.Bulma
+
+open Shared
+open Shared.Dtos
+
+open Client.Components
+open Client.Pages.Music.Types
 open Client.Styles
 open Client.Components.AudioPlayer
-open Shared
 
 let shuffleBtn dispatch state =
     Html.button [
@@ -25,7 +28,7 @@ let shuffleBtn dispatch state =
     ]
 
 let playlistTable dispatch playlist (current: Song) =
-    let trackRow track =
+    let trackRow (track: Song) =
         Html.tr [
             prop.classes [
                 if current.Title = track.Title then Bulma.IsSelected

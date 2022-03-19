@@ -3,7 +3,7 @@
 open Server.Data
 open Expecto
 open Foq
-open Shared
+open Shared.Dtos
 
 type EmptyContext() =
     interface IContext with

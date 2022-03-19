@@ -1,10 +1,13 @@
 ﻿module Client.Components.EntryMedia
 
-open Client.Styles
-open Client.Urls
 open Feliz
 open Feliz.Bulma
-open Shared
+
+open Shared.Extensions
+open Shared.Dtos
+
+open Client.Styles
+open Client.Urls
 
 let private title (entry: BlogEntry) = Bulma.title.h4 [ prop.text entry.Title ]
 

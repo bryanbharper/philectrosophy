@@ -1,10 +1,11 @@
 ﻿module Server.Tests.Markdown
 
-
 open FsCheck
-open Server
 open Expecto
-open Shared
+
+open Server
+
+open Shared.Extensions
 
 let properties = testList "Markdown (Property)" [
 

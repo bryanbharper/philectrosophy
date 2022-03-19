@@ -5,13 +5,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Deferred.fs" />
-    <Compile Include="Async.fs" />
-    <Compile Include="String.fs" />
-    <Compile Include="Date.fs" />
-    <Compile Include="DomainModels.fs" />
-    <Compile Include="ApiContract.fs" />
-    <Compile Include="Tuple.fs" />
-    <Compile Include="Option.fs" />
     <Compile Include="Math.fs" />
+    <Compile Include="Extensions\Option.fs" />
+    <Compile Include="Extensions\Tuple.fs" />
+    <Compile Include="Extensions\Date.fs" />
+    <Compile Include="Extensions\String.fs" />
+    <Compile Include="Extensions\Async.fs" />
+    <Compile Include="Dtos\BlogEntry.fs" />
+    <Compile Include="Dtos\Song.fs" />
+    <Compile Include="Contracts\ApiContract.fs" />
   </ItemGroup>
 </Project>

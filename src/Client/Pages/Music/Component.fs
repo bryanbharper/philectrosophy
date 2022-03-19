@@ -7,6 +7,8 @@ open Feliz.Router
 
 open Shared
 open Shared.Math.Operators
+open Shared.Dtos
+open Shared.Contracts
 
 open Client
 open Client.Urls
@@ -27,7 +29,7 @@ let getPrevTrack (playlist: Song list) current =
     playlist
     |> List.find (fun t -> t.Placement = prevPlacement)
 
-let findBySlug slug playlist =
+let findBySlug slug (playlist: Song list) =
     playlist |> List.find (fun t -> t.Slug = slug)
 
 let updatePath slug =

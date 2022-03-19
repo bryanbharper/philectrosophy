@@ -5,9 +5,12 @@ open Fable.Remoting.Client
 open Feliz
 open Feliz.Bulma
 
-open Shared
-
 open Client.Components
+
+open Shared
+open Shared.Dtos
+open Shared.Contracts
+
 
 let blogApi =
     Remoting.createApi ()

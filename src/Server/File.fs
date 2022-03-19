@@ -1,14 +1,14 @@
 ﻿module Server.File
 
+open System.IO
+
+open Shared.Extensions
+
 type IFileAccess =
     abstract ReadFileAsync: string -> Async<string option>
 
 type IBlogContentStore =
     abstract GetBlogEntryContentAsync: string -> Async<string option>
-
-
-open Shared
-open System.IO
 
 type PublicFileStore() =
 

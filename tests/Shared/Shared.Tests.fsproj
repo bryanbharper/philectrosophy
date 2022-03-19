@@ -5,7 +5,7 @@
   <ItemGroup>
     <Compile Include="Async.Tests.fs" />
     <Compile Include="Date.Tests.fs" />
-    <Compile Include="DomainModels.Tests.fs" />
+    <Compile Include="Dto.Tests.fs" />
     <Compile Include="String.Tests.fs" />
     <Compile Include="Tuple.Tests.fs" />
     <Compile Include="Option.Tests.fs" />

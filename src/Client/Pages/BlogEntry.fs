@@ -1,15 +1,20 @@
 ﻿module Client.Pages.BlogEntry
 
 
-open Client.Components
-open Client.Styles
-open Client.Urls
 open Elmish
+open Elmish.Navigation
 open Fable.Remoting.Client
 open Feliz
 open Feliz.Bulma
-open Elmish.Navigation
+
 open Shared
+open Shared.Extensions
+open Shared.Dtos
+open Shared.Contracts
+
+open Client.Components
+open Client.Styles
+open Client.Urls
 
 let blogApi =
     Remoting.createApi ()

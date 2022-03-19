@@ -9,8 +9,7 @@ open System.Linq
 
 
 open FsCheck
-open Shared
-
+open Shared.Extensions
 
 #if !FABLE_COMPILER
 let properties = testList "String Property Tests" [

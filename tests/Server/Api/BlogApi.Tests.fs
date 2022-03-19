@@ -5,7 +5,8 @@ open Fable.Mocha
 open Expecto
 open Foq
 
-open Shared
+open Shared.Extensions
+open Shared.Dtos
 
 open Server.Data
 open Server.File

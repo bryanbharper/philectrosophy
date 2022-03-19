@@ -1,6 +1,7 @@
 ﻿module Server.Data.SongRepository
 
-open Shared
+open Shared.Extensions
+open Shared.Dtos
 
 type ISongRepository =
     abstract GetAll: unit -> Async<Song list>

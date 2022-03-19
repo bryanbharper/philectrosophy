@@ -1,10 +1,11 @@
 ﻿namespace Server.Api
 
+open Shared.Extensions
+open Shared.Contracts
+
 open Server.Data.SongRepository
 
 module SongApi =
-
-    open Shared
 
     let getSongsAsync (repo: ISongRepository) =
         repo.GetAll()

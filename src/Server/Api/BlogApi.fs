@@ -1,11 +1,13 @@
 ﻿namespace Server.Api
 
-module BlogApi =
+open Shared.Contracts
+open Shared.Extensions
 
-    open Server
-    open Server.Data
-    open Server.File
-    open Shared
+open Server
+open Server.Data
+open Server.File
+
+module BlogApi =
 
     let getEntriesAsync (repo: IBlogRepository) =
         repo.GetAll()

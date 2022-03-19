@@ -1,6 +1,7 @@
 ﻿module Client.Pages.Music.Types
 
 open Shared
+open Shared.Dtos
 
 type PlayerState =
     | Paused

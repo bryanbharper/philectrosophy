@@ -1,8 +1,11 @@
 ﻿module Server.Tests.Rank
 
 open Expecto
+
 open Server
-open Shared
+
+open Shared.Extensions
+open Shared.Dtos
 
 let all =
     testList

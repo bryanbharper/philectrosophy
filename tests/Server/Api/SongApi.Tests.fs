@@ -4,7 +4,7 @@ open Fable.Mocha
 open Expecto
 open Foq
 
-open Shared
+open Shared.Dtos
 
 open Server.Data.SongRepository
 open Server.Api

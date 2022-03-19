@@ -10,9 +10,9 @@ open Giraffe.SerilogExtensions
 open Microsoft.AspNetCore.Http
 open Microsoft.Extensions.DependencyInjection
 open Saturn
-
 open Serilog
-open Shared
+
+open Shared.Contracts
 
 open Server.Data
 open Server.Data.SongRepository

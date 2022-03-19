@@ -1,4 +1,4 @@
-﻿module Shared.Tests.DomainModels
+﻿module Shared.Tests.Dtos
 
 #if FABLE_COMPILER
 open Fable.Mocha
@@ -8,7 +8,9 @@ open Expecto
 
 open System
 open Expecto.Logging
-open Shared
+
+open Shared.Extensions
+open Shared.Dtos
 
 let all = testList "DomainModel" [
    testCase "BlogEntry.create initializes with default values"

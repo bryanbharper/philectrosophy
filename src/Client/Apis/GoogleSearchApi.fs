@@ -1,8 +1,10 @@
 ﻿module Client.Apis.GoogleSearchApi
 
 open System
-open Shared
 open Thoth.Json
+
+open Shared.Extensions
+open Shared.Dtos
 open Client.Apis.Http
 
 type CseImage =

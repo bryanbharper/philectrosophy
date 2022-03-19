@@ -6,7 +6,7 @@ open Fable.Mocha
 open Expecto
 #endif
 
-open Shared
+open Shared.Extensions
 
 let all =
     testList

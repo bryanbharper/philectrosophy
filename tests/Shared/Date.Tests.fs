@@ -7,8 +7,9 @@ open Expecto
 #endif
 
 open System
-open Shared
 open FsCheck
+
+open Shared.Extensions
 
 let months =
     [

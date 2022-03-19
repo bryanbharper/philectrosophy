@@ -1,4 +1,6 @@
-﻿namespace Shared
+﻿namespace Shared.Contracts
+
+open Shared.Dtos
 
 type IBlogApi =
     {

@@ -1,6 +1,7 @@
-﻿namespace Shared
+﻿namespace Shared.Dtos
 
 open System
+open Shared.Extensions
 
 type BlogEntry =
     {
@@ -56,26 +57,3 @@ module BlogEntry =
     let setTags tags entry = { entry with Tags = tags }
     let setThumbNail url entry = { entry with ThumbNailUrl = url }
     let setUpdatedOn dateOption entry = { entry with UpdatedOn = dateOption }
-
-type Song =
-    {
-        Slug: string
-        Title: string
-        Placement: int
-        Path: string
-        Note: string option
-        PlayCount: int
-        IsPublished: bool
-    }
-
-module Song =
-    let create title =
-        {
-           Slug = sprintf "slug-%s" title
-           Title = title
-           Placement = 0
-           Path = sprintf "songs/%s.mp3" title
-           Note = None
-           PlayCount = 0
-           IsPublished = false
-        }

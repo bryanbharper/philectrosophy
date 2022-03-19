@@ -3,7 +3,7 @@
 open Client.Pages.Music
 open Fable.Mocha
 
-open Shared
+open Shared.Dtos
 
 let all =
     testList "Music.Component"

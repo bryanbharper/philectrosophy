@@ -1,7 +1,7 @@
 ﻿module Server.Markdown
 
 open System.Text.RegularExpressions
-open Shared
+open Shared.Extensions
 
 let codeCogsUrl = "https://latex.codecogs.com/gif.latex?"
 let patternTemplate keyword =

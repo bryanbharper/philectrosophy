@@ -7,7 +7,7 @@ open Expecto
 open System.Linq
 #endif
 
-open Shared
+open Shared.Extensions
 
 #if !FABLE_COMPILER
 let properties = testList "String Property Tests" [
