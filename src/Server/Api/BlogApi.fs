@@ -21,7 +21,8 @@ module BlogApi =
         |> Async.map Tuple.sequenceOption
 
     let getSearchResults (repo: IBlogRepository) query =
-        repo.GetAll() |> Async.map (Rank.entries query)
+        repo.GetAll()
+        |> Async.map (List.filter (fun e -> e.IsPublished) >> Rank.entries query)
 
     let updateViewCount (repo: IBlogRepository) slug =
         async {

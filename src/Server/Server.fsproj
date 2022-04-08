@@ -28,5 +28,8 @@
     </Content>
     <Content Include="public\blog.posts\img\**" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="NinjaNye.SearchExtensions" Version="3.0.1" />
+  </ItemGroup>
   <Import Project="..\..\.paket\Paket.Restore.targets" />
 </Project>

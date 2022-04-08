@@ -1,56 +1,47 @@
-﻿module Server.Rank
+﻿namespace Server
 
+open System
+open NinjaNye.SearchExtensions
+
+module Ninja =
+    let search expressions (queryable: 'a seq) =
+        queryable
+            .Search(expressions)
+            .SetCulture(StringComparison.OrdinalIgnoreCase)
+
+    let containing (searchTerms: string []) (searchResult: EnumerableStringSearch<'a>) =
+        searchResult.Containing(searchTerms)
+
+    let toRanked (searchResult: EnumerableStringSearch<'a>) = searchResult.ToRanked()
+
+
+open System.Linq.Expressions
+open Shared
 open Shared.Extensions
 open Shared.Dtos
 
-let cleanText charsToRemove input =
-    input
-    |> String.toLower
-    |> String.trim
-    |> String.strip charsToRemove
+module Rank =
+    type FunAs() =
+        static member LinqExpression<'T, 'TResult>(e: Expression<Func<'T, 'TResult>>) = e
 
-let textToKeywords delimiter input =
-    input
-    |> String.split delimiter
-    |> Seq.filter (fun s -> not <| String.isNullOrWhiteSpace s)
+    let filterCommon (words: string array) =
+        words
+        |> Array.filter (fun w -> StopWords.all |> List.contains (String.toLower w) |> not)
 
-let getInputTerms searchQuery =
-    searchQuery
-    |> cleanText "!\"'()*,./:;?[\]^_`{|}~"
-    |> textToKeywords ' '
+    let entries (searchQuery: string) (entries: BlogEntry list) =
 
-let getTargetTerms (entry: BlogEntry) =
-    let tags =
-        entry.Tags
-        |> cleanText "!\"'()*./:;?[\]^_`{|}~"
-        |> textToKeywords ','
+        let queries =
+            [|
+               FunAs.LinqExpression (fun e -> if e.Subtitle.IsSome then e.Subtitle.Value else "")
+               FunAs.LinqExpression(fun e -> e.Synopsis)
+               FunAs.LinqExpression(fun e -> e.Tags) // |> String.split ',' |> String.concat " ")
+               FunAs.LinqExpression(fun e -> e.Title)
+            |]
 
-    let otherText =
-        entry.Title + entry.Synopsis
-        |> cleanText "!\"'()*,./:;?[\]^_`{|}~"
-        |> textToKeywords ' '
-
-    tags |> Seq.append otherText
-
-let scoreTerms inputTerms targetTerms =
-    let folder score inputTerm =
-        if targetTerms |> Seq.contains inputTerm
-        then score + 1
-        else score
-
-    inputTerms
-    |> Seq.fold folder 0
-
-let scoreEntry searchQuery (entry: BlogEntry) =
-    let targetTerms = getTargetTerms entry
-    let searchTerms = getInputTerms searchQuery
-
-    let result = scoreTerms searchTerms targetTerms, entry
-    result
-
-let entries searchQuery entries =
-    entries
-    |> List.map (scoreEntry searchQuery)
-    |> List.sortByDescending fst
-    |> List.filter (fun (score, _) -> score > 0)
-    |> List.map snd
+        entries
+        |> Ninja.search queries
+        |> Ninja.containing (searchQuery |> String.split ' ' |> filterCommon)
+        |> Ninja.toRanked
+        |> Seq.sortByDescending (fun r -> r.Hits)
+        |> Seq.map (fun r -> r.Item)
+        |> Seq.toList

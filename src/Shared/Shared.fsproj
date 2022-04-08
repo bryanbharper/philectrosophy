@@ -6,6 +6,7 @@
   <ItemGroup>
     <Compile Include="Deferred.fs" />
     <Compile Include="Math.fs" />
+    <Compile Include="StopWords.fs" />
     <Compile Include="Extensions\Option.fs" />
     <Compile Include="Extensions\Tuple.fs" />
     <Compile Include="Extensions\Date.fs" />

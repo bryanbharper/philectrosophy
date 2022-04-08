@@ -172,10 +172,52 @@ let all =
 
                 let lowest =
                     BlogEntry.empty
+                    |> BlogEntry.setIsPublished true
                     |> BlogEntry.setTitle loMatch
 
                 let middle =
                     BlogEntry.empty
+                    |> BlogEntry.setIsPublished true
+                    |> BlogEntry.setTags (midMatch |> String.split ' ' |> String.join ',')
+
+                let highest =
+                    BlogEntry.empty
+                    |> BlogEntry.setIsPublished true
+                    |> BlogEntry.setSynopsis hiMatch
+
+                let entries = [ lowest; highest; middle ]
+
+                let repo =
+                    Mock<IBlogRepository>()
+                        .Setup(fun r -> <@ r.GetAll() @>)
+                        .Returns(entries |> async.Return)
+                        .Create()
+
+                // act
+                let result =
+                    BlogApi.getSearchResults repo hiMatch
+                    |> Async.RunSynchronously
+
+                // assert
+                Expect.equal (List.length result) (List.length entries) "Should return all matches"
+                Expect.equal result.[0] highest "Highest should be first"
+                Expect.equal result.[1] middle "Middle should be second"
+                Expect.equal result.[2] lowest "Lowest should be last"
+
+            testCase "getSearchResults: excludes unpublished"
+            <| fun _ ->
+                // arrange
+                let loMatch = "alPha bRavo charLie"
+                let midMatch = loMatch + "dElta echO foXtrot"
+                let hiMatch = midMatch + "Golf hoTel inDia"
+
+                let lowest =
+                    BlogEntry.empty
+                    |> BlogEntry.setTitle loMatch
+
+                let middle =
+                    BlogEntry.empty
+                    |> BlogEntry.setIsPublished true
                     |> BlogEntry.setTags (midMatch |> String.split ' ' |> String.join ',')
 
                 let highest =
@@ -196,9 +238,8 @@ let all =
                     |> Async.RunSynchronously
 
                 // assert
-                Expect.equal result.[0] highest "Highest should be first"
-                Expect.equal result.[1] middle "Middle should be second"
-                Expect.equal result.[2] lowest "Lowest should be last"
+                Expect.equal (List.length result) 1 "Should only return published entry"
+                Expect.equal result.[0] middle "Only published entry"
 
             testCase "updateViewCount: returns None without matching entry"
             <| fun _ ->
