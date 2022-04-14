@@ -87,7 +87,7 @@ let rec fold folder state list =
 
 Which is essentially equivalent to a `for` loop through `list`. So, the time complexity of `fold` is  [IMATH]O(n)[/IMATH].
 
-Putting this all together, since the `windowed` function is called inside o `fold`, the time complexity of `longestSubstring` is [IMATH]O(n^3)[/IMATH]. Pretty terrible...
+Putting this all together, since the `windowed` function is called inside of `fold`, the time complexity of `longestSubstring` is [IMATH]O(n^3)[/IMATH]. Pretty terrible...
 
 ## Optimized Solution
 
