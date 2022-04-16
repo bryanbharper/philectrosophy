@@ -2,7 +2,7 @@
 
 I've been on the hunt for a new job. In preparation for technical interviews, I've been going over common interview problems (like the ones in this [list](https://www.teamblind.com/post/New-Year-Gift---Curated-List-of-Top-75-LeetCode-Questions-to-Save-Your-Time-OaM1orEU)).
 
-Unfortunately, the vast majority of explanations and solutions to these problems are written in an imperative style. If you know me at all, you know that I'm a functional programming fanatic. So, I thought it'd be fun and useful to find functional solutions to these problems. This will be the first post in a series doing just that.
+Unfortunately, the vast majority of explanations and solutions to these problems are written in an imperative style. If you know me at all, you know that I'm a functional programming fanatic. So, I thought it'd be fun and useful to find functional solutions to these problems. This is the third post in a series doing just that.
 
 ## Longest Unique Substring
 Here's the problem as stated on [here on LeetCode](https://leetcode.com/problems/longest-substring-without-repeating-characters/):
@@ -40,7 +40,7 @@ let allDistinct (collection: 'a seq) =
     collection |> Set.ofSeq |> Set.count = Seq.length collection
 ```
 
-We'll utilize a `fold` function to iterate through the string and build up a collection of sub-windows:
+We'll utilize a `fold` function to iterate through the string and build up a collection of distinct sub-windows. Then we'll find the longest sub-window:
 ```fsharp
 let longestSubstring (s: string): int =
     let distinctWindows (prev: char list list) winSize =
@@ -61,7 +61,11 @@ let longestSubstring (s: string): int =
         |> List.length
 ```
 
+How does this brute force solution perform?
+
 #### Complexity Analysis
+The expression that will take the most time is the `fold` calling `distinctWindows`. Let's analyze it from the inside out.
+
 Implementing the `windowed` function would look something like this:[POP]This is not the actual implementation.[/POP]
 ```fsharp
 let windowed size list =
@@ -71,11 +75,9 @@ let windowed size list =
     ]
 ```
 
-Getting a slice of a list has a time complexity of [IMATH]O(k)[/IMATH] where [IMATH]k[/IMATH] is the size of the slice.[POP]At least, in Python, according to [this stack overflow question](https://stackoverflow.com/questions/13203601/big-o-of-list-slicing). [/POP]. Since these slices are produced in a loop, the time complexity of the `windowed` as a whole is [IMATH]O(n * k)[/IMATH] where [IMATH]n[/IMATH] is the size of `list`. And in our worst case scenario the window and list are the same size, resulting in [IMATH]O(n^2)[/IMATH].
+Let `k` be the slice size, and `n` the length of the list. This function has a time complexity of `O(n-k)`. However,  `k` is constant, so we can simplify to `O(n)`.
 
-But we're not done.
-
-An implementation of the fold function would look something like this:[POP]This is not the actual implementation.[/POP]
+Next, we have the `fold` function, an implementation of which would be something like this:[POP]This is not the actual implementation.[/POP]
 ```fsharp
 let rec fold folder state list =
     match list with
@@ -84,10 +86,9 @@ let rec fold folder state list =
         let newState = folder state head
         fold folder newState tail
 ```
+This is a tail recursive function, so the time complexity of `fold` is `O(n)`.
 
-Which is essentially equivalent to a `for` loop through `list`. So, the time complexity of `fold` is  [IMATH]O(n)[/IMATH].
-
-Putting this all together, since the `windowed` function is called inside of `fold`, the time complexity of `longestSubstring` is [IMATH]O(n^3)[/IMATH]. Pretty terrible...
+Putting this all together, since the `windowed` function is called inside of `fold`, the time complexity of `longestSubstring` is `O(n^2)`. Not ideal...
 
 ## Optimized Solution
 
