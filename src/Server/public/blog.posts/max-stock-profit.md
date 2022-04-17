@@ -2,7 +2,7 @@
 
 I've been on the hunt for a new job. In preparation for technical interviews, I've been going over common interview problems (like the ones in this [list](https://www.teamblind.com/post/New-Year-Gift---Curated-List-of-Top-75-LeetCode-Questions-to-Save-Your-Time-OaM1orEU)).
 
-Unfortunately, the vast majority of explanations and solutions to these problems are written in an imperative style. If you know me at all, you know that I'm a functional programming fanatic. So, I thought it'd be fun and useful to find functional solutions to these problems. This is the third post in a series doing just that.
+Unfortunately, the vast majority of explanations and solutions to these problems are written in an imperative style. If you know me at all, you know that I'm a functional programming fanatic. So, I thought it'd be fun and useful to find functional solutions to these problems. This is the fourth post in a series doing just that.
 
 ## Best Time to Buy and Sell Stock
 Here's the problem as stated on [here on LeetCode](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/):
