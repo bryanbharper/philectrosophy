@@ -161,8 +161,15 @@ let layout (contents: ReactElement list) =
     Bulma.section [
         Bulma.columns [
             Bulma.column [
-                column.isOffsetOneQuarter
-                column.isHalf
+                column.isOneQuarterWideScreen
+                column.isOneQuarterDesktop
+            ]
+            Bulma.column [
+                column.isHalfWideScreen
+                column.isHalfDesktop
+                column.isFullMobile
+                column.isFullTablet
+
                 prop.children contents
             ]
         ]

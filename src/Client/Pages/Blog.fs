@@ -7,12 +7,13 @@ open Feliz
 open Feliz.Router
 open Feliz.Bulma
 
-open Client.Components
-open Client.Urls
-
 open Shared
 open Shared.Dtos
 open Shared.Contracts
+
+open Client.Styles
+open Client.Components
+open Client.Urls
 
 let blogApi =
     Remoting.createApi ()
@@ -45,7 +46,14 @@ let render (state: State) (dispatch: Msg -> unit) =
 
     Bulma.section [
         Bulma.container [
-            Bulma.title.h2 [ prop.text "Blog" ]
+            Bulma.title.h1 [
+                prop.text "Blog"
+                prop.classes [
+                    Bulma.Title
+                    Bulma.IsSize1
+                    Bulma.IsSize2Desktop
+                ]
+            ]
             Html.hr []
             entries
         ]
