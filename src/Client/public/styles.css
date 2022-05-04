@@ -165,6 +165,24 @@
   opacity: 1;
 }
 
+.resume-tab {
+  position: fixed;
+  bottom: 2em;
+  left: 2em;
+  width: 94px;
+  height: 82px;
+  background-color: white;
+  text-align: center;
+  z-index: 900;
+  border-radius: 5px;
+  border: 1px solid #4D336D;
+  opacity: 0.6;
+}
+
+.resume-tab:hover {
+  opacity: 0.8;
+}
+
 /*! bulma.io v0.9.1 | MIT License | github.com/jgthms/bulma */
 /* Bulma Utilities */
 @keyframes spinAround {

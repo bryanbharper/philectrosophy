@@ -6,6 +6,7 @@
     </PropertyGroup>
     <ItemGroup>
         <Content Include="public\phi.png" />
+        <Content Include="public\scss\_about.scss" />
         <Content Include="public\scss\_navbar.scss" />
         <Content Include="public\scss\_variables.scss" />
         <Content Include="public\scss\_markdown.scss" />

@@ -117,9 +117,9 @@ let programming =
             "C#"
             "F#"
             "Typescript / JavaScript"
-            "Java"
+            "Haskell"
             "Python"
-            "LaTeX"
+            "Java"
         ]
 
     let colors =
@@ -282,8 +282,27 @@ let philosophy =
     ]
     |> section Style.LightPurpleBg
 
+let resumeBtn =
+    Html.a [
+        prop.classes [ Bulma.IsHiddenMobile ]
+        prop.href "resources/Resume_BryanHarper.pdf"
+        prop.target "_blank"
+        prop.children [
+            Html.div [
+                prop.classes [ Style.ResumeTab ]
+                prop.children [
+                    Html.h4 "View Resume"
+                    Html.span [
+                        prop.classes [ FA.Fa; FA.FaFilePdf ]
+                    ]
+                ]
+            ]
+        ]
+    ]
+
 let render (state: State) (dispatch: Msg -> unit): ReactElement =
     [
+        resumeBtn
         about
         programming
         engineering
