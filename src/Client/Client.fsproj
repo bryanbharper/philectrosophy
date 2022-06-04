@@ -13,9 +13,10 @@
         <Content Include="public\scss\_helpers.scss" />
         <Content Include="public\scss\_theme.scss" />
         <Content Include="public\scss\_progress-bar.scss" />
+        <Content Include="public\sitemap.xml" />
         <Content Include="public\styles.scss" />
         <Content Include="public\styles.css" />
-        <Content Include="public\SiteMap.txt" />
+        <Content Include="public\sitemap.txt" />
         <Content Include="public\img\*" />
         <Content Include="public\songs\*" />
         <None Include="index.html" />
