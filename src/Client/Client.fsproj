@@ -16,7 +16,6 @@
         <Content Include="public\sitemap.xml" />
         <Content Include="public\styles.scss" />
         <Content Include="public\styles.css" />
-        <Content Include="public\sitemap.txt" />
         <Content Include="public\img\*" />
         <Content Include="public\songs\*" />
         <None Include="index.html" />
