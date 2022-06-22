@@ -128,7 +128,7 @@ For a +1 weapon, on the other hand, we replace [IMATH]P(S)[/IMATH] with our *fla
 
 > [MATH]\begin{align*} E[A_{+1}] &= (g + 1)  \; s_f(t, 1) \end{align*}[/MATH]
 
-Unfortunately, the answer to our question will vary depending on the value of [IMATH]g[/IMATH]. For example, if we choose a rapier --- the favored weapon of my character [Niko Whitteridge](https://github.com/brharper-clgx/Niko/blob/master/backstory.md) --- which has an average damage of 4.5,[POP][MATH]g_r = \left( \frac{1}{8} \right ) \sum \limits_{i=1}^8 i[/MATH][/POP] our two expected value functions look like this:
+Unfortunately, the answer to our question will vary depending on the value of [IMATH]g[/IMATH]. For example, if we choose a rapier --- the favored weapon of my character [Niko Whitteridge](https://github.com/bryanbharper/Niko/blob/master/backstory.md) --- which has an average damage of 4.5,[POP][MATH]g_r = \left( \frac{1}{8} \right ) \sum \limits_{i=1}^8 i[/MATH][/POP] our two expected value functions look like this:
 
 ![rapier-ev-adv-vs-magi](img/rapier-ev-adv-vs-magi.PNG)
 

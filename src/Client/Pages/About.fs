@@ -171,15 +171,15 @@ let programming =
                     Html.li [
                         Html.a [
                             prop.className Bulma.HasTextWhite
-                            prop.href "https://github.com/brharper-clgx"
-                            prop.text "https://github.com/brharper-clgx"
+                            prop.href "https://github.com/bryanbharper"
+                            prop.text "https://github.com/bryanbharper"
                         ]
                     ]
                     Html.li [
                         Html.a [
                             prop.className Bulma.HasTextWhite
-                            prop.href "https://www.codewars.com/users/brharper-clgx"
-                            prop.text "www.codewars.com/users/brharper-clgx"
+                            prop.href "https://www.codewars.com/users/bryanbharper"
+                            prop.text "www.codewars.com/users/bryanbharper"
                         ]
                     ]
                 ]

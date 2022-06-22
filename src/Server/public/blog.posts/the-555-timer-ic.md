@@ -103,7 +103,7 @@ Now we can use [IMATH]T_L[/IMATH] and [IMATH]T_H[/IMATH] to find the frequency a
 
 [MATH]D = \frac{R_A + R_B}{R_A + 2 R_B} 100 [/MATH]
 
-Now, in practical situations it is generally the case that you have a desired frequency or duty cycle, and your goal is to find a set of components (resistors and capacitors) which will achieve this desired parameter. Mathematically, both of the above equations have an infinite number of solutions. However, we only have a finite number of resistors and capacitors available in inventory. So, I've written a small python program, found [here](https://github.com/brharper-clgx/555_timer), which will determine the best set of components from your inventory that will achieve the desired frequency or duty cycle.
+Now, in practical situations it is generally the case that you have a desired frequency or duty cycle, and your goal is to find a set of components (resistors and capacitors) which will achieve this desired parameter. Mathematically, both of the above equations have an infinite number of solutions. However, we only have a finite number of resistors and capacitors available in inventory. So, I've written a small python program, found [here](https://github.com/bryanbharper/555_timer), which will determine the best set of components from your inventory that will achieve the desired frequency or duty cycle.
 
 > An aside: with the above configuration, the duty cycle will always be greater than 50%. This is simply because the capacitor charges through two resistors but discharges through only one, making the charge time always greater than the discharge time. However, with some clever use of diodes, you can make this circuit both charge and discharge through the same amount to achieve a 50% duty cycle.
 

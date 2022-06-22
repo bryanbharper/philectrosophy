@@ -1,6 +1,6 @@
 ﻿[feliz-router]: https://github.com/Zaid-Ajaj/Feliz.Router "Feliz Router"
 [elm-nav]: https://elmish.github.io/browser/navigation.html "Elm Navigation"
-[source]: https://github.com/brharper-clgx/safe-stack-path-routing "Source Code"
+[source]: https://github.com/bryanbharper/safe-stack-path-routing "Source Code"
 [safe]: https://safe-stack.github.io/ "Safe Stack"
 
 ### Intro
@@ -10,7 +10,7 @@ This post will go over how to implement *path* routing in a [SAFE stack][safe] a
 > *If you already have routing implemented but are struggling to get *path* routing to work with your back-end, skip ahead to section __"Configuring the Server"__ below.*
 
 ### The problem
-Below is a basic web app built with the [SAFE stack][safe]. The source for this example can be found [here][source]. I recommend cloning the repo and following along. *Be sure to follow the steps in the [README.md](https://github.com/brharper-clgx/safe-stack-path-routing/blob/feliz-hash/README.md) to get the app up and running.*
+Below is a basic web app built with the [SAFE stack][safe]. The source for this example can be found [here][source]. I recommend cloning the repo and following along. *Be sure to follow the steps in the [README.md](https://github.com/bryanbharper/safe-stack-path-routing/blob/feliz-hash/README.md) to get the app up and running.*
 
 ![no-routing-demo](img/no-routing-demo.gif)
 
@@ -22,7 +22,7 @@ So, let's improve the app better by introducing routing.
 
 ### Hash Routing
 
-> *The finished code for the following section can be found on the [feliz-hash](https://github.com/brharper-clgx/safe-stack-path-routing/tree/feliz-hash) branch of the [repo][source].*
+> *The finished code for the following section can be found on the [feliz-hash](https://github.com/bryanbharper/safe-stack-path-routing/tree/feliz-hash) branch of the [repo][source].*
 
 On a first pass we'll implement our solution using the [Feliz.Router][feliz-router] module. By default, `Feliz.Router` uses *hash* routes (e.g., `www.my-site.com/#/about`). Let's start with this default configuration and see where it gets us.
 
@@ -114,12 +114,12 @@ This is great. It has many advantages over the previous application.
 
 However, not all is well in the world. The `#` prefixing all of our Urls is more troublesome than it might seem. Many external tools such as Google's search or [Disqus](https://disqus.com/) won't index pages that begin with a hash. Beyond that, you have to admit that hashes are a bit unseemly. Wouldn't it be nice to have a clean route without any funky symbols? In general, the use of hash routing is regarded as an out of date practice.
 
-The source code for the changes above can be found on the [feliz-hash](https://github.com/brharper-clgx/safe-stack-path-routing/tree/feliz-hash) branch of the repo.
+The source code for the changes above can be found on the [feliz-hash](https://github.com/bryanbharper/safe-stack-path-routing/tree/feliz-hash) branch of the repo.
 
 
 ### Path Routing
 
-> *The finished code for the following section can be found on the [path-routing](https://github.com/brharper-clgx/safe-stack-path-routing/tree/path-routing) branch of the [repo][source].*
+> *The finished code for the following section can be found on the [path-routing](https://github.com/bryanbharper/safe-stack-path-routing/tree/path-routing) branch of the [repo][source].*
 
 So we want to implement *path* routing, which is the same as has routing except we omit the `#` sign.
 
@@ -216,7 +216,7 @@ In theory, everything should be working now. However, if we run the app we're in
 Here's what's happening: we have a [SPA](https://en.wikipedia.org/wiki/Single-page_application) in which all content is rendered from a single `index.html` file. However, when we append a *path* to [localhost:8080](http://localhost:8080/) we are asking the server for a resource at that location. But there isn't one. So, we need to tell our server to redirect this request back to the `index.html` file. I'll show you how in the next section.
 
 ### Configuring the Server
-> *The finished code for the following section can be found on the [path-routing](https://github.com/brharper-clgx/safe-stack-path-routing/tree/path-routing) branch of the [repo][source].*
+> *The finished code for the following section can be found on the [path-routing](https://github.com/bryanbharper/safe-stack-path-routing/tree/path-routing) branch of the [repo][source].*
 
 #### Webpack Dev Server
 We'll first fix the *webpack* dev server. To do so, make the following modification to your `webpack.config.js`:
