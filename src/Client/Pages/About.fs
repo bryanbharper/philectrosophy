@@ -117,9 +117,9 @@ let programming =
             "C#"
             "F#"
             "Typescript / JavaScript"
+            "GraphQL"
             "Haskell"
             "Python"
-            "Java"
         ]
 
     let colors =
