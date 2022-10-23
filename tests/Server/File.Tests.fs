@@ -50,8 +50,10 @@ let all =
                 let expected = "expected content"
 
                 let fileAccess =
-                    Mock<IFileAccess>().Setup(fun f -> <@ f.ReadFileAsync path @>)
-                        .Returns(expected |> Some |> async.Return).Create()
+                    Mock<IFileAccess>()
+                        .Setup(fun f -> <@ f.ReadFileAsync path @>)
+                        .Returns(expected |> Some |> async.Return)
+                        .Create()
 
                 let target =
                     BlogContentStore(fileAccess) :> IBlogContentStore
