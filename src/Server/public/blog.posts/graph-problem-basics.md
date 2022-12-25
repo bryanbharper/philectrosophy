@@ -246,11 +246,12 @@ let breadthFirstPrint' start graph =     // 'node -> Map<'node, 'node list> -> u
         | head :: tail ->
             printfn $"{head}"
 
-            if visited |> Set.contains head then
-                traverse tail visited
+            if visited |> Set.contains head
+            then traverse tail visited
             else
                 let newStack = tail @ (graph |> Map.find head)
                 let newVisited = visited |> Set.add head
+
                 traverse newStack newVisited
 
     traverse [ start ] Set.empty

@@ -3,7 +3,7 @@
 open System.Text.RegularExpressions
 open Shared.Extensions
 
-let codeCogsUrl = "https://latex.codecogs.com/gif.latex?"
+let codeCogsUrl = "http://latex.codecogs.com/gif.latex?"
 let patternTemplate keyword =
     sprintf "\[%s\](.*?)\[\/%s\]" keyword keyword
 
