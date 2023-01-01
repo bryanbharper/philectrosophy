@@ -1,3 +1,5 @@
+# 🚩 _**This project has moved to https://github.com/bryanbharper/Philectrosophy_Net6**_
+
 # Philectrosophy
 
 ## Running for Development
